@@ -5,7 +5,7 @@ import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
 
-public class LoginTest extends BaseTest {
+public class LoginTest_BeforeClass extends BaseTest_BeforeClass {
     @Test(priority = 1)
     public void testLoginSuccess() throws InterruptedException {
 
@@ -29,43 +29,23 @@ public class LoginTest extends BaseTest {
         System.out.println("Đăng nhập thành công vào CRM");
     }
 
-    @Test(priority = 2)
-    public void testLoginFailWithEmailInvalid() throws InterruptedException {
-        System.out.println("testLoginFailWithEmailInvalid");
-        // truy cập link web CRM
-        driver.get(LocatorsCRM.url);
-        Thread.sleep(1000);
-
-        // Login CRM
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin123@example.com");
-        Thread.sleep(1000);
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
-        Thread.sleep(1000);
-        driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
-        Thread.sleep(1000);
-
-        System.out.println("Đăng nhập vào CRM không thành công do email không hợp lệ");
-    }
-
     @Test(priority = 3)
     public void testAddNewCustomer() throws InterruptedException {
-        String customerName = "Hatest Company" + System.currentTimeMillis();
+        String customerName = "Hatest Company " + System.currentTimeMillis();
 
         // truy cập link web CRM
-        driver.get(LocatorsCRM.url);
+//        driver.get(LocatorsCRM.url);
+////        Thread.sleep(1000);
+//
+//        // Login CRM
+//        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
+//        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin@example.com");
+////        Thread.sleep(1000);
+//        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).clear();
+//        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
+////        Thread.sleep(1000);
+//        driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
 //        Thread.sleep(1000);
-
-        // Login CRM
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin@example.com");
-//        Thread.sleep(1000);
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).clear();
-        driver.findElement(By.xpath(LocatorsCRM.inputPassword)).sendKeys("123456");
-//        Thread.sleep(1000);
-        driver.findElement(By.xpath(LocatorsCRM.buttonLogin)).click();
-        Thread.sleep(1000);
 
         // Click vào menu Customers
         driver.findElement(By.xpath(LocatorsCRM.linkMenuCustomer)).click();

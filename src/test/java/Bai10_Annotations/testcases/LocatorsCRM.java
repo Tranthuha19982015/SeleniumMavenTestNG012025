@@ -4,7 +4,7 @@ public class LocatorsCRM {
     public static String url = "https://crm.anhtester.com/admin/authentication";
 
     //Locator for Login Page
-    public static String headerLoginPage = "https://crm.anhtester.com/admin/authentication";
+    public static String headerLoginPage = "//h1[normalize-space()='Login']";
     public static String inputEmail = "//input[@id='email']";
     public static String inputPassword = "//input[@id='password']";
     public static String buttonLogin = "//button[normalize-space()='Login']";
@@ -19,8 +19,8 @@ public class LocatorsCRM {
     public static String linkMenuCustomer = "//ul[@id='side-menu']//a[@href='https://crm.anhtester.com/admin/clients']";
 
     public static String buttonNewCustomer = "//a[normalize-space()='New Customer']";
-    public static String buttonImportCustomer = "//a[normalize-space()='Import Customers' and contains(@href,'import')]";
-    public static String buttonContacts = "//a[normalize-space()='Contacts' and contains(@href,'all_contacts')]";
+    public static String buttonImportCustomer = "//a[normalize-space()='Import Customers']";
+    public static String buttonContacts = "//a[normalize-space()='Contacts']";
 
     public static String buttonFilter = "//div[@id='vueApp']/descendant::button[contains(@class,'dropdown-toggle')]";
 
@@ -38,7 +38,7 @@ public class LocatorsCRM {
     public static String labelDefaultFilter = "//label[normalize-space()='Mark as default']";
     public static String buttonApplyAndSave = "//button[text()='Apply and Save']";
 
-    public static String labelCustomersSummary = "//span[normalize-space()='Customers Summary']";
+    public static String headerCustomerPage = "//span[normalize-space()='Customers Summary']";
     public static String numberTotalCustomers = "//span[normalize-space()='Total Customers']/preceding-sibling::span";
     public static String labelTotalCustomers = "//span[normalize-space()='Total Customers']";
     public static String numberActiveCustomers = "//span[normalize-space()='Active Customers']/preceding-sibling::span";
@@ -58,7 +58,8 @@ public class LocatorsCRM {
     public static String iconReload = "//div[@id='clients_length']/following-sibling::div//button[contains(@class,'btn-dt-reload')]";
 
     public static String iconSearch = "//div[@id='clients_filter']/descendant::span[@class='input-group-addon']";
-    public static String inputSearch = "//div[@id='clients_filter']/descendant::input[@type='search']";
+    public static String inputSearch = "//div[@id='clients_filter']//input[@type='search']";
+    public static String firstRowItemCustomer="//table[@id='clients']//tbody/tr[1]/td[3]/a";
 
     public static String checkboxAll = "//input[@id='mass_select_all' and @type='checkbox]";
     public static String columnNumberOfCompany = "//th[@id='th-number' and normalize-space()='#']";
@@ -80,12 +81,24 @@ public class LocatorsCRM {
     public static String inputVatNumber = "//input[@id='vat']";
     public static String inputPhone = "//input[@id='phonenumber']";
     public static String inputWebsite = "//input[@id='website']";
+
     public static String dropdownGroups = "//button[contains(@data-id,'groups_in')]";
     public static String inputSearchGroups = "//button[contains(@data-id,'groups_in')]/following-sibling::div//input[@type='search']";
+
     public static String dropdownCurrency = "//button[@data-id='default_currency']";
     public static String inputSearchCurrency = "//button[@data-id='default_currency']/following-sibling::div//input[@type='search']";
+
     public static String dropdownDefaultLanguage = "//button[@data-id='default_language']";
-    public static String inputAdress = "//textarea[@id='address']";
+    //    C1:
+    public static String optionDefaultLanguage = "//span[normalize-space()='%s']";
+
+    //    C2:
+    public static String selectXPathLanguage(String language) {
+        String xpathDefaultLanguage = "//span[normalize-space()='" + language + "']";
+        return xpathDefaultLanguage;
+    }
+
+    public static String inputAddress = "//textarea[@id='address']";
     public static String inputCity = "//input[@id='city']";
     public static String inputState = "//input[@id='state']";
     public static String inputZipCode = "//input[@id='zip']";
@@ -104,9 +117,9 @@ public class LocatorsCRM {
     // 2. Tab Billing & Shipping
     public static String tabBillingShipping = "//a[normalize-space()='Billing & Shipping' and @role='tab']";
     public static String labelBillingAddress = "//a[normalize-space()='Same as Customer Info']/parent::h4";
-    public static String linkSameAsCustomerInfo = "//a[normalize-space()='Same as Customer Info' and contains(@class,'billing-same-as-customer')]";
+    public static String labelSameAsCustomerInfo = "//a[normalize-space()='Same as Customer Info' and contains(@class,'billing-same-as-customer')]";
     public static String labelShippingAddress = "//span[normalize-space()='Shipping Address']";
-    public static String linkCopyBillingAddress = "//a[normalize-space()='Copy Billing Address']";
+    public static String labelCopyBillingAddress = "//a[normalize-space()='Copy Billing Address']";
     // Billing
     public static String inputBillingStreet = "//textarea[@id='billing_street']";
     public static String inputBillingCity = "//input[@id='billing_city']";
@@ -121,51 +134,4 @@ public class LocatorsCRM {
     public static String inputShippingZipCode = "//input[@id='shipping_zip']";
     public static String dropdownShippingCountry = "//button[@data-id='shipping_country']";
     public static String dropdownShippingSearchCountry = "//button[@data-id='shipping_country']/following-sibling::div//input[@type='search']";
-
-    //    Locator for Projects
-    public static String linkMenuProjects = "//ul[@id='side-menu']//a[@href='https://crm.anhtester.com/admin/projects']";
-    public static String buttonNewProject = "//a[normalize-space()='New Project' and @href='https://crm.anhtester.com/admin/projects/project']";
-    //Project
-    public static String inputProjectName = "//input[@id='name']";
-    public static String dropdownCustomer = "//button[@data-id='clientid']";
-    public static String inputSearchCustomer = "//button[@data-id='clientid']/following-sibling::div//input[@type='search']";
-    public static String checkboxCalculateProgressThroughTasks = "//input[@id='progress_from_tasks']";
-    public static String switchProgress = "//label[contains(normalize-space(),'Progress')]/following-sibling::div/span";
-    public static String dropdownBillingType = "//button[@data-id='billing_type']";
-    public static String dropdownStatus = "//button[@data-id='status']";
-    public static String inputRatePerHour = "//input[@id='project_rate_per_hour']";
-    public static String inputTotalRate = "//input[@id='project_cost']";
-    public static String inputEstimatedHours = "//input[@id='estimated_hours']";
-    public static String dropdownMembers = "//button[contains(@data-id,'project_members')]";
-    public static String inputSearchMembers = "//button[contains(@data-id,'project_members')]/following-sibling::div//input[@type='search']";
-    public static String inputStartDate = "//input[@id='start_date']";
-    public static String calendarStartDate = "//input[@id='start_date']/following-sibling::div[@class='input-group-addon']";
-    public static String inputDeadline = "//input[@id='deadline']";
-    public static String calendarDeadline = "//input[@id='deadline']/following-sibling::div[@class='input-group-addon']";
-    public static String inputTags = "//label[normalize-space()='Tags']/following-sibling::ul//input";
-
-    public static String inputDescription = "//p[text()='Description']/following-sibling::div[@app-field-wrapper='description']";
-    public static String buttonFile = "//span[text()='File']/parent::button";
-    public static String buttonEdit = "//span[text()='Edit']/parent::button";
-    public static String buttonView = "//span[text()='View']/parent::button";
-    public static String buttonInsert = "//span[text()='Insert']/parent::button";
-    public static String buttonFormat = "//span[text()='Format']/parent::button";
-    public static String buttonTools = "//span[text()='Tools']/parent::button";
-    public static String buttonTable = "//span[text()='Table']/parent::button";
-    public static String dropdownSystemFont = "//p[text()='Description']/following-sibling::div//button[@title='Font System Font']";
-    public static String dropdownFontSize = "//p[text()='Description']/following-sibling::div//button[starts-with(@title,'Font size')]";
-    public static String dropdownColorText = "//p[text()='Description']/following::div[@aria-label='Text color Black']//span[contains(@class,'tox-split-button__chevron')]";
-    public static String dropdownBackgroundColorText = "//p[text()='Description']/following::div[@aria-label='Background color Black']//span[contains(@class,'tox-split-button__chevron')]";
-    public static String buttonBold = "//p[text()='Description']/following::button[@title='Bold']";
-    public static String buttonItalic = "//p[text()='Description']/following::button[@title='Italic']";
-    public static String buttonAlignLeft = "//p[text()='Description']/following::button[@title='Align left']";
-    public static String buttonAlignCenter = "//p[text()='Description']/following::button[@title='Align center']";
-    public static String buttonAlignRight = "//p[text()='Description']/following::button[@title='Align right']";
-    public static String buttonAlignJustify = "//p[text()='Description']/following::button[@title='Justify']";
-    public static String buttonRevealOrHideAdditional = "//p[text()='Description']/following::button[@title='Reveal or hide additional toolbar items']";
-
-    public static String checkboxSendProjectCreatedEmail = "//input[@id='send_created_email']";
-    public static String buttonSaveProjects = "//button[normalize-space()='Save']";
-
-    public static String customerValue = "Hatest_01";
 }
