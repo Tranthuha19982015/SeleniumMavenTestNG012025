@@ -1,5 +1,6 @@
 package Bai10_Annotations.testcases;
 
+import common.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;

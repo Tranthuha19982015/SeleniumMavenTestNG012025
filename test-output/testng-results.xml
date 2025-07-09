@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="1" total="2" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-07-02T20:13:52 ICT" name="Default Suite" finished-at="2025-07-02T20:13:52 ICT" duration-ms="49">
+    <groups>
+      <group name="testOne">
+        <method signature="DemoAnnotation.testOneMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" name="testOneMethod" class="Bai10_Annotations.DemoAnnotation"/>
+      </group> <!-- testOne -->
+    </groups>
+    <test started-at="2025-07-02T20:13:52 ICT" name="SeleniumMavenTestNG012025" finished-at="2025-07-02T20:13:52 ICT" duration-ms="49">
+      <class name="Bai10_Annotations.DemoAnnotation">
+        <test-method is-config="true" signature="beforeSuite()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeSuite" finished-at="2025-07-02T20:13:52 ICT" duration-ms="13" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method is-config="true" signature="beforeTest()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeTest" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method is-config="true" signature="beforeBaseClass()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeBaseClass" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeBaseClass -->
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeClass" finished-at="2025-07-02T20:13:52 ICT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeGroupOne()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeGroupOne" finished-at="2025-07-02T20:13:52 ICT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeGroupOne -->
+        <test-method is-config="true" signature="beforeBaseMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeBaseMethod" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeBaseMethod -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="beforeMethod" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="testOneMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="testOneMethod" description="This is test method 1" finished-at="2025-07-02T20:13:52 ICT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testOneMethod -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterMethod" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method is-config="true" signature="afterBaseMethod()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterBaseMethod" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterBaseMethod -->
+        <test-method is-config="true" signature="afterGroupOne()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterGroupOne" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterGroupOne -->
+        <test-method is-config="true" signature="afterClass()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterClass" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterClass -->
+        <test-method is-config="true" signature="afterBaseClass()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterBaseClass" finished-at="2025-07-02T20:13:52 ICT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterBaseClass -->
+        <test-method is-config="true" signature="afterTest()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterTest" finished-at="2025-07-02T20:13:52 ICT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method is-config="true" signature="afterSuite()[pri:0, instance:Bai10_Annotations.DemoAnnotation@229f66ed]" started-at="2025-07-02T20:13:52 ICT" name="afterSuite" finished-at="2025-07-02T20:13:52 ICT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- Bai10_Annotations.DemoAnnotation -->
+    </test> <!-- SeleniumMavenTestNG012025 -->
+  </suite> <!-- Default Suite -->
+</testng-results>
