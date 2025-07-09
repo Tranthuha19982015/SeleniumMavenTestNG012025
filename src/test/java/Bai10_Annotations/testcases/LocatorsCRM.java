@@ -134,4 +134,6 @@ public class LocatorsCRM {
     public static String inputShippingZipCode = "//input[@id='shipping_zip']";
     public static String dropdownShippingCountry = "//button[@data-id='shipping_country']";
     public static String dropdownShippingSearchCountry = "//button[@data-id='shipping_country']/following-sibling::div//input[@type='search']";
+
+    public static String linkMenuDashboard = "//span[normalize-space()='Dashboard']";
 }
