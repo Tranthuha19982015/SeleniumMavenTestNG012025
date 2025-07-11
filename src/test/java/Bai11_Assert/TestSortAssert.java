@@ -7,27 +7,25 @@ import org.testng.asserts.SoftAssert;
 
 public class TestSortAssert extends BaseTest {
     @Test(priority = 1)
-    public void testSoftAssert() {
+    public void testSoftAssert() throws InterruptedException {
 
         driver.get("https://anhtester.com");
 
         SoftAssert softassert = new SoftAssert();
 
-        String expectedTitle = "Anh Tester";
+        String expectedTitle = "Anh Tester Automation Testing";
         String actualTitle = driver.getTitle();
 
         System.out.println("*** Checking For The First Title ***");
-
         softassert.assertEquals(actualTitle, expectedTitle);
 
         driver.findElement(By.xpath("//a[@id='btn-login']")).click();
-
+        Thread.sleep(2000);
         System.out.println("*** Checking For The Second Title ***");
 
         String actualLoginPageTitle = driver.getTitle();
-
         softassert.assertEquals(actualLoginPageTitle, "Login");
 
-        softassert.assertAll(); // Kết thúc quá trình kiểm tra Soft Assert, nếu có lỗi sẽ hiển thị tất cả các lỗi đã gặp trong quá trình kiểm tra
+        softassert.assertAll(); // Bắt buộc phải gọi assertAll() để kiểm tra tất cả các assert đã được thực hiện
     }
 }
