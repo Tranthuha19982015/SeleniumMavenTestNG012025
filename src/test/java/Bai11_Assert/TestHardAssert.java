@@ -53,7 +53,6 @@ public class TestHardAssert extends BaseTest {
         List<WebElement> checkMenuDashboard = driver.findElements(By.xpath(LocatorsCRM.linkMenuDashboard));
         System.out.println("checkMenuDashboard = " + checkMenuDashboard.size());
         Assert.assertTrue(checkMenuDashboard.size() > 0, "Menu Dashboard không hiển thị, đăng nhập thất bại");
-        ;
         System.out.println("Đăng nhập thành công vào CRM");
     }
 
