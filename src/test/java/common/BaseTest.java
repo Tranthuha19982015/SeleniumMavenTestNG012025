@@ -17,7 +17,8 @@ public class BaseTest {
         System.out.println("Khởi tạo trình duyệt Chrome");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        softAssert = new SoftAssert();
     }
 
     @AfterMethod
