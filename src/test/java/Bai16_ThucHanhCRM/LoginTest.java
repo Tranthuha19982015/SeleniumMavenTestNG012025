@@ -25,7 +25,6 @@ public class LoginTest extends BaseTest {
         boolean dashboardElements = driver.findElements(By.xpath(LocatorsCRM.linkMenuDashboard)).size() > 0;
         Assert.assertTrue(dashboardElements, "Login failed or Dashboard not display.");
 
-
 //        Assert.assertTrue(driver.findElement(By.xpath(LocatorsCRM.linkMenuDashboard)).isDisplayed());
     }
 

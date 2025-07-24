@@ -4,11 +4,9 @@ import Bai10_Annotations.testcases.LocatorsCRM;
 import common.BaseTest;
 import keywords.WebUI;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
 
 public class DashboardTest extends BaseTest {
     @Test

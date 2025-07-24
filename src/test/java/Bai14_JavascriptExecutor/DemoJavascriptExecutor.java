@@ -1,6 +1,8 @@
 package Bai14_JavascriptExecutor;
 
+import Bai10_Annotations.testcases.LocatorsCRM;
 import common.BaseTest;
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -8,7 +10,26 @@ import org.testng.annotations.Test;
 
 public class DemoJavascriptExecutor extends BaseTest {
     @Test
-    public void jsExecutorDemo00() throws InterruptedException {
+    public void testClickElementWithJavaScriptExecutor() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://crm.anhtester.com/admin/authentication");
+        Thread.sleep(1000);
+
+        WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
+        WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
+
+        // sendKeys text on input
+        js.executeScript("arguments[0].setAttribute('value','admin@example.com');", inputEmail);
+        js.executeScript("arguments[0].setAttribute('value','123456');", inputPassword);
+
+        WebElement buttonLogin = driver.findElement(By.xpath("//button[normalize-space()='Login']"));
+        js.executeScript("arguments[0].click()", buttonLogin);
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testClickElementWithJavaScriptExecutor_CMS() throws InterruptedException {
         // Creating the JavascriptExecutor interface object
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -20,6 +41,49 @@ public class DemoJavascriptExecutor extends BaseTest {
         js.executeScript("arguments[0].click();", menuBlog);
 //        menuBlog.click();
         Thread.sleep(1000);
+    }
+
+    @Test
+    public void testScrollToElement() throws InterruptedException {
+        driver.get("https://anhtester.com/");
+        Thread.sleep(1000);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        WebElement element = driver.findElement(By.xpath("//h2[contains(text(),'Kiến thức Automation Testing')]"));
+
+        //Scroll to element
+        //Giá trị true là nằm phía trên
+        //Giá trị false là nằm phía dưới
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+
+//        js.executeScript("arguments[0].scrollIntoView(false);", element);
+
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void demoHighlightElement() throws InterruptedException {
+        driver.get("https://crm.anhtester.com/admin/authentication");
+        Thread.sleep(1000);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
+//        js.executeScript("arguments[0].style.border='3px solid red';", inputEmail);
+        WebUI.highlightElement(driver, inputEmail, "red");
+        js.executeScript("arguments[0].setAttribute('value','admin@example.com');", inputEmail);
+        Thread.sleep(1000);
+
+        WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
+//        js.executeScript("arguments[0].style.border='3px solid purple';", inputPassword);
+        WebUI.highlightElement(driver, inputPassword, "green");
+        js.executeScript("arguments[0].setAttribute('value','123456');", inputPassword);
+        Thread.sleep(1000);
+
+        WebElement buttonLogin = driver.findElement(By.xpath("//button[normalize-space()='Login']"));
+        js.executeScript("arguments[0].click();", buttonLogin);
+        Thread.sleep(2000);
     }
 
     @Test
@@ -44,60 +108,6 @@ public class DemoJavascriptExecutor extends BaseTest {
 
         // Add Alert window using JavascriptExecutor
         js.executeScript("alert('Successfully Logged In');");
-
-        Thread.sleep(2000);
-    }
-
-    @Test
-    public void jsExecutorDemo02() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        driver.get("https://crm.anhtester.com/admin/authentication");
-        Thread.sleep(1000);
-
-        // sendKeys text on input
-        js.executeScript("document.getElementById('email').setAttribute('value','admin@example.com');");
-        js.executeScript("document.getElementById('password').setAttribute('value','123456');");
-
-        js.executeScript("document.getElementsByClassName('btn-primary')[0].click()");
-        Thread.sleep(2000);
-    }
-
-    @Test
-    public void jsExecutorDemo03() throws InterruptedException {
-        driver.get("https://anhtester.com/");
-        Thread.sleep(1000);
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        WebElement webElement = driver.findElement(By.xpath("//h2[contains(text(),'Kiến thức Automation Testing')]"));
-
-        //Scroll to element
-        //Giá trị true là nằm phía trên
-        //Giá trị false là nằm phía dưới
-        js.executeScript("arguments[0].scrollIntoView(false);", webElement);
-
-        Thread.sleep(2000);
-    }
-
-    @Test
-    public void jsExecutorDemo04() throws InterruptedException {
-        driver.get("https://crm.anhtester.com/admin/authentication");
-        Thread.sleep(1000);
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
-        js.executeScript("arguments[0].style.border='3px solid red'", inputEmail);
-        inputEmail.sendKeys("admin@example.com");
-        Thread.sleep(1000);
-        WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
-        js.executeScript("arguments[0].style.border='3px solid red'", inputPassword);
-        inputPassword.sendKeys("123456");
-        Thread.sleep(1000);
-        WebElement buttonLogin = driver.findElement(By.xpath("//button[normalize-space()='Login']"));
-        js.executeScript("arguments[0].style.border='3px solid red'", buttonLogin);
-        inputEmail.click();
 
         Thread.sleep(2000);
     }
