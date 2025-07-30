@@ -14,10 +14,9 @@ public class BaseTest {
 
     @BeforeMethod
     public void createDriver() {
-        System.out.println("Khởi tạo trình duyệt Chrome");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         softAssert = new SoftAssert();
     }
 
@@ -25,8 +24,7 @@ public class BaseTest {
     public void closeDriver() {
         if (driver != null) {
             driver.quit();
-            System.out.println("Đóng trình duyệt");
-            softAssert.assertAll(); // Bắt buộc phải gọi assertAll() để kiểm tra tất cả các assert đã được thực hiện
         }
+        softAssert.assertAll(); // Bắt buộc phải gọi assertAll() để kiểm tra tất cả các assert đã được thực hiện
     }
 }

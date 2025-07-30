@@ -22,7 +22,7 @@ public class LoginPage {
     //Khai báo hàm xây dựng cho từng trang
     public LoginPage(WebDriver driver) {
         this.driver = driver; //Từ khóa this phân biệt 2 biến cùng tên trong và ngoài
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); //Khởi tạo đối tượng wait với thời gian chờ là 10 giây
     }
 
     //Khai báo các đối tượng element thuộc về trang Login (khai báo những element cần thiết cho TCs sau này)
@@ -32,11 +32,18 @@ public class LoginPage {
     private By buttonLogin = By.xpath("//button[normalize-space()='Login']");
     private By checkboxRememberMe = By.xpath("//input[@id='remember']");
     private By linkForgotPassword = By.xpath("//a[normalize-space()='Forgot Password?']");
-    private By errorMessageInvalid = By.xpath("//div[@id='alerts']");
+    private By errorMessageInvalid = By.xpath("//div[@id='alerts']/div[contains(text(),'Invalid email or password')]");
     private By errorMessageRequiredEmail = By.xpath("//div[normalize-space()='The Email Address field is required.']");
     private By errorMessageRequiredPassword = By.xpath("//div[normalize-space()='The Password field is required.']");
 
     //Khai báo các hàm xử lý nội bộ trong nội bộ trang Login
+
+    public void verifyLoginPageDisplay() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(headerLogin));
+        boolean isHeaderLoginDisplayed = driver.findElements(headerLogin).size() > 0;
+        Assert.assertTrue(isHeaderLoginDisplayed, "Login Page is not displayed.");
+    }
+
     private void setEmail(String email) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(inputEmail));
         driver.findElement(inputEmail).sendKeys(email);
@@ -62,5 +69,19 @@ public class LoginPage {
     public void verifyLoginSuccess() {
         boolean checkMenu = driver.findElements(By.xpath("//span[normalize-space()='Dashboard']")).size() > 0;
         Assert.assertTrue(checkMenu, "Login failed or Dashboard not display.");
+    }
+
+    public void verifyLoginFailureWithInvalidEmailOrPassword() {
+        boolean isElementsErrorMessage = driver.findElements(errorMessageInvalid).size() > 0;
+        Assert.assertTrue(isElementsErrorMessage, "The error message for invalid email/password not display.");
+    }
+
+    public void verifyLoginFailureWithEmailNull() {
+        boolean isElementsErrorMessage = driver.findElements(errorMessageRequiredEmail).size() > 0;
+        Assert.assertTrue(isElementsErrorMessage, "The error message for Email required not display.");
+    }
+    public void verifyLoginFailureWithPasswordNull() {
+        boolean isElementsErrorMessage = driver.findElements(errorMessageRequiredPassword).size() > 0;
+        Assert.assertTrue(isElementsErrorMessage, "The error message for Password required not display.");
     }
 }
