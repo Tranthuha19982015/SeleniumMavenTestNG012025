@@ -21,7 +21,7 @@ public class BasePage {
 
     public void logoutSystem() {
         WebUI.clickElement(driver, iconProfile);
-        WebUI.clickElement(driver, By.xpath("//a[normalize-space()='Logout']"));
+        WebUI.clickElement(driver, optionLogout);
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPageDisplay();

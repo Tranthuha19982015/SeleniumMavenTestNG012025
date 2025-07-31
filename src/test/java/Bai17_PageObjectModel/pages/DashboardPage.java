@@ -20,10 +20,12 @@ public class DashboardPage extends BasePage {
         Assert.assertTrue(isDashboardDisplayed, "Dashboard page is not displayed");
     }
 
+    //Cách 1
     public String getTotalProjectsInProgress() {
         return driver.findElement(labelTotalProjectsInprogress).getText();
     }
 
+    //Cách 2
 //    public void verifyTotalProjectsInprogress() {
 //        String totalProjectsInProgressOnDashboard = driver.findElement(labelTotalProjectsInprogress).getText();
 //        System.out.println("Total Projects In Progress: " + totalProjectsInProgressOnDashboard);

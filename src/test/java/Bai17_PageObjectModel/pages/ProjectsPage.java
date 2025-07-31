@@ -40,7 +40,7 @@ public class ProjectsPage extends BasePage {
 
     //Ham tinh toan tong so du lieu trong trang Projects
     public int getTotalProjects() {
-        int totalProjects = Integer.parseInt(getTotalNotStarted())+
+        int totalProjects = Integer.parseInt(getTotalNotStarted()) +
                 Integer.parseInt(getTotalInProgress()) +
                 Integer.parseInt(getTotalOnHold()) +
                 Integer.parseInt(getTotalCancelled()) +
