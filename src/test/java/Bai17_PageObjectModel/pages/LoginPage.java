@@ -1,5 +1,6 @@
 package Bai17_PageObjectModel.pages;
 
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,7 +10,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
     //Khai báo driver trong từng trang
     private WebDriver driver;
@@ -19,6 +20,7 @@ public class LoginPage {
 
     //Khai báo hàm xây dựng cho từng trang
     public LoginPage(WebDriver driver) {
+        super(driver);
         this.driver = driver; //Từ khóa this phân biệt 2 biến cùng tên trong và ngoài
     }
 
@@ -45,15 +47,16 @@ public class LoginPage {
     }
 
     private void setEmail(String email) {
-        driver.findElement(inputEmail).sendKeys(email);
+        WebUI.setText(driver, inputEmail, email);
     }
 
     private void setPassword(String password) {
-        driver.findElement(inputPassword).sendKeys(password);
+//        driver.findElement(inputPassword).sendKeys(password);
+        WebUI.setText(driver, inputPassword, password);
     }
 
     private void clickLoginButton() {
-        driver.findElement(buttonLogin).click();
+        WebUI.clickElement(driver, buttonLogin);
     }
 
     public void loginCRM(String email, String password) {
@@ -64,7 +67,7 @@ public class LoginPage {
     }
 
     public void verifyLoginSuccess() {
-        boolean isElementPresent = driver.findElements(By.xpath("//span[normalize-space()='Dashboard']")).size() > 0;
+        boolean isElementPresent = driver.findElements(menuDashboard).size() > 0;
         Assert.assertTrue(isElementPresent, "Login failed or Dashboard not displayed.");
     }
 
