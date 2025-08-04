@@ -1,4 +1,4 @@
-package Bai17_PageObjectModel.pages;
+package Bai19_PageNavigation.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.By;
@@ -53,11 +53,21 @@ public class LoginPage extends BasePage {
         WebUI.clickElement(driver, buttonLogin);
     }
 
-    public void loginCRM(String email, String password) {
+    public void loginCRM(String email, String password) { //Chỉ dùng nội bộ trang Login
         navigateToLoginAdminCRM();
         enterEmail(email);
         enterPassword(password);
         clickLoginButton();
+    }
+
+    public DashboardPage loginCRM() { //Dùng để liên kết trang
+        navigateToLoginAdminCRM();
+        enterEmail("admin@example.com");
+        enterPassword("123456");
+        clickLoginButton();
+        verifyLoginSuccess();
+
+        return new DashboardPage(driver); //Trả về đối tượng DashboardPage sau khi đăng nhập thành công
     }
 
     public void verifyLoginSuccess() {

@@ -1,6 +1,6 @@
-package Bai18_PageFatory.testcases;
+package Bai18_PageFactory.testcases;
 
-import Bai18_PageFatory.pages.LoginPage;
+import Bai18_PageFactory.pages.LoginPage;
 import common.BaseTest;
 import org.testng.annotations.Test;
 

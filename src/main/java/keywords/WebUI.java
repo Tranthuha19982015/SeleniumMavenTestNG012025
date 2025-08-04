@@ -26,8 +26,8 @@ public class WebUI {
 
     public static void clickElement(WebDriver driver, By by) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        wait.until(ExpectedConditions.elementToBeClickable(by));
-        driver.findElement(by).click();
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
+        element.click();
     }
 
     public static void clickElement(WebDriver driver, WebElement element) {
@@ -39,14 +39,12 @@ public class WebUI {
 
     public static void clickElement(WebDriver driver, By by, int seconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
-        wait.until(ExpectedConditions.elementToBeClickable(by));
-        driver.findElement(by).click();
+        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 
     public static void setText(WebDriver driver, By by, String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        driver.findElement(by).sendKeys(text);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(text);
     }
 
     public static void setText(WebDriver driver, WebElement element, String text) {

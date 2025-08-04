@@ -1,4 +1,4 @@
-package Bai18_PageFatory.testcases;
+package Bai18_PageFactory.testcases;
 
 import common.BaseTest;
 
