@@ -1,4 +1,4 @@
-package Bai19_PageNavigation.pages;
+package Bai20_Practise_POM_CRM.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.By;
@@ -32,8 +32,9 @@ public class BasePage {
         WebUI.clickElement(driver, menuDashboard);
     }
 
-    public void clickMenuCustomers() {
+    public CustomersPage clickMenuCustomers() {
         WebUI.clickElement(driver, menuCustomers);
+        return new CustomersPage(driver);
     }
 
     public ProjectsPage clickMenuProjects() {

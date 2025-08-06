@@ -1,9 +1,6 @@
 package keywords;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,6 +8,14 @@ import java.time.Duration;
 
 public class WebUI {
     public static int WAIT_TIMEOUT = 10;
+
+    public static void sleep(double second) {
+        try {
+            Thread.sleep((long) (1000 * second));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void highlightElement(WebDriver driver, WebElement element) {
         // Highlight the element using JavaScriptExecutor
@@ -40,6 +45,30 @@ public class WebUI {
     public static void clickElement(WebDriver driver, By by, int seconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
+    }
+
+    public static void setKey(WebDriver driver, By by, Keys key) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
+        element.sendKeys(key);
+    }
+
+    public static String getTextElement(WebDriver driver, By by) {
+        System.out.println("Get text of element" + by);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        String textElement = element.getText();
+        System.out.println("===> Text: " + textElement);
+        return textElement;
+    }
+
+    public static String getAttributeElement(WebDriver driver, By by, String attribute) {
+        System.out.println("Get attribute of element" + by);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        String attributeElement = element.getAttribute(attribute);
+        System.out.println("===> Attribute: " + attributeElement);
+        return attributeElement;
     }
 
     public static void setText(WebDriver driver, By by, String text) {
