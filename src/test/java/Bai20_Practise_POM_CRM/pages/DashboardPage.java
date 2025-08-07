@@ -1,5 +1,6 @@
 package Bai20_Practise_POM_CRM.pages;
 
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -27,7 +28,8 @@ public class DashboardPage extends BasePage {
     }
 
     public String getTotalConvertedLeads() {
-        return driver.findElement(labelTotalConvertedLeads).getText();
+        String textConvertedLeads = WebUI.getTextElement(driver,labelTotalConvertedLeads);
+        return textConvertedLeads;
     }
 
     //Cách 2

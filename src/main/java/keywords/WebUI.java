@@ -33,6 +33,7 @@ public class WebUI {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
         element.click();
+        System.out.println("Click to element: " + by);
     }
 
     public static void clickElement(WebDriver driver, WebElement element) {
@@ -45,6 +46,7 @@ public class WebUI {
     public static void clickElement(WebDriver driver, By by, int seconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
+        System.out.println("Click to element: " + by);
     }
 
     public static void setKey(WebDriver driver, By by, Keys key) {
@@ -74,6 +76,7 @@ public class WebUI {
     public static void setText(WebDriver driver, By by, String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(text);
+        System.out.println("Set text for element: " + by);
     }
 
     public static void setText(WebDriver driver, WebElement element, String text) {
