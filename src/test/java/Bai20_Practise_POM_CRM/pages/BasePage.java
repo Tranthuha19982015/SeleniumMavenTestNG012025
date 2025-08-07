@@ -15,6 +15,7 @@ public class BasePage {
     public By menuDashboard = By.xpath("//span[normalize-space()='Dashboard' and @class='menu-text']");
     public By menuCustomers = By.xpath("//span[normalize-space()='Customers' and @class='menu-text']");
     public By menuProjects = By.xpath("//span[normalize-space()='Projects' and @class='menu-text']");
+    public By menuLeads = By.xpath("//span[normalize-space()='Leads' and @class='menu-text']");
 
     public By iconProfile = By.xpath("//li[@class='icon header-user-profile']");
     public By optionLogout = By.xpath("//a[text()='Logout']");
@@ -40,5 +41,10 @@ public class BasePage {
     public ProjectsPage clickMenuProjects() {
         WebUI.clickElement(driver, menuProjects);
         return new ProjectsPage(driver); // Trả về đối tượng ProjectsPage sau khi click vào menu Projects
+    }
+
+    public LeadsPage clickMenuLeads() {
+        WebUI.clickElement(driver, menuLeads);
+        return new LeadsPage(driver);
     }
 }

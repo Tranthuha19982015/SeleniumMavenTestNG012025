@@ -1,6 +1,7 @@
 package Bai20_Practise_POM_CRM.testcases;
 
 import Bai20_Practise_POM_CRM.pages.DashboardPage;
+import Bai20_Practise_POM_CRM.pages.LeadsPage;
 import Bai20_Practise_POM_CRM.pages.LoginPage;
 import Bai20_Practise_POM_CRM.pages.ProjectsPage;
 import common.BaseTest;
@@ -11,6 +12,7 @@ public class DashboardTest extends BaseTest {
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
     private ProjectsPage projectsPage;
+    private LeadsPage leadsPage;
 
     @Test
     public void testLabelProjectsInProgressOnDashboard() {
@@ -34,5 +36,20 @@ public class DashboardTest extends BaseTest {
         Assert.assertEquals(totalProjectsInProgressOnDashboard, projectsPage.getTotalInProgress() + " / " + projectsPage.getTotalProjects(),
                 "Total Projects In Progress on Dashboard does not match with Projects Page");
 //        dashboardPage.verifyTotalProjectsInprogress(); //cách 2
+    }
+
+    @Test
+    public void testLabelConvertedLeadsOnDashboard() {
+        loginPage = new LoginPage(driver);
+        dashboardPage = loginPage.loginCRM();
+        dashboardPage.verifyDashboardPageDisplay();
+
+        String totalConvertedLeadsOnDashboard = dashboardPage.getTotalConvertedLeads();
+        System.out.println("Total Converted Leads: " + totalConvertedLeadsOnDashboard);
+
+        leadsPage = dashboardPage.clickMenuLeads();
+        leadsPage.clickIconLeadsSummary();
+
+        Assert.assertEquals(totalConvertedLeadsOnDashboard, leadsPage.getTotalStatusCustomerLeads() + " / " + leadsPage.getTotalLeads(), "Total Converted Leads on Dashboard does not match with Leads Page");
     }
 }

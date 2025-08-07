@@ -14,6 +14,7 @@ public class DashboardPage extends BasePage {
 
     private By buttonDashboardOptions = By.xpath("//div[@class='screen-options-btn']");
     private By labelTotalProjectsInprogress = By.xpath("(//span[normalize-space()='Projects In Progress']/parent::div)/following-sibling::span");
+    private By labelTotalConvertedLeads = By.xpath("((//span[normalize-space()='Converted Leads'])/parent::div)/following-sibling::span");
 
     public void verifyDashboardPageDisplay() {
         boolean isDashboardDisplayed = driver.findElements(buttonDashboardOptions).size() > 0;
@@ -23,6 +24,10 @@ public class DashboardPage extends BasePage {
     //Cách 1
     public String getTotalProjectsInProgress() {
         return driver.findElement(labelTotalProjectsInprogress).getText();
+    }
+
+    public String getTotalConvertedLeads() {
+        return driver.findElement(labelTotalConvertedLeads).getText();
     }
 
     //Cách 2
