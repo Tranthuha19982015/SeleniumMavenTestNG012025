@@ -140,7 +140,6 @@ public class LeadsPage extends BasePage {
         WebUI.clickElement(driver, inputSearchLead);
         WebUI.setText(driver, inputSearchLead, name);
         WebUI.setKey(driver, inputSearchLead, Keys.ENTER);
-        WebUI.sleep(1);
         Assert.assertEquals(WebUI.getTextElement(driver, firstRowItemLead), name, "Không đúng Lead đã thêm mới.");
     }
 
