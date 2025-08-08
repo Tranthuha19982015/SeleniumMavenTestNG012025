@@ -58,6 +58,7 @@ public class WebUI {
     public static String getTextElement(WebDriver driver, By by) {
         System.out.println("Get text of element" + by);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+//        wait.until(ExpectedConditions.textToBePresentInElementLocated(by, text));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         String textElement = element.getText();
         System.out.println("===> Text: " + textElement);

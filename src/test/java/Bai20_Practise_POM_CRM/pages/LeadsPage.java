@@ -131,7 +131,7 @@ public class LeadsPage extends BasePage {
 
     public void clickButtonCloseAfterAdd() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(buttonCloseWindowAfterAdd));
+        js.executeScript("arguments[0].scrollIntoView(true);", (driver.findElement(buttonCloseWindowAfterAdd)));
         WebUI.sleep(1);
         WebUI.clickElement(driver, buttonCloseWindowAfterAdd);
     }
