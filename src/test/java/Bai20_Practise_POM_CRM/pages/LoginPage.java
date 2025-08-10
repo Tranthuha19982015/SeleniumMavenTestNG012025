@@ -33,8 +33,8 @@ public class LoginPage extends BasePage {
     //Khai báo các hàm xử lý nội bộ trong nội bộ trang Login
 
     public void verifyLoginPageDisplay() {
-        boolean isElementPresent = driver.findElements(headerLoginPage).size() > 0;
-        Assert.assertTrue(isElementPresent, "Login page is not displayed.");
+//        boolean isElementPresent = driver.findElements(headerLoginPage).size() > 0;
+        Assert.assertTrue(WebUI.waitForElementVisible(driver,headerLoginPage), "Login page is not displayed.");
     }
 
     public void navigateToLoginAdminCRM() {
@@ -71,22 +71,22 @@ public class LoginPage extends BasePage {
     }
 
     public void verifyLoginSuccess() {
-        boolean isElementPresent = driver.findElements(menuDashboard).size() > 0;
-        Assert.assertTrue(isElementPresent, "Login failed or Dashboard not displayed.");
+//        boolean isElementPresent = driver.findElements(menuDashboard).size() > 0;
+        Assert.assertTrue(WebUI.waitForElementVisible(driver,menuDashboard), "Login failed or Dashboard not displayed.");
     }
 
     public void verifyLoginFailureWithInvalidEmailOrPassword() {
-        boolean isElementErrorMessage = driver.findElements(errorMessageInvalid).size() > 0;
-        Assert.assertTrue(isElementErrorMessage, "Error message for invalid email not displayed.");
+//        boolean isElementErrorMessage = driver.findElements(errorMessageInvalid).size() > 0;
+        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageInvalid), "Error message for invalid email not displayed.");
     }
 
     public void verifyLoginFailureWithEmailNull() {
-        boolean isElementErrorMessage = driver.findElements(errorMessageRequiredEmail).size() > 0;
-        Assert.assertTrue(isElementErrorMessage, "Error message for required email not displayed.");
+//        boolean isElementErrorMessage = driver.findElements(errorMessageRequiredEmail).size() > 0;
+        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageRequiredEmail), "Error message for required email not displayed.");
     }
 
     public void verifyLoginFailureWithPasswordNull() {
-        boolean isElementErrorMessage = driver.findElements(errorMessageRequiredPassword).size() > 0;
-        Assert.assertTrue(isElementErrorMessage, "Error message for required password not displayed.");
+//        boolean isElementErrorMessage = driver.findElements(errorMessageRequiredPassword).size() > 0;
+        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageRequiredPassword), "Error message for required password not displayed.");
     }
 }

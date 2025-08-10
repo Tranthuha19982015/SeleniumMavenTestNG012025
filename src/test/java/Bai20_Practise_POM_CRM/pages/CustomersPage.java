@@ -22,6 +22,7 @@ public class CustomersPage extends BasePage {
     private By headerCustomerPage = By.xpath("//span[normalize-space()='Customers Summary']");
     private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
     private By firstRowItemCustomer = By.xpath("//table[@id='clients']//tbody/tr[1]/td[3]/a");
+    private By labelTotalCustomers = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
 
     private By inputCompany = By.xpath("//input[@id='company']");
     private By inputVatNumber = By.xpath("//input[@id='vat']");
@@ -67,8 +68,8 @@ public class CustomersPage extends BasePage {
     }
 
     public void selectXpathLanguage(String language) {
-        WebUI.clickElement(driver, dropdownDefaultLanguage);
-        WebUI.clickElement(driver, By.xpath("//span[normalize-space()='" + language + "']"));
+        String xpathLanguage = "//span[normalize-space()='" + language + "']";
+        WebUI.clickElement(driver, By.xpath(xpathLanguage));
     }
 
     public void submitDataForAddNewCustomer(String customerName) {
@@ -88,6 +89,7 @@ public class CustomersPage extends BasePage {
         WebUI.setText(driver, inputSearchCurrency, "USD");
         WebUI.setKey(driver, inputSearchCurrency, Keys.ENTER);
 
+        WebUI.clickElement(driver, dropdownDefaultLanguage);
         selectXpathLanguage("Vietnamese");
 
         WebUI.setText(driver, inputAddress, "Minh Khai, Bắc Từ Liêm");

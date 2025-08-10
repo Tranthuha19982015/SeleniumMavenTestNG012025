@@ -25,4 +25,15 @@ public class LeadsTest extends BaseTest {
         leadsPage.clickButtonCloseAfterAdd();
         leadsPage.verifyAddNewLeadSuccess(name);
     }
+
+    @Test
+    public void testStatusOnTableWithLeadsSummaryAfterAddSuccess(){
+        loginPage = new LoginPage(driver);
+        dashboardPage = loginPage.loginCRM();
+        leadsPage = dashboardPage.clickMenuLeads();
+
+        String name = "Htest " + System.currentTimeMillis();
+        leadsPage.verifyNavigateToLeadPage();
+        leadsPage.verifyAfterAddingNewLead(name);
+    }
 }

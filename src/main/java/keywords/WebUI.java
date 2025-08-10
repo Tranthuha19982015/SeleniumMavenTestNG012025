@@ -56,7 +56,7 @@ public class WebUI {
     }
 
     public static String getTextElement(WebDriver driver, By by) {
-        System.out.println("Get text of element" + by);
+        System.out.println("Get text of element: " + by);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
 //        wait.until(ExpectedConditions.textToBePresentInElementLocated(by, text));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -76,7 +76,8 @@ public class WebUI {
 
     public static void setText(WebDriver driver, By by, String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(text);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        element.sendKeys(text);
         System.out.println("Set text for element: " + by);
     }
 
@@ -85,5 +86,16 @@ public class WebUI {
         wait.until(ExpectedConditions.visibilityOf(element));
         highlightElement(driver, element);
         element.sendKeys(text);
+    }
+
+    public static boolean waitForElementVisible(WebDriver driver, By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            return true;
+        } catch (TimeoutException e) {
+            System.out.println("Element not visible: " + by);
+            return false;
+        }
     }
 }
