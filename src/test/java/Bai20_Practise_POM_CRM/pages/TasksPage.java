@@ -106,14 +106,14 @@ public class TasksPage extends BasePage {
         Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
     }
 
-    public void checkChooseRepeatEvery(String typeRepeat) {
+    public void checkChooseRepeatEvery() {
         for (int i = 0; i < WebUI.getListElement(driver, listRepeatEvery).size(); i++)
-            if (!typeRepeat.equals("") && !typeRepeat.equals("Custom")) {
+            if (WebUI.getListElement(driver, listRepeatEvery).get(i).equals("") && WebUI.getListElement(driver, listRepeatEvery).get(i).equals("Custom")) {
                 WebUI.clickElement(driver, checkboxInfinity);
                 WebUI.clearTextElement(driver, inputTotalCycles);
                 WebUI.setText(driver, inputTotalCycles, "8");
                 break;
-            } else if (typeRepeat.equals("Custom")) {
+            } else if (WebUI.getListElement(driver, listRepeatEvery).get(i).equals("Custom")) {
                 WebUI.clearTextElement(driver, inputNumberCustomRepeatEvery);
                 WebUI.setText(driver, inputNumberCustomRepeatEvery, "3");
                 WebUI.clickElement(driver, dropdownTypeCustomRepeatEvery);
@@ -135,7 +135,7 @@ public class TasksPage extends BasePage {
         WebUI.clickElement(driver, selectPriority("High"));
         WebUI.clickElement(driver, dropdownRepeatEvery);
         WebUI.clickElement(driver, selectRepeatEvery("6 Months"));
-        checkChooseRepeatEvery("6 Months");
+        checkChooseRepeatEvery();
 
         WebUI.clickElement(driver, dropdownRelatedTo);
         WebUI.clickElement(driver, selectRelatedTo("Lead"));
