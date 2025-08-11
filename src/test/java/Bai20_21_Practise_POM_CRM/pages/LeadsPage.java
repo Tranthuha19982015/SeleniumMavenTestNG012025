@@ -1,4 +1,4 @@
-package Bai20_Practise_POM_CRM.pages;
+package Bai20_21_Practise_POM_CRM.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.*;

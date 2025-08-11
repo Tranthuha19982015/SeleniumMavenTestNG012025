@@ -33,6 +33,7 @@ public class WebUI {
     public static void clickElement(WebDriver driver, By by) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
+        highlightElement(driver, element);
         element.click();
         System.out.println("Click to element: " + by);
     }
@@ -116,7 +117,7 @@ public class WebUI {
     }
 
     public static void switchToDefaultContent(WebDriver driver) {
-        driver.switchTo().parentFrame();
+        driver.switchTo().defaultContent();
         System.out.println("Switched back to default content");
     }
 

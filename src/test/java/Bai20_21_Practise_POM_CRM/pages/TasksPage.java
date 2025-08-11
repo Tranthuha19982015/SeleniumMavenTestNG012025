@@ -1,4 +1,4 @@
-package Bai20_Practise_POM_CRM.pages;
+package Bai20_21_Practise_POM_CRM.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.*;
@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.List;
 
 public class TasksPage extends BasePage {
     private WebDriver driver;
@@ -79,8 +78,8 @@ public class TasksPage extends BasePage {
     private By inputTaskDescription = By.xpath("//textarea[@id='description']");
     private By iframeTaskDescription = By.xpath("//iframe[@id='description_ifr']");
     private By inputOnFrame = By.xpath("//body[@id='tinymce']/descendant::p");
-    private By buttonClose = By.xpath("//div[@id='_task_modal']//div[@class='modal-footer']/button[normalize-space()='Close']");
-    private By buttonSave = By.xpath("//div[@id='_task_modal']//div[@class='modal-footer']/button[normalize-space()='Save']");
+    private By buttonClose = By.xpath("//button[normalize-space()='Close']");
+    private By buttonSave = By.xpath("//button[normalize-space()='Save']");
 
     private boolean checkExist(By by) {
         try {
@@ -106,23 +105,20 @@ public class TasksPage extends BasePage {
         Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
     }
 
-    public void checkChooseRepeatEvery() {
-        for (int i = 0; i < WebUI.getListElement(driver, listRepeatEvery).size(); i++)
-            if (WebUI.getListElement(driver, listRepeatEvery).get(i).equals("") && WebUI.getListElement(driver, listRepeatEvery).get(i).equals("Custom")) {
-                WebUI.clickElement(driver, checkboxInfinity);
-                WebUI.clearTextElement(driver, inputTotalCycles);
-                WebUI.setText(driver, inputTotalCycles, "8");
-                break;
-            } else if (WebUI.getListElement(driver, listRepeatEvery).get(i).equals("Custom")) {
-                WebUI.clearTextElement(driver, inputNumberCustomRepeatEvery);
-                WebUI.setText(driver, inputNumberCustomRepeatEvery, "3");
-                WebUI.clickElement(driver, dropdownTypeCustomRepeatEvery);
-                WebUI.clickElement(driver, selectTypeCustomRepeatEvery("Week"));
-                break;
-            }
+    public void checkChooseRepeatEvery(String typeRepeat) {
+        if (!typeRepeat.equals("") || !typeRepeat.equals("Custom")) {
+            WebUI.clickElement(driver, checkboxInfinity);
+            WebUI.clearTextElement(driver, inputTotalCycles);
+            WebUI.setText(driver, inputTotalCycles, "8");
+        } else if (typeRepeat.equals("Custom")) {
+            WebUI.clearTextElement(driver, inputNumberCustomRepeatEvery);
+            WebUI.setText(driver, inputNumberCustomRepeatEvery, "3");
+            WebUI.clickElement(driver, dropdownTypeCustomRepeatEvery);
+            WebUI.clickElement(driver, selectTypeCustomRepeatEvery("Week"));
+        }
     }
 
-    public void submitDataAddNewTask(String subject) {
+    public void fillDataAddNewTask(String subject) {
         WebUI.clickElement(driver, checkboxPublic);
         WebUI.setText(driver, inputSubject, subject);
         WebUI.clearTextElement(driver, inputHourlyRate);
@@ -134,8 +130,9 @@ public class TasksPage extends BasePage {
         WebUI.clickElement(driver, dropdownPriority);
         WebUI.clickElement(driver, selectPriority("High"));
         WebUI.clickElement(driver, dropdownRepeatEvery);
-        WebUI.clickElement(driver, selectRepeatEvery("6 Months"));
-        checkChooseRepeatEvery();
+        String typeRepeatEvery = "6 Months";
+        WebUI.clickElement(driver, selectRepeatEvery(typeRepeatEvery));
+        checkChooseRepeatEvery(typeRepeatEvery);
 
         WebUI.clickElement(driver, dropdownRelatedTo);
         WebUI.clickElement(driver, selectRelatedTo("Lead"));
@@ -152,11 +149,14 @@ public class TasksPage extends BasePage {
         WebUI.setText(driver, inputTags, "htest");
         WebUI.setKey(driver, inputTags, Keys.ENTER);
         WebUI.clickElement(driver, labelTags);
-        WebUI.clickElement(driver, inputTaskDescription);
-        WebUI.switchToFrameWhenAvailable(driver, iframeTaskDescription);
-        WebUI.setText(driver, inputOnFrame, "htest iframe");
-        WebUI.switchToDefaultContent(driver);
-        WebUI.clickElement(driver, buttonSave);
+//        WebUI.clickElement(driver, inputTaskDescription);
+//        WebUI.switchToFrameWhenAvailable(driver, iframeTaskDescription);
+//        WebUI.setText(driver, inputOnFrame, "htest iframe");
+//        WebUI.switchToDefaultContent(driver);
+        WebUI.sleep(1);
+    }
+    public void clickButtonSave(){
+        WebUI.clickElement(driver,buttonSave);
     }
 
     public void verifyAddNewTaskSuccess() {

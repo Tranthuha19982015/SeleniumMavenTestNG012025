@@ -1,4 +1,4 @@
-package Bai20_Practise_POM_CRM.pages;
+package Bai20_21_Practise_POM_CRM.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.*;
@@ -17,13 +17,14 @@ public class CustomersPage extends BasePage {
         this.driver = driver;
     }
 
-    //Elements
+    //Locator for Customer List
     private By buttonNewCustomer = By.xpath("//a[normalize-space()='New Customer']");
     private By headerCustomerPage = By.xpath("//span[normalize-space()='Customers Summary']");
     private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
     private By firstRowItemCustomer = By.xpath("//table[@id='clients']//tbody/tr[1]/td[3]/a");
     private By labelTotalCustomers = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
 
+    //Locator for Add New Customer
     private By inputCompany = By.xpath("//input[@id='company']");
     private By inputVatNumber = By.xpath("//input[@id='vat']");
     private By inputPhone = By.xpath("//input[@id='phonenumber']");
@@ -42,7 +43,7 @@ public class CustomersPage extends BasePage {
     private By dropdownCountry = By.xpath("//button[contains(@data-id,'country')]");
     private By inputSearchCountry = By.xpath("//button[contains(@data-id,'country')]/following-sibling::div//input[@type='search']");
     private By buttonSave = By.xpath("//div[@id='profile-save-section']//button[normalize-space()='Save']");
-    private By alertMessage = By.xpath("//span[@class='alert-title']");
+    private By alertMessage = By.xpath("//div[@id='alert_float_1']//span[@class='alert-title']");
 
     private By headerCustomerDetailPage = By.xpath("//h4[normalize-space()='Profile']");
 
@@ -77,17 +78,18 @@ public class CustomersPage extends BasePage {
         WebUI.setText(driver, inputPhone, "0965898635");
         WebUI.setText(driver, inputWebsite, "htest.com.vn");
 
+        // select Groups
         WebUI.clickElement(driver, dropdownGroups);
-//        WebUI.sleep(1);
         WebUI.setText(driver, inputSearchGroups, "hatran");
         WebUI.setKey(driver, inputSearchGroups, Keys.ENTER);
         WebUI.clickElement(driver, dropdownGroups);
 
+        //select Currency
         WebUI.clickElement(driver, dropdownCurrency);
-//        WebUI.sleep(1);
         WebUI.setText(driver, inputSearchCurrency, "USD");
         WebUI.setKey(driver, inputSearchCurrency, Keys.ENTER);
 
+        //select Default Language
         WebUI.clickElement(driver, dropdownDefaultLanguage);
         selectXpathLanguage("Vietnamese");
 
@@ -96,6 +98,7 @@ public class CustomersPage extends BasePage {
         WebUI.setText(driver, inputState, "123545");
         WebUI.setText(driver, inputZipCode, "0001212");
 
+        //select Country
         WebUI.clickElement(driver, dropdownCountry);
         WebUI.setText(driver, inputSearchCountry, "Vietnam");
         WebUI.setKey(driver, inputSearchCountry, Keys.ENTER);

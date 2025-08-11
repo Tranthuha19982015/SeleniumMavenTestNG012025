@@ -1,4 +1,4 @@
-package Bai20_Practise_POM_CRM.pages;
+package Bai20_21_Practise_POM_CRM.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
