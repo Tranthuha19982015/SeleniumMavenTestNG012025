@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class WebUI {
     public static int WAIT_TIMEOUT = 10;
@@ -56,22 +57,27 @@ public class WebUI {
     }
 
     public static String getTextElement(WebDriver driver, By by) {
-        System.out.println("Get text of element: " + by);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-//        wait.until(ExpectedConditions.textToBePresentInElementLocated(by, text));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        System.out.println("Get text of element: " + by);
         String textElement = element.getText();
         System.out.println("===> Text: " + textElement);
         return textElement;
     }
 
     public static String getAttributeElement(WebDriver driver, By by, String attribute) {
-        System.out.println("Get attribute of element" + by);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        System.out.println("Get attribute of element" + by);
         String attributeElement = element.getAttribute(attribute);
         System.out.println("===> Attribute: " + attributeElement);
         return attributeElement;
+    }
+
+    public static List<WebElement> getListElement(WebDriver driver, By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        List<WebElement> elements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        return elements;
     }
 
     public static void setText(WebDriver driver, By by, String text) {
@@ -97,5 +103,27 @@ public class WebUI {
             System.out.println("Element not visible: " + by);
             return false;
         }
+    }
+
+    public static void switchToFrameWhenAvailable(WebDriver driver, By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+            System.out.println("Switched to iframe: " + by);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Iframe không xuất hiện sau: " + WAIT_TIMEOUT + " giây");
+        }
+    }
+
+    public static void switchToDefaultContent(WebDriver driver) {
+        driver.switchTo().parentFrame();
+        System.out.println("Switched back to default content");
+    }
+
+    public static void clearTextElement(WebDriver driver, By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        element.clear();
+        System.out.println("Clear text default of element: " + by);
     }
 }

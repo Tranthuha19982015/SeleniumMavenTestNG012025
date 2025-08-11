@@ -168,13 +168,13 @@ public class LeadsPage extends BasePage {
 
     public void verifyTotalStatusOnTableWithLeadsSummary() {
         clickIconLeadsSummary();
-        System.out.println("Số lượng Status Active dưới Table bằng trên Lead Summary = " + getTotalStatusActiveLeads());
+        System.out.println("Số lượng Status Active = " + getTotalStatusActiveLeads());
         int totalActive = getTotalStatusActiveLeads();
         int countActive = countActiveStatusOnTable();
         Assert.assertEquals(totalActive, countActive, "Số lượng Status Active dưới Table không bằng trên Lead Summary");
 
         clickIconLeadsSummary();
-        System.out.println("Số lượng Status Customer Status Customer dưới Table bằng trên Lead Summary = " + getTotalStatusCustomerLeads());
+        System.out.println("Số lượng Status Customer = " + getTotalStatusCustomerLeads());
         int totalCustomer = getTotalStatusCustomerLeads();
         int countCustomer = countCustomerStatusOnTable();
         Assert.assertEquals(totalCustomer, countCustomer, "Số lượng Status Customer dưới Table không bằng trên Lead Summary");

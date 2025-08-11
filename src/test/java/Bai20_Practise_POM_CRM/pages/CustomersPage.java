@@ -51,7 +51,6 @@ public class CustomersPage extends BasePage {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-//            driver.findElement(by).isDisplayed();
             return true;
         } catch (NoSuchElementException e) {
             return false;

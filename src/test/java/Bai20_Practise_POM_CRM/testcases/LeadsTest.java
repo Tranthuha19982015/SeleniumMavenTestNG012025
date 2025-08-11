@@ -17,7 +17,7 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
-        String name = "Htest " + System.currentTimeMillis();
+        String name = "Leads Htest " + System.currentTimeMillis();
         leadsPage.verifyNavigateToLeadPage();
         leadsPage.clickButtonNewLead();
         leadsPage.verifyOpenWindowAddNewLead();
@@ -32,7 +32,7 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
-        String name = "Htest " + System.currentTimeMillis();
+        String name = "Leads Htest " + System.currentTimeMillis();
         leadsPage.verifyNavigateToLeadPage();
         leadsPage.verifyAfterAddingNewLead(name);
     }
