@@ -9,7 +9,7 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class LeadsPage extends BasePage {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public LeadsPage(WebDriver driver) {
         super(driver);
@@ -92,7 +92,7 @@ public class LeadsPage extends BasePage {
         Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewLeadWindow), "Add new lead", "The lead summary window not match.");
     }
 
-    public void submitDataAddNewLead(String name) {
+    public void fillDataAddNewLead(String name) {
         WebUI.clickElement(driver, dropdownStatus);
         WebUI.setText(driver, inputSearchStatus, "Active");
         WebUI.setKey(driver, inputSearchStatus, Keys.ENTER);
@@ -128,7 +128,9 @@ public class LeadsPage extends BasePage {
         WebUI.setText(driver, inputCompany, "NDJSC");
         WebUI.setText(driver, inputDescription, "Test add lead");
         WebUI.clickElement(driver, checkboxPublic);
+    }
 
+    public void clickSaveButton(){
         WebUI.clickElement(driver, buttonSave);
     }
 
@@ -186,7 +188,7 @@ public class LeadsPage extends BasePage {
         int beforeCustomerStatus = getTotalStatusCustomerLeads();
 
         clickButtonNewLead();
-        submitDataAddNewLead(name);
+        fillDataAddNewLead(name);
         clickButtonCloseAfterAdd();
         verifyAddNewLeadSuccess(name);
         String statusOfRowAddNew = WebUI.getTextElement(driver, firstRowItemLeadStatus);

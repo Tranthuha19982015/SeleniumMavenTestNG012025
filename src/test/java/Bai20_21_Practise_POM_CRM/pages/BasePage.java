@@ -19,6 +19,7 @@ public class BasePage {
     public By menuTasks = By.xpath("//span[normalize-space()='Tasks' and @class='menu-text']");
     public By iconProfile = By.xpath("//li[@class='icon header-user-profile']");
     public By optionLogout = By.xpath("//a[text()='Logout']");
+    public By alertMessage = By.xpath("//div[@id='alert_float_1']/span[@class='alert-title']");
 
     public void logoutSystem() {
         WebUI.clickElement(driver, iconProfile);

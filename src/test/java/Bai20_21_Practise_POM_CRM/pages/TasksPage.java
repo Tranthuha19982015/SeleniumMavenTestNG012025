@@ -2,6 +2,7 @@ package Bai20_21_Practise_POM_CRM.pages;
 
 import keywords.WebUI;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -10,6 +11,9 @@ import java.time.Duration;
 
 public class TasksPage extends BasePage {
     private WebDriver driver;
+    private CustomersPage customersPage;
+    private ProjectsPage projectsPage;
+    private LeadsPage leadsPage;
 
     public TasksPage(WebDriver driver) {
         super(driver);
@@ -69,6 +73,14 @@ public class TasksPage extends BasePage {
         return By.xpath(xpathRelatedTo);
     }
 
+    private By dropdownTypeRelatedTo = By.xpath("//button[@data-id='rel_id']");
+    private By inputSearchTypeRelatedTo = By.xpath("//button[@data-id='rel_id']/following-sibling::div/descendant::input[@type='search']");
+
+    private By selectValueSearchTypeRelatedTo(String value) {
+        String valueSearch = "(//button[@data-id='rel_id']/following-sibling::div)/descendant::span[contains(normalize-space(),'" + value + "')]";
+        return By.xpath(valueSearch);
+    }
+
     private By dropdownAssignees = By.xpath("//button[@data-id='assignees']");
     private By inputSearchAssignees = By.xpath("//button[@data-id='assignees']/following-sibling::div/descendant::input[@type='search']");
     private By dropdownFollowers = By.xpath("//button[@data-id='followers[]']");
@@ -105,8 +117,8 @@ public class TasksPage extends BasePage {
         Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
     }
 
-    public void checkChooseRepeatEvery(String typeRepeat) {
-        if (!typeRepeat.equals("") || !typeRepeat.equals("Custom")) {
+    public void chooseOptionRepeatEvery(String typeRepeat) {
+        if (!typeRepeat.equals("") && !typeRepeat.equals("Custom")) {
             WebUI.clickElement(driver, checkboxInfinity);
             WebUI.clearTextElement(driver, inputTotalCycles);
             WebUI.setText(driver, inputTotalCycles, "8");
@@ -118,48 +130,75 @@ public class TasksPage extends BasePage {
         }
     }
 
-    public void fillDataAddNewTask(String subject) {
+    public void fillDataAddNewTask(String subject, String valueRelatedTo) {
+        Actions actions = new Actions(driver);
         WebUI.clickElement(driver, checkboxPublic);
         WebUI.setText(driver, inputSubject, subject);
         WebUI.clearTextElement(driver, inputHourlyRate);
         WebUI.setText(driver, inputHourlyRate, "3");
-        WebUI.setText(driver, datepickerStartDate, "10-08-2025");
+
+        //select Start Date
+        WebUI.clearTextElement(driver, datepickerStartDate);
+        WebUI.setText(driver, datepickerStartDate, "11-08-2025");
         WebUI.clickElement(driver, datepickerStartDate);
+
+        //select Due Date
+        WebUI.clearTextElement(driver, datepickerDueDate);
         WebUI.setText(driver, datepickerDueDate, "12-08-2025");
         WebUI.clickElement(driver, datepickerDueDate);
+
+        //select Priority
         WebUI.clickElement(driver, dropdownPriority);
         WebUI.clickElement(driver, selectPriority("High"));
+
+        //select Repeat Every
         WebUI.clickElement(driver, dropdownRepeatEvery);
-        String typeRepeatEvery = "6 Months";
+        String typeRepeatEvery = "Custom";
         WebUI.clickElement(driver, selectRepeatEvery(typeRepeatEvery));
-        checkChooseRepeatEvery(typeRepeatEvery);
+        chooseOptionRepeatEvery(typeRepeatEvery);
 
+        //select Related To
         WebUI.clickElement(driver, dropdownRelatedTo);
-        WebUI.clickElement(driver, selectRelatedTo("Lead"));
+        String optionRelatedTo = "Lead";
+        WebUI.clickElement(driver, selectRelatedTo(optionRelatedTo));
+        WebUI.clickElement(driver, dropdownTypeRelatedTo);
+        WebUI.setText(driver, inputSearchTypeRelatedTo, valueRelatedTo);
+        WebUI.sleep(1);
+        actions.moveToElement(driver.findElement(inputSearchTypeRelatedTo)).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
+        WebUI.waitForResultVisible(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
+        WebUI.clickElement(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
 
+        //select Assignees
         WebUI.clickElement(driver, dropdownAssignees);
         WebUI.setText(driver, inputSearchAssignees, "Anh Tester");
         WebUI.setKey(driver, inputSearchAssignees, Keys.ENTER);
         WebUI.clickElement(driver, dropdownAssignees);
 
+        //select Followers
         WebUI.clickElement(driver, dropdownFollowers);
         WebUI.setText(driver, inputSearchFollowers, "Anh Tester");
         WebUI.setKey(driver, inputSearchFollowers, Keys.ENTER);
         WebUI.clickElement(driver, dropdownFollowers);
+
+        //fill Tags
         WebUI.setText(driver, inputTags, "htest");
         WebUI.setKey(driver, inputTags, Keys.ENTER);
         WebUI.clickElement(driver, labelTags);
-//        WebUI.clickElement(driver, inputTaskDescription);
-//        WebUI.switchToFrameWhenAvailable(driver, iframeTaskDescription);
-//        WebUI.setText(driver, inputOnFrame, "htest iframe");
-//        WebUI.switchToDefaultContent(driver);
-        WebUI.sleep(1);
+
+        //fill iFrame Description
+        WebUI.clickElement(driver, inputTaskDescription);
+        WebUI.switchToFrameWhenAvailable(driver, iframeTaskDescription);
+        WebUI.setText(driver, inputOnFrame, "htest iframe");
+        WebUI.switchToDefaultContent(driver);
     }
-    public void clickButtonSave(){
-        WebUI.clickElement(driver,buttonSave);
+
+    public void clickButtonSave() {
+        WebUI.clickElement(driver, buttonSave);
     }
 
     public void verifyAddNewTaskSuccess() {
-
+        Assert.assertTrue(checkExist(alertMessage), "The alert message not display.");
+        String actualMessage = WebUI.getTextElement(driver, alertMessage);
+        Assert.assertEquals(actualMessage, "Task added successfully.", "The alert message add new tasks not match.");
     }
 }

@@ -9,8 +9,7 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class CustomersPage extends BasePage {
-
-    public WebDriver driver;
+    private WebDriver driver;
 
     public CustomersPage(WebDriver driver) {
         super(driver);
@@ -38,13 +37,18 @@ public class CustomersPage extends BasePage {
     private By dropdownCurrency = By.xpath("//button[contains(@data-id,'default_currency')]");
     private By inputSearchCurrency = By.xpath("//button[contains(@data-id,'default_currency')]/following-sibling::div//input[@type='search']");
     private By dropdownDefaultLanguage = By.xpath("//button[contains(@data-id,'default_language')]");
-    private By optionLanguage = By.xpath("//span[normalize-space()='Vietnamese']");
-    private By optionLanguageDynamic = By.xpath("(//span[normalize-space()='%s'])[%d]");
+
+    public By selectXpathLanguage(String language) {
+        String xpathLanguage = "//span[normalize-space()='" + language + "']";
+        System.out.println("Select language: " + language);
+        return By.xpath(xpathLanguage);
+    }
+
+    //    private By optionLanguageVietnamese = By.xpath("//span[normalize-space()='Vietnamese']");
+//    private String optionLanguageDynamic = "(//span[normalize-space()='%s'])[%d]";
     private By dropdownCountry = By.xpath("//button[contains(@data-id,'country')]");
     private By inputSearchCountry = By.xpath("//button[contains(@data-id,'country')]/following-sibling::div//input[@type='search']");
     private By buttonSave = By.xpath("//div[@id='profile-save-section']//button[normalize-space()='Save']");
-    private By alertMessage = By.xpath("//div[@id='alert_float_1']//span[@class='alert-title']");
-
     private By headerCustomerDetailPage = By.xpath("//h4[normalize-space()='Profile']");
 
     //Hàm xử lý cho trang Customer
@@ -67,12 +71,7 @@ public class CustomersPage extends BasePage {
         WebUI.clickElement(driver, buttonNewCustomer);
     }
 
-    public void selectXpathLanguage(String language) {
-        String xpathLanguage = "//span[normalize-space()='" + language + "']";
-        WebUI.clickElement(driver, By.xpath(xpathLanguage));
-    }
-
-    public void submitDataForAddNewCustomer(String customerName) {
+    public void fillDataForAddNewCustomer(String customerName) {
         WebUI.setText(driver, inputCompany, customerName);
         WebUI.setText(driver, inputVatNumber, "10");
         WebUI.setText(driver, inputPhone, "0965898635");
@@ -91,7 +90,7 @@ public class CustomersPage extends BasePage {
 
         //select Default Language
         WebUI.clickElement(driver, dropdownDefaultLanguage);
-        selectXpathLanguage("Vietnamese");
+        WebUI.clickElement(driver, selectXpathLanguage("Vietnamese"));
 
         WebUI.setText(driver, inputAddress, "Minh Khai, Bắc Từ Liêm");
         WebUI.setText(driver, inputCity, "Hà Nội");
@@ -102,7 +101,9 @@ public class CustomersPage extends BasePage {
         WebUI.clickElement(driver, dropdownCountry);
         WebUI.setText(driver, inputSearchCountry, "Vietnam");
         WebUI.setKey(driver, inputSearchCountry, Keys.ENTER);
+    }
 
+    public void clickSaveButton() {
         WebUI.clickElement(driver, buttonSave);
     }
 

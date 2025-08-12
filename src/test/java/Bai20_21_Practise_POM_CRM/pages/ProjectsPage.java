@@ -1,5 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -47,4 +48,5 @@ public class ProjectsPage extends BasePage {
                 Integer.parseInt(getTotalFinished());
         return totalProjects;
     }
+
 }

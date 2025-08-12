@@ -7,9 +7,9 @@ import common.BaseTest;
 import org.testng.annotations.Test;
 
 public class LeadsTest extends BaseTest {
-    LoginPage loginPage;
-    DashboardPage dashboardPage;
-    LeadsPage leadsPage;
+    private LoginPage loginPage;
+    private DashboardPage dashboardPage;
+    private LeadsPage leadsPage;
 
     @Test
     public void testAddNewLead() {
@@ -21,7 +21,8 @@ public class LeadsTest extends BaseTest {
         leadsPage.verifyNavigateToLeadPage();
         leadsPage.clickButtonNewLead();
         leadsPage.verifyOpenWindowAddNewLead();
-        leadsPage.submitDataAddNewLead(name);
+        leadsPage.fillDataAddNewLead(name);
+        leadsPage.clickSaveButton();
         leadsPage.clickButtonCloseAfterAdd();
         leadsPage.verifyAddNewLeadSuccess(name);
     }
