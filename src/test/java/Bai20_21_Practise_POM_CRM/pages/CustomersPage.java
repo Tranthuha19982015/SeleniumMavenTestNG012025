@@ -38,7 +38,7 @@ public class CustomersPage extends BasePage {
     private By inputSearchCurrency = By.xpath("//button[contains(@data-id,'default_currency')]/following-sibling::div//input[@type='search']");
     private By dropdownDefaultLanguage = By.xpath("//button[contains(@data-id,'default_language')]");
 
-    public By selectXpathLanguage(String language) {
+    public By optionValueDefaultLanguage(String language) {
         String xpathLanguage = "//span[normalize-space()='" + language + "']";
         System.out.println("Select language: " + language);
         return By.xpath(xpathLanguage);
@@ -90,7 +90,7 @@ public class CustomersPage extends BasePage {
 
         //select Default Language
         WebUI.clickElement(driver, dropdownDefaultLanguage);
-        WebUI.clickElement(driver, selectXpathLanguage("Vietnamese"));
+        WebUI.clickElement(driver, optionValueDefaultLanguage("Vietnamese"));
 
         WebUI.setText(driver, inputAddress, "Minh Khai, Bắc Từ Liêm");
         WebUI.setText(driver, inputCity, "Hà Nội");

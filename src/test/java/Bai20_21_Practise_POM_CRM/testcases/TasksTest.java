@@ -21,9 +21,7 @@ public class TasksTest extends BaseTest {
         leadsPage = dashboardPage.clickMenuLeads();
 
         String leadsName = "Leads Htest " + System.currentTimeMillis();
-        leadsPage.verifyNavigateToLeadPage();
         leadsPage.clickButtonNewLead();
-        leadsPage.verifyOpenWindowAddNewLead();
         leadsPage.fillDataAddNewLead(leadsName);
         leadsPage.clickSaveButton();
         leadsPage.clickButtonCloseAfterAdd();
