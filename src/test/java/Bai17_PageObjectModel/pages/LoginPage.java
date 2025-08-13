@@ -1,6 +1,6 @@
 package Bai17_PageObjectModel.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -42,15 +42,15 @@ public class LoginPage extends BasePage {
     }
 
     private void enterEmail(String email) {
-        WebUI.setText(driver, inputEmail, email);
+        WebUI_Old.setText(driver, inputEmail, email);
     }
 
     private void enterPassword(String password) {
-        WebUI.setText(driver, inputPassword, password);
+        WebUI_Old.setText(driver, inputPassword, password);
     }
 
     private void clickLoginButton() {
-        WebUI.clickElement(driver, buttonLogin);
+        WebUI_Old.clickElement(driver, buttonLogin);
     }
 
     public void loginCRM(String email, String password) {

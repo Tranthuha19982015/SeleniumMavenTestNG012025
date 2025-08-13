@@ -1,8 +1,7 @@
 package Bai14_JavascriptExecutor;
 
-import Bai10_Annotations.testcases.LocatorsCRM;
 import common.BaseTest;
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -71,13 +70,13 @@ public class DemoJavascriptExecutor extends BaseTest {
 
         WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
 //        js.executeScript("arguments[0].style.border='3px solid red';", inputEmail);
-        WebUI.highlightElement(driver, inputEmail, "red");
+        WebUI_Old.highlightElement(driver, inputEmail, "red");
         js.executeScript("arguments[0].setAttribute('value','admin@example.com');", inputEmail);
         Thread.sleep(1000);
 
         WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
 //        js.executeScript("arguments[0].style.border='3px solid purple';", inputPassword);
-        WebUI.highlightElement(driver, inputPassword, "green");
+        WebUI_Old.highlightElement(driver, inputPassword, "green");
         js.executeScript("arguments[0].setAttribute('value','123456');", inputPassword);
         Thread.sleep(1000);
 

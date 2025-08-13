@@ -3,8 +3,8 @@
 <suite name="SuiteRunByClass" verbose="1">
     <test name="FirstTest">
         <classes>
-            <class name="Bai10_Annotations.DemoAnnotations"/>
-            <class name="Bai10_Annotations.DemoAnnotations_2"/>
+            <class name="Bai20_21_Practise_POM_CRM.testcases.LoginTest"/>
+            <class name="Bai20_21_Practise_POM_CRM.testcases.LeadsTest"/>
         </classes>
     </test>
 </suite>

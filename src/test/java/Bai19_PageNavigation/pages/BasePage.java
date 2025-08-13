@@ -1,6 +1,6 @@
 package Bai19_PageNavigation.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -20,8 +20,8 @@ public class BasePage {
     public By optionLogout = By.xpath("//a[text()='Logout']");
 
     public void logoutSystem() {
-        WebUI.clickElement(driver, iconProfile);
-        WebUI.clickElement(driver, optionLogout);
+        WebUI_Old.clickElement(driver, iconProfile);
+        WebUI_Old.clickElement(driver, optionLogout);
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPageDisplay();
@@ -29,15 +29,15 @@ public class BasePage {
 
     //Cac phuong thuc chung cho cac trang
     public void clickMenuDashboard() {
-        WebUI.clickElement(driver, menuDashboard);
+        WebUI_Old.clickElement(driver, menuDashboard);
     }
 
     public void clickMenuCustomers() {
-        WebUI.clickElement(driver, menuCustomers);
+        WebUI_Old.clickElement(driver, menuCustomers);
     }
 
     public ProjectsPage clickMenuProjects() {
-        WebUI.clickElement(driver, menuProjects);
+        WebUI_Old.clickElement(driver, menuProjects);
         return new ProjectsPage(driver); // Trả về đối tượng ProjectsPage sau khi click vào menu Projects
     }
 }

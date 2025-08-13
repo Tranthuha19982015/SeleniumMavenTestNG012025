@@ -1,6 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -105,100 +105,100 @@ public class TasksPage extends BasePage {
 
     public void verifyTasksPageDisplay() {
         Assert.assertTrue(checkExist(headerTasksPage), "The tasks header page not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerTasksPage), "Tasks Summary", "The Tasks header not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerTasksPage), "Tasks Summary", "The Tasks header not match.");
     }
 
     public void clickButtonNewTask() {
-        WebUI.clickElement(driver, buttonNewTask);
+        WebUI_Old.clickElement(driver, buttonNewTask);
     }
 
     public void verifyAddNewTaskPageDisplay() {
         Assert.assertTrue(checkExist(headerAddNewTask), "The Add new task header page not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
     }
 
     public void chooseOptionRepeatEvery(String typeRepeat) {
         if (!typeRepeat.equals("") && !typeRepeat.equals("Custom")) {
-            WebUI.clickElement(driver, checkboxInfinity);
-            WebUI.clearTextElement(driver, inputTotalCycles);
-            WebUI.setText(driver, inputTotalCycles, "8");
+            WebUI_Old.clickElement(driver, checkboxInfinity);
+            WebUI_Old.clearTextElement(driver, inputTotalCycles);
+            WebUI_Old.setText(driver, inputTotalCycles, "8");
         } else if (typeRepeat.equals("Custom")) {
-            WebUI.clearTextElement(driver, inputNumberCustomRepeatEvery);
-            WebUI.setText(driver, inputNumberCustomRepeatEvery, "3");
-            WebUI.clickElement(driver, dropdownTypeCustomRepeatEvery);
-            WebUI.clickElement(driver, selectTypeCustomRepeatEvery("Week"));
+            WebUI_Old.clearTextElement(driver, inputNumberCustomRepeatEvery);
+            WebUI_Old.setText(driver, inputNumberCustomRepeatEvery, "3");
+            WebUI_Old.clickElement(driver, dropdownTypeCustomRepeatEvery);
+            WebUI_Old.clickElement(driver, selectTypeCustomRepeatEvery("Week"));
         }
     }
 
     public void fillDataAddNewTask(String subject, String valueRelatedTo) {
         Actions actions = new Actions(driver);
-        WebUI.clickElement(driver, checkboxPublic);
-        WebUI.setText(driver, inputSubject, subject);
-        WebUI.clearTextElement(driver, inputHourlyRate);
-        WebUI.setText(driver, inputHourlyRate, "3");
+        WebUI_Old.clickElement(driver, checkboxPublic);
+        WebUI_Old.setText(driver, inputSubject, subject);
+        WebUI_Old.clearTextElement(driver, inputHourlyRate);
+        WebUI_Old.setText(driver, inputHourlyRate, "3");
 
         //select Start Date
-        WebUI.clearTextElement(driver, datepickerStartDate);
-        WebUI.setText(driver, datepickerStartDate, "11-08-2025");
-        WebUI.clickElement(driver, datepickerStartDate);
+        WebUI_Old.clearTextElement(driver, datepickerStartDate);
+        WebUI_Old.setText(driver, datepickerStartDate, "11-08-2025");
+        WebUI_Old.clickElement(driver, datepickerStartDate);
 
         //select Due Date
-        WebUI.clearTextElement(driver, datepickerDueDate);
-        WebUI.setText(driver, datepickerDueDate, "12-08-2025");
-        WebUI.clickElement(driver, datepickerDueDate);
+        WebUI_Old.clearTextElement(driver, datepickerDueDate);
+        WebUI_Old.setText(driver, datepickerDueDate, "12-08-2025");
+        WebUI_Old.clickElement(driver, datepickerDueDate);
 
         //select Priority
-        WebUI.clickElement(driver, dropdownPriority);
-        WebUI.clickElement(driver, selectPriority("High"));
+        WebUI_Old.clickElement(driver, dropdownPriority);
+        WebUI_Old.clickElement(driver, selectPriority("High"));
 
         //select Repeat Every
-        WebUI.clickElement(driver, dropdownRepeatEvery);
+        WebUI_Old.clickElement(driver, dropdownRepeatEvery);
         String typeRepeatEvery = "Custom";
-        WebUI.clickElement(driver, selectRepeatEvery(typeRepeatEvery));
+        WebUI_Old.clickElement(driver, selectRepeatEvery(typeRepeatEvery));
         chooseOptionRepeatEvery(typeRepeatEvery);
 
         //select Related To
-        WebUI.clickElement(driver, dropdownRelatedTo);
+        WebUI_Old.clickElement(driver, dropdownRelatedTo);
         String optionRelatedTo = "Lead";
-        WebUI.clickElement(driver, selectRelatedTo(optionRelatedTo));
-        WebUI.clickElement(driver, dropdownTypeRelatedTo);
-        WebUI.setText(driver, inputSearchTypeRelatedTo, valueRelatedTo);
-        WebUI.sleep(1);
+        WebUI_Old.clickElement(driver, selectRelatedTo(optionRelatedTo));
+        WebUI_Old.clickElement(driver, dropdownTypeRelatedTo);
+        WebUI_Old.setText(driver, inputSearchTypeRelatedTo, valueRelatedTo);
+        WebUI_Old.sleep(1);
         actions.moveToElement(driver.findElement(inputSearchTypeRelatedTo)).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
-        WebUI.waitForResultVisible(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
-        WebUI.clickElement(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
+        WebUI_Old.waitForResultVisible(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
+        WebUI_Old.clickElement(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
 
         //select Assignees
-        WebUI.clickElement(driver, dropdownAssignees);
-        WebUI.setText(driver, inputSearchAssignees, "Anh Tester");
-        WebUI.setKey(driver, inputSearchAssignees, Keys.ENTER);
-        WebUI.clickElement(driver, dropdownAssignees);
+        WebUI_Old.clickElement(driver, dropdownAssignees);
+        WebUI_Old.setText(driver, inputSearchAssignees, "Anh Tester");
+        WebUI_Old.setKey(driver, inputSearchAssignees, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownAssignees);
 
         //select Followers
-        WebUI.clickElement(driver, dropdownFollowers);
-        WebUI.setText(driver, inputSearchFollowers, "Anh Tester");
-        WebUI.setKey(driver, inputSearchFollowers, Keys.ENTER);
-        WebUI.clickElement(driver, dropdownFollowers);
+        WebUI_Old.clickElement(driver, dropdownFollowers);
+        WebUI_Old.setText(driver, inputSearchFollowers, "Anh Tester");
+        WebUI_Old.setKey(driver, inputSearchFollowers, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownFollowers);
 
         //fill Tags
-        WebUI.setText(driver, inputTags, "htest");
-        WebUI.setKey(driver, inputTags, Keys.ENTER);
-        WebUI.clickElement(driver, labelTags);
+        WebUI_Old.setText(driver, inputTags, "htest");
+        WebUI_Old.setKey(driver, inputTags, Keys.ENTER);
+        WebUI_Old.clickElement(driver, labelTags);
 
         //fill iFrame Description
-        WebUI.clickElement(driver, inputTaskDescription);
-        WebUI.switchToFrameWhenAvailable(driver, iframeTaskDescription);
-        WebUI.setText(driver, inputOnFrame, "htest iframe");
-        WebUI.switchToDefaultContent(driver);
+        WebUI_Old.clickElement(driver, inputTaskDescription);
+        WebUI_Old.switchToFrameWhenAvailable(driver, iframeTaskDescription);
+        WebUI_Old.setText(driver, inputOnFrame, "htest iframe");
+        WebUI_Old.switchToDefaultContent(driver);
     }
 
     public void clickButtonSave() {
-        WebUI.clickElement(driver, buttonSave);
+        WebUI_Old.clickElement(driver, buttonSave);
     }
 
     public void verifyAddNewTaskSuccess() {
         Assert.assertTrue(checkExist(alertMessage), "The alert message not display.");
-        String actualMessage = WebUI.getTextElement(driver, alertMessage);
+        String actualMessage = WebUI_Old.getTextElement(driver, alertMessage);
         Assert.assertEquals(actualMessage, "Task added successfully.", "The alert message add new tasks not match.");
     }
 }

@@ -1,6 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -22,8 +22,8 @@ public class BasePage {
     public By alertMessage = By.xpath("//div[@id='alert_float_1']/span[@class='alert-title']");
 
     public void logoutSystem() {
-        WebUI.clickElement(driver, iconProfile);
-        WebUI.clickElement(driver, optionLogout);
+        WebUI_Old.clickElement(driver, iconProfile);
+        WebUI_Old.clickElement(driver, optionLogout);
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPageDisplay();
@@ -31,26 +31,26 @@ public class BasePage {
 
     //Cac phuong thuc chung cho cac trang
     public void clickMenuDashboard() {
-        WebUI.clickElement(driver, menuDashboard);
+        WebUI_Old.clickElement(driver, menuDashboard);
     }
 
     public CustomersPage clickMenuCustomers() {
-        WebUI.clickElement(driver, menuCustomers);
+        WebUI_Old.clickElement(driver, menuCustomers);
         return new CustomersPage(driver);
     }
 
     public ProjectsPage clickMenuProjects() {
-        WebUI.clickElement(driver, menuProjects);
+        WebUI_Old.clickElement(driver, menuProjects);
         return new ProjectsPage(driver); // Trả về đối tượng ProjectsPage sau khi click vào menu Projects
     }
 
     public LeadsPage clickMenuLeads() {
-        WebUI.clickElement(driver, menuLeads);
+        WebUI_Old.clickElement(driver, menuLeads);
         return new LeadsPage(driver);
     }
 
     public TasksPage clickMenuTasks() {
-        WebUI.clickElement(driver, menuTasks);
+        WebUI_Old.clickElement(driver, menuTasks);
         return new TasksPage(driver);
     }
 }

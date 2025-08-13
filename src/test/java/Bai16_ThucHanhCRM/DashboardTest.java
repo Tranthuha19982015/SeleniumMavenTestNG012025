@@ -2,7 +2,7 @@ package Bai16_ThucHanhCRM;
 
 import Bai10_Annotations.testcases.LocatorsCRM;
 import common.BaseTest;
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,9 +12,9 @@ public class DashboardTest extends BaseTest {
     @Test
     public void testDashboard_CheckQuickStatisticsTotal() {
         driver.get(LocatorsCRM.url);
-        WebUI.setText(driver, By.xpath(LocatorsCRM.inputEmail), "admin@example.com");
-        WebUI.setText(driver, By.xpath(LocatorsCRM.inputPassword), "123456");
-        WebUI.clickElement(driver, By.xpath(LocatorsCRM.buttonLogin));
+        WebUI_Old.setText(driver, By.xpath(LocatorsCRM.inputEmail), "admin@example.com");
+        WebUI_Old.setText(driver, By.xpath(LocatorsCRM.inputPassword), "123456");
+        WebUI_Old.clickElement(driver, By.xpath(LocatorsCRM.buttonLogin));
 
         boolean dashboardElements = driver.findElements(By.xpath(LocatorsCRM.linkMenuDashboard)).size() > 0;
         Assert.assertTrue(dashboardElements, "Login failed or Dashboard not display.");
@@ -23,7 +23,7 @@ public class DashboardTest extends BaseTest {
         String totalProjectsInProgressOnDashboard = driver.findElement(By.xpath("(//span[normalize-space()='Projects In Progress']/parent::div)/following-sibling::span")).getText();
         System.out.println("Total Projects In Progress: " + totalProjectsInProgressOnDashboard);
 
-        WebUI.clickElement(driver, By.xpath("//span[normalize-space()='Projects']/parent::a"));
+        WebUI_Old.clickElement(driver, By.xpath("//span[normalize-space()='Projects']/parent::a"));
 
         //get so luong ngoai trang Projects
         String totalProjectsNotStartedOnProjects = driver.findElement(By.xpath("//div[@class='_filters _hidden_inputs']/descendant::span[normalize-space()='Not Started']/preceding-sibling::span")).getText();

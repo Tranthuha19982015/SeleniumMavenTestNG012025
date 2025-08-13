@@ -1,6 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -64,52 +64,52 @@ public class CustomersPage extends BasePage {
 
     public void verifyNavigateToCustomerPage() {
         Assert.assertTrue(checkElementExist(headerCustomerPage), "The customer header page not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerCustomerPage), "Customers Summary", "The customer header page not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerCustomerPage), "Customers Summary", "The customer header page not match.");
     }
 
     public void clickButtonNewCustomer() {
-        WebUI.clickElement(driver, buttonNewCustomer);
+        WebUI_Old.clickElement(driver, buttonNewCustomer);
     }
 
     public void fillDataForAddNewCustomer(String customerName) {
-        WebUI.setText(driver, inputCompany, customerName);
-        WebUI.setText(driver, inputVatNumber, "10");
-        WebUI.setText(driver, inputPhone, "0965898635");
-        WebUI.setText(driver, inputWebsite, "htest.com.vn");
+        WebUI_Old.setText(driver, inputCompany, customerName);
+        WebUI_Old.setText(driver, inputVatNumber, "10");
+        WebUI_Old.setText(driver, inputPhone, "0965898635");
+        WebUI_Old.setText(driver, inputWebsite, "htest.com.vn");
 
         // select Groups
-        WebUI.clickElement(driver, dropdownGroups);
-        WebUI.setText(driver, inputSearchGroups, "hatran");
-        WebUI.setKey(driver, inputSearchGroups, Keys.ENTER);
-        WebUI.clickElement(driver, dropdownGroups);
+        WebUI_Old.clickElement(driver, dropdownGroups);
+        WebUI_Old.setText(driver, inputSearchGroups, "hatran");
+        WebUI_Old.setKey(driver, inputSearchGroups, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownGroups);
 
         //select Currency
-        WebUI.clickElement(driver, dropdownCurrency);
-        WebUI.setText(driver, inputSearchCurrency, "USD");
-        WebUI.setKey(driver, inputSearchCurrency, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownCurrency);
+        WebUI_Old.setText(driver, inputSearchCurrency, "USD");
+        WebUI_Old.setKey(driver, inputSearchCurrency, Keys.ENTER);
 
         //select Default Language
-        WebUI.clickElement(driver, dropdownDefaultLanguage);
-        WebUI.clickElement(driver, optionValueDefaultLanguage("Vietnamese"));
+        WebUI_Old.clickElement(driver, dropdownDefaultLanguage);
+        WebUI_Old.clickElement(driver, optionValueDefaultLanguage("Vietnamese"));
 
-        WebUI.setText(driver, inputAddress, "Minh Khai, Bắc Từ Liêm");
-        WebUI.setText(driver, inputCity, "Hà Nội");
-        WebUI.setText(driver, inputState, "123545");
-        WebUI.setText(driver, inputZipCode, "0001212");
+        WebUI_Old.setText(driver, inputAddress, "Minh Khai, Bắc Từ Liêm");
+        WebUI_Old.setText(driver, inputCity, "Hà Nội");
+        WebUI_Old.setText(driver, inputState, "123545");
+        WebUI_Old.setText(driver, inputZipCode, "0001212");
 
         //select Country
-        WebUI.clickElement(driver, dropdownCountry);
-        WebUI.setText(driver, inputSearchCountry, "Vietnam");
-        WebUI.setKey(driver, inputSearchCountry, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownCountry);
+        WebUI_Old.setText(driver, inputSearchCountry, "Vietnam");
+        WebUI_Old.setKey(driver, inputSearchCountry, Keys.ENTER);
     }
 
     public void clickSaveButton() {
-        WebUI.clickElement(driver, buttonSave);
+        WebUI_Old.clickElement(driver, buttonSave);
     }
 
     public void verifyNavigateToCustomerDetailPage() {
         Assert.assertTrue(checkElementExist(headerCustomerDetailPage), "The customer detail header page not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerCustomerDetailPage), "Profile", "The customer detail header page not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerCustomerDetailPage), "Profile", "The customer detail header page not match.");
     }
 
     public void verifyAddNewCustomerSuccess(String customerName) {
@@ -117,18 +117,18 @@ public class CustomersPage extends BasePage {
         verifyNavigateToCustomerDetailPage();
 
         //Verify data in customer detail
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputCompany, "value"), customerName, "The Company name not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputVatNumber, "value"), "10", "The VAT value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputPhone, "value"), "0965898635", "The Phone number value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputWebsite, "value"), "htest.com.vn", "The Website value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, dropdownGroups, "title"), "hatran", "The Groups value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, dropdownCurrency, "title"), "USD", "The Currency value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, dropdownDefaultLanguage, "title"), "Vietnamese", "The Default Language value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputAddress, "value"), "Minh Khai, Bắc Từ Liêm", "The Address value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputCity, "value"), "Hà Nội", "The City value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputState, "value"), "123545", "The State value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, inputZipCode, "value"), "0001212", "The Zip Code value not match.");
-        Assert.assertEquals(WebUI.getAttributeElement(driver, dropdownCountry, "title"), "Vietnam", "The Country value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputCompany, "value"), customerName, "The Company name not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputVatNumber, "value"), "10", "The VAT value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputPhone, "value"), "0965898635", "The Phone number value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputWebsite, "value"), "htest.com.vn", "The Website value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, dropdownGroups, "title"), "hatran", "The Groups value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, dropdownCurrency, "title"), "USD", "The Currency value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, dropdownDefaultLanguage, "title"), "Vietnamese", "The Default Language value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputAddress, "value"), "Minh Khai, Bắc Từ Liêm", "The Address value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputCity, "value"), "Hà Nội", "The City value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputState, "value"), "123545", "The State value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, inputZipCode, "value"), "0001212", "The Zip Code value not match.");
+        Assert.assertEquals(WebUI_Old.getAttributeElement(driver, dropdownCountry, "title"), "Vietnam", "The Country value not match.");
     }
 
     public void searchAndCheckCustomerInTable() {

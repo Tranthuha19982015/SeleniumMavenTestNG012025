@@ -5,7 +5,6 @@ import Bai20_21_Practise_POM_CRM.pages.LeadsPage;
 import Bai20_21_Practise_POM_CRM.pages.LoginPage;
 import Bai20_21_Practise_POM_CRM.pages.TasksPage;
 import common.BaseTest;
-import keywords.WebUI;
 import org.testng.annotations.Test;
 
 public class TasksTest extends BaseTest {

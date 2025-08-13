@@ -1,6 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -33,7 +33,7 @@ public class LoginPage extends BasePage {
     //Khai báo các hàm xử lý nội bộ trong nội bộ trang Login
 
     public void verifyLoginPageDisplay() {
-        Assert.assertTrue(WebUI.waitForElementVisible(driver,headerLoginPage), "Login page is not displayed.");
+        Assert.assertTrue(WebUI_Old.waitForElementVisible(driver,headerLoginPage), "Login page is not displayed.");
     }
 
     public void navigateToLoginAdminCRM() {
@@ -41,15 +41,15 @@ public class LoginPage extends BasePage {
     }
 
     private void enterEmail(String email) {
-        WebUI.setText(driver, inputEmail, email);
+        WebUI_Old.setText(driver, inputEmail, email);
     }
 
     private void enterPassword(String password) {
-        WebUI.setText(driver, inputPassword, password);
+        WebUI_Old.setText(driver, inputPassword, password);
     }
 
     private void clickLoginButton() {
-        WebUI.clickElement(driver, buttonLogin);
+        WebUI_Old.clickElement(driver, buttonLogin);
     }
 
     public void loginCRM(String email, String password) { //Chỉ dùng nội bộ trang Login
@@ -70,18 +70,18 @@ public class LoginPage extends BasePage {
     }
 
     public void verifyLoginSuccess() {
-        Assert.assertTrue(WebUI.waitForElementVisible(driver,menuDashboard), "Login failed or Dashboard not displayed.");
+        Assert.assertTrue(WebUI_Old.waitForElementVisible(driver,menuDashboard), "Login failed or Dashboard not displayed.");
     }
 
     public void verifyLoginFailureWithInvalidEmailOrPassword() {
-        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageInvalid), "Error message for invalid email not displayed.");
+        Assert.assertTrue(WebUI_Old.waitForElementVisible(driver,errorMessageInvalid), "Error message for invalid email not displayed.");
     }
 
     public void verifyLoginFailureWithEmailNull() {
-        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageRequiredEmail), "Error message for required email not displayed.");
+        Assert.assertTrue(WebUI_Old.waitForElementVisible(driver,errorMessageRequiredEmail), "Error message for required email not displayed.");
     }
 
     public void verifyLoginFailureWithPasswordNull() {
-        Assert.assertTrue(WebUI.waitForElementVisible(driver,errorMessageRequiredPassword), "Error message for required password not displayed.");
+        Assert.assertTrue(WebUI_Old.waitForElementVisible(driver,errorMessageRequiredPassword), "Error message for required password not displayed.");
     }
 }

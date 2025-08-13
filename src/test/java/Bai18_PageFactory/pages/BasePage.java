@@ -1,6 +1,6 @@
 package Bai18_PageFactory.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,8 +31,8 @@ public class BasePage {
     public WebElement optionLogout;
 
     public void logoutSystem() {
-        WebUI.clickElement(driver,iconProfile);
-        WebUI.clickElement(driver,optionLogout);
+        WebUI_Old.clickElement(driver,iconProfile);
+        WebUI_Old.clickElement(driver,optionLogout);
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPageDisplay();
@@ -40,15 +40,15 @@ public class BasePage {
 
     //Cac phuong thuc chung cho cac trang
     public void clickMenuDashboard() {
-        WebUI.clickElement(driver, menuDashboard);
+        WebUI_Old.clickElement(driver, menuDashboard);
     }
 
     public void clickMenuCustomers() {
-        WebUI.clickElement(driver,menuCustomers);
+        WebUI_Old.clickElement(driver,menuCustomers);
     }
 
     public void clickMenuProjects() {
 //        menuProjects.click();
-        WebUI.clickElement(driver,menuProjects);
+        WebUI_Old.clickElement(driver,menuProjects);
     }
 }

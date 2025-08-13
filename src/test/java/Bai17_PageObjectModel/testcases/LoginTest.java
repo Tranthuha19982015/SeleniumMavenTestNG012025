@@ -1,11 +1,7 @@
 package Bai17_PageObjectModel.testcases;
 
-import Bai10_Annotations.testcases.LocatorsCRM;
 import Bai17_PageObjectModel.pages.LoginPage;
 import common.BaseTest;
-import keywords.WebUI;
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {

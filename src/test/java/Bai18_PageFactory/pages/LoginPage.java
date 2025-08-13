@@ -1,6 +1,6 @@
 package Bai18_PageFactory.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -66,15 +66,15 @@ public class LoginPage extends BasePage {
 
     // dùng 3 hàm dưới để có thể custom thêm cho hàm như Wait,...
     private void enterEmail(String email) {
-        WebUI.setText(driver, inputEmail, email);
+        WebUI_Old.setText(driver, inputEmail, email);
     }
 
     private void enterPassword(String password) {
-        WebUI.setText(driver, inputPassword, password);
+        WebUI_Old.setText(driver, inputPassword, password);
     }
 
     private void clickLoginButton() {
-        WebUI.clickElement(driver, buttonLogin);
+        WebUI_Old.clickElement(driver, buttonLogin);
     }
 
     //

@@ -1,6 +1,6 @@
 package Bai20_21_Practise_POM_CRM.pages;
 
-import keywords.WebUI;
+import keywords.WebUI_Old;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -74,86 +74,86 @@ public class LeadsPage extends BasePage {
     }
 
     public void clickIconLeadsSummary() {
-        WebUI.clickElement(driver, iconLeadsSummary);
+        WebUI_Old.clickElement(driver, iconLeadsSummary);
     }
 
     public void verifyNavigateToLeadPage() {
         clickIconLeadsSummary();
         Assert.assertTrue(checkExist(headerLeadsPage), "The lead header page not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerLeadsPage), "Leads Summary", "The lead header page not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerLeadsPage), "Leads Summary", "The lead header page not match.");
     }
 
     public void clickButtonNewLead() {
-        WebUI.clickElement(driver, buttonNewLead);
+        WebUI_Old.clickElement(driver, buttonNewLead);
     }
 
     public void verifyOpenWindowAddNewLead() {
         Assert.assertTrue(checkExist(headerAddNewLeadWindow), "The new lead window not display.");
-        Assert.assertEquals(WebUI.getTextElement(driver, headerAddNewLeadWindow), "Add new lead", "The lead summary window not match.");
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerAddNewLeadWindow), "Add new lead", "The lead summary window not match.");
     }
 
     public void fillDataAddNewLead(String name) {
-        WebUI.clickElement(driver, dropdownStatus);
-        WebUI.setText(driver, inputSearchStatus, "Active");
-        WebUI.setKey(driver, inputSearchStatus, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownStatus);
+        WebUI_Old.setText(driver, inputSearchStatus, "Active");
+        WebUI_Old.setKey(driver, inputSearchStatus, Keys.ENTER);
 
-        WebUI.clickElement(driver, dropdownSource);
-        WebUI.setText(driver, inputSearchSource, "Google");
-        WebUI.setKey(driver, inputSearchSource, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownSource);
+        WebUI_Old.setText(driver, inputSearchSource, "Google");
+        WebUI_Old.setKey(driver, inputSearchSource, Keys.ENTER);
 
-        WebUI.clickElement(driver, inputTags);
-        WebUI.setText(driver, inputTags, "HTest");
-        WebUI.setKey(driver, inputTags, Keys.ENTER);
+        WebUI_Old.clickElement(driver, inputTags);
+        WebUI_Old.setText(driver, inputTags, "HTest");
+        WebUI_Old.setKey(driver, inputTags, Keys.ENTER);
 
-        WebUI.setText(driver, inputName, name);
+        WebUI_Old.setText(driver, inputName, name);
 //        WebUI.setText(driver, inputAddress, "Minh Khai");
-        WebUI.setText(driver, inputPosition, "Bắc Từ Liêm");
-        WebUI.setText(driver, inputCity, "Hà Nội");
-        WebUI.setText(driver, inputEmailAddress, "htest" + System.currentTimeMillis() + "@gmail.com");
-        WebUI.setText(driver, inputState, "htest state");
-        WebUI.setText(driver, inputWebsite, "htest.com.vn");
+        WebUI_Old.setText(driver, inputPosition, "Bắc Từ Liêm");
+        WebUI_Old.setText(driver, inputCity, "Hà Nội");
+        WebUI_Old.setText(driver, inputEmailAddress, "htest" + System.currentTimeMillis() + "@gmail.com");
+        WebUI_Old.setText(driver, inputState, "htest state");
+        WebUI_Old.setText(driver, inputWebsite, "htest.com.vn");
 
-        WebUI.clickElement(driver, dropdownCountry);
-        WebUI.setText(driver, inputSearchCountry, "Vietnam");
-        WebUI.setKey(driver, inputSearchCountry, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownCountry);
+        WebUI_Old.setText(driver, inputSearchCountry, "Vietnam");
+        WebUI_Old.setKey(driver, inputSearchCountry, Keys.ENTER);
 
-        WebUI.setText(driver, inputPhone, "0965896589");
-        WebUI.setText(driver, inputZipCode, "0235565");
-        WebUI.setText(driver, inputLeadValue, "10");
+        WebUI_Old.setText(driver, inputPhone, "0965896589");
+        WebUI_Old.setText(driver, inputZipCode, "0235565");
+        WebUI_Old.setText(driver, inputLeadValue, "10");
 
-        WebUI.clickElement(driver, dropdownDefaultLanguage);
-        WebUI.setText(driver, inputSearchDefaultLanguage, "Vietnamese");
-        WebUI.setKey(driver, inputSearchDefaultLanguage, Keys.ENTER);
+        WebUI_Old.clickElement(driver, dropdownDefaultLanguage);
+        WebUI_Old.setText(driver, inputSearchDefaultLanguage, "Vietnamese");
+        WebUI_Old.setKey(driver, inputSearchDefaultLanguage, Keys.ENTER);
 
-        WebUI.setText(driver, inputCompany, "NDJSC");
-        WebUI.setText(driver, inputDescription, "Test add lead");
-        WebUI.clickElement(driver, checkboxPublic);
+        WebUI_Old.setText(driver, inputCompany, "NDJSC");
+        WebUI_Old.setText(driver, inputDescription, "Test add lead");
+        WebUI_Old.clickElement(driver, checkboxPublic);
     }
 
     public void clickSaveButton(){
-        WebUI.clickElement(driver, buttonSave);
+        WebUI_Old.clickElement(driver, buttonSave);
     }
 
     public void clickButtonCloseAfterAdd() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", (driver.findElement(buttonCloseWindowAfterAdd)));
-        WebUI.sleep(1);
-        WebUI.clickElement(driver, buttonCloseWindowAfterAdd);
+        WebUI_Old.sleep(1);
+        WebUI_Old.clickElement(driver, buttonCloseWindowAfterAdd);
     }
 
     public void verifyAddNewLeadSuccess(String name) {
-        WebUI.clickElement(driver, inputSearchLead);
-        WebUI.setText(driver, inputSearchLead, name);
-        WebUI.setKey(driver, inputSearchLead, Keys.ENTER);
-        Assert.assertEquals(WebUI.getTextElement(driver, firstRowItemLeadName), name, "Không đúng Lead đã thêm mới.");
+        WebUI_Old.clickElement(driver, inputSearchLead);
+        WebUI_Old.setText(driver, inputSearchLead, name);
+        WebUI_Old.setKey(driver, inputSearchLead, Keys.ENTER);
+        Assert.assertEquals(WebUI_Old.getTextElement(driver, firstRowItemLeadName), name, "Không đúng Lead đã thêm mới.");
     }
 
     public int getTotalStatusActiveLeads() {
-        return Integer.parseInt(WebUI.getTextElement(driver, labelActive));
+        return Integer.parseInt(WebUI_Old.getTextElement(driver, labelActive));
     }
 
     public int getTotalStatusCustomerLeads() {
-        return Integer.parseInt(WebUI.getTextElement(driver, labelCustomer));
+        return Integer.parseInt(WebUI_Old.getTextElement(driver, labelCustomer));
     }
 
     public int getTotalLeads() {
@@ -189,9 +189,10 @@ public class LeadsPage extends BasePage {
 
         clickButtonNewLead();
         fillDataAddNewLead(name);
+        clickSaveButton();
         clickButtonCloseAfterAdd();
         verifyAddNewLeadSuccess(name);
-        String statusOfRowAddNew = WebUI.getTextElement(driver, firstRowItemLeadStatus);
+        String statusOfRowAddNew = WebUI_Old.getTextElement(driver, firstRowItemLeadStatus);
 
         driver.navigate().refresh();
 
