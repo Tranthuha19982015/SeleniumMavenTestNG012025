@@ -75,6 +75,7 @@ public class LeadsPage extends BasePage {
 
     public void clickIconLeadsSummary() {
         WebUI_Old.clickElement(driver, iconLeadsSummary);
+        WebUI_Old.sleep(1);
     }
 
     public void verifyNavigateToLeadPage() {

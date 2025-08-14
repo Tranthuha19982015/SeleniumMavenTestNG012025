@@ -17,24 +17,43 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
-        String name = "Leads Htest " + System.currentTimeMillis();
+        String leadsName = "Leads Htest " + System.currentTimeMillis();
         leadsPage.verifyNavigateToLeadPage();
         leadsPage.clickButtonNewLead();
         leadsPage.verifyOpenWindowAddNewLead();
-        leadsPage.fillDataAddNewLead(name);
+        leadsPage.fillDataAddNewLead(leadsName);
         leadsPage.clickSaveButton();
         leadsPage.clickButtonCloseAfterAdd();
-        leadsPage.verifyAddNewLeadSuccess(name);
+        leadsPage.verifyAddNewLeadSuccess(leadsName);
     }
 
     @Test
-    public void testStatusOnTableWithLeadsSummaryAfterAddSuccess(){
+    public void testStatusOnTableWithLeadsSummaryAfterAddSuccess() {
         loginPage = new LoginPage(driver);
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
         String leadsName = "Leads Htest " + System.currentTimeMillis();
+
         leadsPage.verifyNavigateToLeadPage();
-        leadsPage.verifyAfterAddingNewLead(leadsName);
+        leadsPage.clickIconLeadsSummary();
+
+        //get total lead status in leads summary
+        int beforeTotalActive = Integer.parseInt(leadsPage.getTotalStatusActiveLeads());
+        int beforeTotalCustomer = Integer.parseInt(leadsPage.getTotalStatusCustomerLeads());
+
+        //Add new lead
+        leadsPage.clickButtonNewLead();
+        leadsPage.verifyOpenWindowAddNewLead();
+        //fill data
+        leadsPage.fillDataAddNewLead(leadsName);
+        leadsPage.clickSaveButton();
+
+        //dong pop-up
+        leadsPage.clickButtonCloseAfterAdd();
+
+
+        leadsPage.verifyAddNewLeadSuccess(leadsName);
+
     }
 }
