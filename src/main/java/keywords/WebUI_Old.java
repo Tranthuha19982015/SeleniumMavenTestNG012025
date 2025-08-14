@@ -57,7 +57,7 @@ public class WebUI_Old {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         element.sendKeys(text);
-        System.out.println("Set text " + text + " for element: " + by);
+        System.out.println("Set text \"" + text + "\" for element: " + by);
     }
 
     public static void setText(WebDriver driver, WebElement element, String text) {

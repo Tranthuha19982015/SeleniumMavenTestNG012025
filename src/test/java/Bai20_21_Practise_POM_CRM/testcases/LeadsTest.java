@@ -33,8 +33,8 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
-        String name = "Leads Htest " + System.currentTimeMillis();
+        String leadsName = "Leads Htest " + System.currentTimeMillis();
         leadsPage.verifyNavigateToLeadPage();
-        leadsPage.verifyAfterAddingNewLead(name);
+        leadsPage.verifyAfterAddingNewLead(leadsName);
     }
 }

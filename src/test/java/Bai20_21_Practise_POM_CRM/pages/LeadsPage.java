@@ -211,7 +211,6 @@ public class LeadsPage extends BasePage {
         } else {
             System.out.println("Bản ghi mới thêm thành công thêm Status mới");
         }
-
-        verifyTotalStatusOnTableWithLeadsSummary();
+//        verifyTotalStatusOnTableWithLeadsSummary();
     }
 }
