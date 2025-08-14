@@ -1,14 +1,17 @@
 package keywords;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
 
 public class WebUI_Old {
     public static int WAIT_TIMEOUT = 10;
+    private static int PAGE_LOAD_TIMEOUT = 20;
 
     public static void sleep(double second) {
         try {
@@ -33,7 +36,6 @@ public class WebUI_Old {
     public static void clickElement(WebDriver driver, By by) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
-//        highlightElement(driver, element);
         element.click();
         System.out.println("Click to element: " + by);
     }
@@ -72,12 +74,17 @@ public class WebUI_Old {
     }
 
     public static String getTextElement(WebDriver driver, By by) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        System.out.println("Get text of element: " + by);
-        String textElement = element.getText();
-        System.out.println("===> Text: " + textElement);
-        return textElement;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
+        String textActual = "";
+        try {
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            textActual = element.getText();
+            System.out.println("Get text of element: " + by);
+            System.out.println("===> Text: " + textActual);
+        } catch (TimeoutException e) {
+            System.out.println("Element not found or not visible: " + by);
+        }
+        return textActual;
     }
 
     public static String getAttributeElement(WebDriver driver, By by, String attribute) {
@@ -112,6 +119,43 @@ public class WebUI_Old {
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         } catch (TimeoutException e) {
             System.out.println("Element not visible: " + by);
+        }
+    }
+
+    //Chờ đợi trang load xong mới thao tác
+    public static void waitForPageLoaded(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30), Duration.ofMillis(500));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        //Wait for Javascript to load
+        ExpectedCondition< Boolean > jsLoad = new ExpectedCondition < Boolean > () {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return js.executeScript("return document.readyState").toString().equals("complete");
+            }
+        };
+
+        //Check JS is Ready
+        boolean jsReady = js.executeScript("return document.readyState").toString().equals("complete");
+
+        //Wait Javascript until it is Ready!
+        if (!jsReady) {
+            //System.out.println("Javascript is NOT Ready.");
+            //Wait for Javascript to load
+            try {
+                wait.until(jsLoad);
+            } catch (Throwable error) {
+                error.printStackTrace();
+                Assert.fail("FAILED. Timeout waiting for page load.");
+            }
+        }
+    }
+    public static void waitForElementInVisible(WebDriver driver, By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+        } catch (TimeoutException e) {
+            System.out.println("Element still visible: " + by);
         }
     }
 

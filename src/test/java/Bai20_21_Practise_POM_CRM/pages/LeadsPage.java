@@ -130,7 +130,7 @@ public class LeadsPage extends BasePage {
         WebUI_Old.clickElement(driver, checkboxPublic);
     }
 
-    public void clickSaveButton(){
+    public void clickSaveButton() {
         WebUI_Old.clickElement(driver, buttonSave);
     }
 
@@ -142,22 +142,25 @@ public class LeadsPage extends BasePage {
     }
 
     public void verifyAddNewLeadSuccess(String name) {
+        WebUI_Old.waitForElementInVisible(driver, buttonCloseWindowAfterAdd);
         WebUI_Old.clickElement(driver, inputSearchLead);
         WebUI_Old.setText(driver, inputSearchLead, name);
         WebUI_Old.setKey(driver, inputSearchLead, Keys.ENTER);
+        WebUI_Old.sleep(1);
         Assert.assertEquals(WebUI_Old.getTextElement(driver, firstRowItemLeadName), name, "Không đúng Lead đã thêm mới.");
     }
 
-    public int getTotalStatusActiveLeads() {
-        return Integer.parseInt(WebUI_Old.getTextElement(driver, labelActive));
+    public String getTotalStatusActiveLeads() {
+        return WebUI_Old.getTextElement(driver, labelActive);
     }
 
-    public int getTotalStatusCustomerLeads() {
-        return Integer.parseInt(WebUI_Old.getTextElement(driver, labelCustomer));
+    public String getTotalStatusCustomerLeads() {
+        return WebUI_Old.getTextElement(driver, labelCustomer);
     }
 
     public int getTotalLeads() {
-        return getTotalStatusActiveLeads() + getTotalStatusCustomerLeads();
+        int totalLead = Integer.parseInt(getTotalStatusActiveLeads()) + Integer.parseInt(getTotalStatusCustomerLeads());
+        return totalLead;
     }
 
     public int countActiveStatusOnTable() {
@@ -171,21 +174,21 @@ public class LeadsPage extends BasePage {
     public void verifyTotalStatusOnTableWithLeadsSummary() {
         clickIconLeadsSummary();
         System.out.println("Số lượng Status Active = " + getTotalStatusActiveLeads());
-        int totalActive = getTotalStatusActiveLeads();
+        int totalActive = Integer.parseInt(getTotalStatusActiveLeads());
         int countActive = countActiveStatusOnTable();
         Assert.assertEquals(totalActive, countActive, "Số lượng Status Active dưới Table không bằng trên Lead Summary");
 
         clickIconLeadsSummary();
         System.out.println("Số lượng Status Customer = " + getTotalStatusCustomerLeads());
-        int totalCustomer = getTotalStatusCustomerLeads();
+        int totalCustomer = Integer.parseInt(getTotalStatusCustomerLeads());
         int countCustomer = countCustomerStatusOnTable();
         Assert.assertEquals(totalCustomer, countCustomer, "Số lượng Status Customer dưới Table không bằng trên Lead Summary");
     }
 
     public void verifyAfterAddingNewLead(String name) {
         clickIconLeadsSummary();
-        int beforeActiveStatus = getTotalStatusActiveLeads();
-        int beforeCustomerStatus = getTotalStatusCustomerLeads();
+        String beforeActiveStatus = getTotalStatusActiveLeads();
+        String beforeCustomerStatus = getTotalStatusCustomerLeads();
 
         clickButtonNewLead();
         fillDataAddNewLead(name);
@@ -195,15 +198,16 @@ public class LeadsPage extends BasePage {
         String statusOfRowAddNew = WebUI_Old.getTextElement(driver, firstRowItemLeadStatus);
 
         driver.navigate().refresh();
+        WebUI_Old.waitForPageLoaded(driver);
 
         clickIconLeadsSummary();
-        int afterActiveStatus = getTotalStatusActiveLeads();
-        int afterCustomerStatus = getTotalStatusCustomerLeads();
+        String afterActiveStatus = getTotalStatusActiveLeads();
+        String afterCustomerStatus = getTotalStatusCustomerLeads();
 
         if (statusOfRowAddNew.equals("Active")) {
-            Assert.assertEquals(afterActiveStatus, beforeActiveStatus + 1, "Số lượng status Active trên Lead Summary không tăng đúng");
+            Assert.assertEquals(Integer.parseInt(afterActiveStatus), Integer.parseInt(beforeActiveStatus) + 1, "Số lượng status Active trên Lead Summary không tăng đúng");
         } else if (statusOfRowAddNew.equals("Customer")) {
-            Assert.assertEquals(afterCustomerStatus, beforeCustomerStatus + 1, "Số lượng status Customer trên Lead Summary không tăng đúng");
+            Assert.assertEquals(Integer.parseInt(afterCustomerStatus), Integer.parseInt(beforeCustomerStatus) + 1, "Số lượng status Customer trên Lead Summary không tăng đúng");
         } else {
             System.out.println("Bản ghi mới thêm thành công thêm Status mới");
         }
