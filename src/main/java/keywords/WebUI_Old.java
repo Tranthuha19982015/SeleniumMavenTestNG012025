@@ -57,7 +57,7 @@ public class WebUI_Old {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         element.sendKeys(text);
-        System.out.println("Set text for element: " + by);
+        System.out.println("Set text " + text + " for element: " + by);
     }
 
     public static void setText(WebDriver driver, WebElement element, String text) {
@@ -128,7 +128,7 @@ public class WebUI_Old {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         //Wait for Javascript to load
-        ExpectedCondition< Boolean > jsLoad = new ExpectedCondition < Boolean > () {
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
                 return js.executeScript("return document.readyState").toString().equals("complete");
@@ -150,6 +150,7 @@ public class WebUI_Old {
             }
         }
     }
+
     public static void waitForElementInVisible(WebDriver driver, By by) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
