@@ -71,6 +71,7 @@ public class WebUI_Old {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
         element.sendKeys(key);
+        System.out.println("Enter key to element: " + by);
     }
 
     public static String getTextElement(WebDriver driver, By by) {
@@ -88,7 +89,7 @@ public class WebUI_Old {
     }
 
     public static String getAttributeElement(WebDriver driver, By by, String attribute) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         System.out.println("Get attribute of element" + by);
         String attributeElement = element.getAttribute(attribute);
@@ -104,7 +105,7 @@ public class WebUI_Old {
 
     public static boolean waitForElementVisible(WebDriver driver, By by) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
             return true;
         } catch (TimeoutException e) {
@@ -115,7 +116,7 @@ public class WebUI_Old {
 
     public static void waitForResultVisible(WebDriver driver, By by) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         } catch (TimeoutException e) {
             System.out.println("Element not visible: " + by);
@@ -154,7 +155,7 @@ public class WebUI_Old {
     public static void waitForElementInVisible(WebDriver driver, By by) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+            wait.until(ExpectedConditions.invisibilityOf(driver.findElement(by)));
         } catch (TimeoutException e) {
             System.out.println("Element still visible: " + by);
         }

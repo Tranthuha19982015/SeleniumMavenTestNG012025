@@ -20,6 +20,7 @@ public class TasksPage extends BasePage {
         this.driver = driver;
     }
 
+    //Locators of elements on Tasks page
     private By buttonNewTask = By.xpath("//a[normalize-space()='New Task']");
     private By headerTasksPage = By.xpath("//span[normalize-space()='Tasks Summary']");
     private By labelNotStarted = By.xpath("//span[normalize-space()='Not Started']/preceding-sibling::span");
@@ -30,6 +31,7 @@ public class TasksPage extends BasePage {
     private By inputSearchTasks = By.xpath("//div[@id='tasks_filter']/descendant::input[@type='search']");
     private By firstRowItemTasksName = By.xpath("//table[@id='tasks']//tbody/tr[1]/td[3]");
 
+    //Locators of elements on Add New Task page
     private By headerAddNewTask = By.xpath("//h4[@id='myModalLabel']");
     private By checkboxPublic = By.xpath("//label[normalize-space()='Public']");
     private By checkboxBillable = By.xpath("//label[@for='task_is_billable']");
@@ -92,6 +94,8 @@ public class TasksPage extends BasePage {
     private By inputOnFrame = By.xpath("//body[@id='tinymce']/descendant::p");
     private By buttonClose = By.xpath("//button[normalize-space()='Close']");
     private By buttonSave = By.xpath("//button[normalize-space()='Save']");
+
+    private By valueLeadInTask = By.xpath("//button[@data-id='rel_id']/following-sibling::div/descendant::a//span[@class='text']");
 
     private boolean checkExist(By by) {
         try {
@@ -200,5 +204,20 @@ public class TasksPage extends BasePage {
         Assert.assertTrue(checkExist(alertMessage), "The alert message not display.");
         String actualMessage = WebUI_Old.getTextElement(driver, alertMessage);
         Assert.assertEquals(actualMessage, "Task added successfully.", "The alert message add new tasks not match.");
+    }
+
+    public String getValueLeadInTask() {
+        return WebUI_Old.getTextElement(driver, valueLeadInTask);
+    }
+
+    public void chooseLeadFollowingRelatedTo(String leadName) {
+        Actions actions = new Actions(driver);
+        WebUI_Old.clickElement(driver, dropdownRelatedTo);
+        WebUI_Old.clickElement(driver, selectRelatedTo("Lead"));
+        WebUI_Old.clickElement(driver, dropdownTypeRelatedTo);
+        WebUI_Old.setText(driver, inputSearchTypeRelatedTo, leadName);
+        WebUI_Old.sleep(1);
+        actions.moveToElement(driver.findElement(inputSearchTypeRelatedTo)).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
+        WebUI_Old.waitForResultVisible(driver, valueLeadInTask);
     }
 }

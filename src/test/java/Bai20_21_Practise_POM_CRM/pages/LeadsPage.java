@@ -16,17 +16,24 @@ public class LeadsPage extends BasePage {
         this.driver = driver;
     }
 
+    // Locators for elements on the Leads page
     private By buttonNewLead = By.xpath("//a[normalize-space()='New Lead']");
     private By iconLeadsSummary = By.xpath("//a[contains(@class,'btn-with-tooltip') and @data-title='Leads Summary']");
-    private By labelActive = By.xpath("//h4[normalize-space()='Leads Summary']/following-sibling::div/descendant::span[normalize-space()='Active']/preceding-sibling::span");
-    private By labelCustomer = By.xpath("//h4[normalize-space()='Leads Summary']/following-sibling::div/descendant::span[normalize-space()='Customer']/preceding-sibling::span");
+    private By labelActive = By.xpath("//span[normalize-space()='Active']/preceding-sibling::span");
+    private By labelCustomer = By.xpath("//span[normalize-space()='Customer']/preceding-sibling::span");
     private By headerLeadsPage = By.xpath("//h4[normalize-space()='Leads Summary']");
     private By inputSearchLead = By.xpath("//div[@id='leads_filter']/descendant::input[@type='search']");
+
+    // The first row item in the leads table
     private By firstRowItemLeadName = By.xpath("//table[@id='leads']//tbody/tr[1]/td[3]/a");
+    private By firstRowItemLeadEmail = By.xpath("//table[@id='leads']//tbody/tr[1]/td[5]/a");
     private By firstRowItemLeadStatus = By.xpath("//table[@id='leads']//tbody/tr[1]//td/span[contains(@class,'lead-status')]");
+
+    // The total number of leads with specific statuses in the leads table
     private By totalStatusActiveLeads = By.xpath("//table[@id='leads']//tbody//td/span[contains(@class,'lead-status') and text()='Active']");
     private By totalStatusCustomerLeads = By.xpath("//table[@id='leads']//tbody//td/span[contains(@class,'lead-status') and text()='Customer']");
 
+    // Elements in the Add New Lead window
     private By headerAddNewLeadWindow = By.xpath("//h4[normalize-space()='Add new lead']");
     private By dropdownStatus = By.xpath("//button[@data-id='status']");
     private By inputSearchStatus = By.xpath("//button[@data-id='status']/following-sibling::div/descendant::input[@type='search']");
@@ -62,6 +69,7 @@ public class LeadsPage extends BasePage {
     private By buttonSave = By.xpath("//div[@id='tab_lead_profile']/descendant::button[normalize-space()='Save']");
 
     private By buttonCloseWindowAfterAdd = By.xpath("//div[@class='modal-content data']//button[@aria-label='Close']");
+    private By popupProfileLead = By.xpath("//div[@id='lead-modal']//div[@class='modal-content data']");
 
     public boolean checkExist(By by) {
         try {
@@ -75,7 +83,6 @@ public class LeadsPage extends BasePage {
 
     public void clickIconLeadsSummary() {
         WebUI_Old.clickElement(driver, iconLeadsSummary);
-        WebUI_Old.sleep(1);
     }
 
     public void verifyNavigateToLeadPage() {
@@ -95,7 +102,7 @@ public class LeadsPage extends BasePage {
 
     public void fillDataAddNewLead(String name) {
         WebUI_Old.clickElement(driver, dropdownStatus);
-        WebUI_Old.setText(driver, inputSearchStatus, "Active");
+        WebUI_Old.setText(driver, inputSearchStatus, "Customer");
         WebUI_Old.setKey(driver, inputSearchStatus, Keys.ENTER);
 
         WebUI_Old.clickElement(driver, dropdownSource);
@@ -142,13 +149,26 @@ public class LeadsPage extends BasePage {
         WebUI_Old.clickElement(driver, buttonCloseWindowAfterAdd);
     }
 
-    public void verifyAddNewLeadSuccess(String name) {
-        WebUI_Old.waitForElementInVisible(driver, buttonCloseWindowAfterAdd);
+    public String getFirstRowItemLeadName() {
+        return WebUI_Old.getTextElement(driver, firstRowItemLeadName);
+    }
+
+    public String getFirstRowItemLeadEmail() {
+        return WebUI_Old.getTextElement(driver, firstRowItemLeadEmail);
+    }
+
+    public String getFirstRowItemLeadStatus() {
+        return WebUI_Old.getTextElement(driver, firstRowItemLeadStatus);
+    }
+
+    public void searchAndCheckLeadInTable(String name) {
+//        WebUI_Old.waitForPageLoaded(driver);
+        WebUI_Old.waitForElementInVisible(driver, popupProfileLead);
         WebUI_Old.clickElement(driver, inputSearchLead);
         WebUI_Old.setText(driver, inputSearchLead, name);
         WebUI_Old.setKey(driver, inputSearchLead, Keys.ENTER);
         WebUI_Old.sleep(1);
-        Assert.assertEquals(WebUI_Old.getTextElement(driver, firstRowItemLeadName), name, "Không đúng Lead đã thêm mới.");
+        Assert.assertEquals(getFirstRowItemLeadName(), name, "Không đúng Lead đã thêm mới.");
     }
 
     public String getTotalStatusActiveLeads() {
@@ -164,54 +184,28 @@ public class LeadsPage extends BasePage {
         return totalLead;
     }
 
+    public void verifyAfterAddingNewLead(int beforeActiveStatus, int beforeCustomerStatus,
+                                         int afterActiveStatus, int afterCustomerStatus, String statusOfFirstRowItem) {
+        if (statusOfFirstRowItem.equals("Active")) {
+            Assert.assertEquals(afterActiveStatus, beforeActiveStatus + 1, "The number of Active Statuses after adding new ones does not match.");
+            Assert.assertEquals(afterCustomerStatus, beforeCustomerStatus, "The number of Customer Statuses after adding new ones does not match.");
+            System.out.println("The number of Status Active after successfully adding new ones is: " + afterActiveStatus);
+            System.out.println("The number of Customer Statuses that remain unchanged after successful addition is: " + afterCustomerStatus);
+        } else if (statusOfFirstRowItem.equals("Customer")) {
+            Assert.assertEquals(afterCustomerStatus, beforeCustomerStatus + 1, "The number of Customer Statuses after adding new ones does not match.");
+            Assert.assertEquals(afterActiveStatus, beforeActiveStatus, "The number of Active Statuses after adding new ones does not match.");
+            System.out.println("The number of Status Active that remains unchanged after a successful addition is: " + afterActiveStatus);
+            System.out.println("The number of Customer Statuses after successfully adding new ones is: " + afterCustomerStatus);
+        } else {
+            System.out.println("The newly added record has a Status other than Active and Customer: " + statusOfFirstRowItem);
+        }
+    }
+
     public int countActiveStatusOnTable() {
         return driver.findElements(totalStatusActiveLeads).size();
     }
 
     public int countCustomerStatusOnTable() {
         return driver.findElements(totalStatusCustomerLeads).size();
-    }
-
-    public void verifyTotalStatusOnTableWithLeadsSummary() {
-        clickIconLeadsSummary();
-        System.out.println("Số lượng Status Active = " + getTotalStatusActiveLeads());
-        int totalActive = Integer.parseInt(getTotalStatusActiveLeads());
-        int countActive = countActiveStatusOnTable();
-        Assert.assertEquals(totalActive, countActive, "Số lượng Status Active dưới Table không bằng trên Lead Summary");
-
-        clickIconLeadsSummary();
-        System.out.println("Số lượng Status Customer = " + getTotalStatusCustomerLeads());
-        int totalCustomer = Integer.parseInt(getTotalStatusCustomerLeads());
-        int countCustomer = countCustomerStatusOnTable();
-        Assert.assertEquals(totalCustomer, countCustomer, "Số lượng Status Customer dưới Table không bằng trên Lead Summary");
-    }
-
-    public void verifyAfterAddingNewLead(String name) {
-        clickIconLeadsSummary();
-        String beforeActiveStatus = getTotalStatusActiveLeads();
-        String beforeCustomerStatus = getTotalStatusCustomerLeads();
-
-        clickButtonNewLead();
-        fillDataAddNewLead(name);
-        clickSaveButton();
-        clickButtonCloseAfterAdd();
-        verifyAddNewLeadSuccess(name);
-        String statusOfRowAddNew = WebUI_Old.getTextElement(driver, firstRowItemLeadStatus);
-
-        driver.navigate().refresh();
-        WebUI_Old.waitForPageLoaded(driver);
-
-        clickIconLeadsSummary();
-        String afterActiveStatus = getTotalStatusActiveLeads();
-        String afterCustomerStatus = getTotalStatusCustomerLeads();
-
-        if (statusOfRowAddNew.equals("Active")) {
-            Assert.assertEquals(Integer.parseInt(afterActiveStatus), Integer.parseInt(beforeActiveStatus) + 1, "Số lượng status Active trên Lead Summary không tăng đúng");
-        } else if (statusOfRowAddNew.equals("Customer")) {
-            Assert.assertEquals(Integer.parseInt(afterCustomerStatus), Integer.parseInt(beforeCustomerStatus) + 1, "Số lượng status Customer trên Lead Summary không tăng đúng");
-        } else {
-            System.out.println("Bản ghi mới thêm thành công thêm Status mới");
-        }
-//        verifyTotalStatusOnTableWithLeadsSummary();
     }
 }
