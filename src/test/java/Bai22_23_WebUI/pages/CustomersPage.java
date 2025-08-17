@@ -1,0 +1,139 @@
+package Bai22_23_WebUI.pages;
+
+import keywords.WebUI;
+import keywords.WebUI;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.time.Duration;
+
+public class CustomersPage extends BasePage {
+    private WebDriver driver;
+
+    public CustomersPage(WebDriver driver) {
+        super(driver);
+        this.driver = driver;
+        new WebUI(driver);
+    }
+
+    //Locator for Customer List
+    private By buttonNewCustomer = By.xpath("//a[normalize-space()='New Customer']");
+    private By headerCustomerPage = By.xpath("//span[normalize-space()='Customers Summary']");
+    private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
+    private By firstRowItemCustomer = By.xpath("//table[@id='clients']//tbody/tr[1]/td[3]/a");
+    private By labelTotalCustomers = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
+
+    //Locator for Add New Customer
+    private By inputCompany = By.xpath("//input[@id='company']");
+    private By inputVatNumber = By.xpath("//input[@id='vat']");
+    private By inputPhone = By.xpath("//input[@id='phonenumber']");
+    private By inputWebsite = By.xpath("//input[@id='website']");
+    private By inputAddress = By.xpath("//textarea[@id='address']");
+    private By inputCity = By.xpath("//input[@id='city']");
+    private By inputState = By.xpath("//input[@id='state']");
+    private By inputZipCode = By.xpath("//input[@id='zip']");
+    private By dropdownGroups = By.xpath("//button[contains(@data-id,'groups_in')]");
+    private By inputSearchGroups = By.xpath("//button[contains(@data-id,'groups_in')]/following-sibling::div//input[@type='search']");
+    private By dropdownCurrency = By.xpath("//button[contains(@data-id,'default_currency')]");
+    private By inputSearchCurrency = By.xpath("//button[contains(@data-id,'default_currency')]/following-sibling::div//input[@type='search']");
+    private By dropdownDefaultLanguage = By.xpath("//button[contains(@data-id,'default_language')]");
+
+    public By optionValueDefaultLanguage(String language) {
+        String xpathLanguage = "//span[normalize-space()='" + language + "']";
+        System.out.println("Select language: " + language);
+        return By.xpath(xpathLanguage);
+    }
+
+    //    private By optionLanguageVietnamese = By.xpath("//span[normalize-space()='Vietnamese']");
+//    private String optionLanguageDynamic = "(//span[normalize-space()='%s'])[%d]";
+    private By dropdownCountry = By.xpath("//button[contains(@data-id,'country')]");
+    private By inputSearchCountry = By.xpath("//button[contains(@data-id,'country')]/following-sibling::div//input[@type='search']");
+    private By buttonSave = By.xpath("//div[@id='profile-save-section']//button[normalize-space()='Save']");
+    private By headerCustomerDetailPage = By.xpath("//h4[normalize-space()='Profile']");
+
+    //Hàm xử lý cho trang Customer
+    public void verifyNavigateToCustomerPage() {
+        boolean check = WebUI.checkElementExist(headerCustomerPage);
+        Assert.assertTrue(check, "The customer header page not display.");
+        Assert.assertEquals(WebUI.getElementText(headerCustomerPage), "Customers Summary", "The customer header page not match.");
+    }
+
+    public void clickButtonNewCustomer() {
+        WebUI.clickElement(buttonNewCustomer);
+    }
+
+    public void fillDataForAddNewCustomer(String customerName) {
+        WebUI.setText(inputCompany, customerName);
+        WebUI.setText(inputVatNumber, "10");
+        WebUI.setText(inputPhone, "0965898635");
+        WebUI.setText(inputWebsite, "htest.com.vn");
+
+        // select Groups
+        WebUI.clickElement(dropdownGroups);
+        WebUI.setText(inputSearchGroups, "hatran");
+        WebUI.setKey(inputSearchGroups, Keys.ENTER);
+        WebUI.clickElement(dropdownGroups);
+
+        //select Currency
+        WebUI.clickElement(dropdownCurrency);
+        WebUI.setText(inputSearchCurrency, "USD");
+        WebUI.setKey(inputSearchCurrency, Keys.ENTER);
+
+        //select Default Language
+        WebUI.clickElement(dropdownDefaultLanguage);
+        WebUI.clickElement(optionValueDefaultLanguage("Vietnamese"));
+
+        WebUI.setText(inputAddress, "Minh Khai, Bắc Từ Liêm");
+        WebUI.setText(inputCity, "Hà Nội");
+        WebUI.setText(inputState, "123545");
+        WebUI.setText(inputZipCode, "0001212");
+
+        //select Country
+        WebUI.clickElement(dropdownCountry);
+        WebUI.setText(inputSearchCountry, "Vietnam");
+        WebUI.setKey(inputSearchCountry, Keys.ENTER);
+    }
+
+    public void clickSaveButton() {
+        WebUI.clickElement(buttonSave);
+    }
+
+    public void verifyNavigateToCustomerDetailPage() {
+        boolean check = WebUI.checkElementExist(headerCustomerDetailPage);
+        Assert.assertTrue(check, "The customer detail header page not display.");
+        Assert.assertEquals(WebUI.getElementText(headerCustomerDetailPage), "Profile", "The customer detail header page not match.");
+    }
+
+    public void verifyAddNewCustomerSuccess(String customerName) {
+        //navigation to customer detail
+        verifyNavigateToCustomerDetailPage();
+
+        //Verify data in customer detail
+        Assert.assertEquals(WebUI.getElementAttribute(inputCompany, "value"), customerName, "The Company name not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputVatNumber, "value"), "10", "The VAT value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputPhone, "value"), "0965898635", "The Phone number value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputWebsite, "value"), "htest.com.vn", "The Website value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(dropdownGroups, "title"), "hatran", "The Groups value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(dropdownCurrency, "title"), "USD", "The Currency value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(dropdownDefaultLanguage, "title"), "Vietnamese", "The Default Language value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputAddress, "value"), "Minh Khai, Bắc Từ Liêm", "The Address value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputCity, "value"), "Hà Nội", "The City value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputState, "value"), "123545", "The State value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(inputZipCode, "value"), "0001212", "The Zip Code value not match.");
+        Assert.assertEquals(WebUI.getElementAttribute(dropdownCountry, "title"), "Vietnam", "The Country value not match.");
+    }
+
+    public void searchAndCheckCustomerInTable() {
+
+    }
+
+    public void verifyCustomerDetail() {
+
+    }
+}
+
