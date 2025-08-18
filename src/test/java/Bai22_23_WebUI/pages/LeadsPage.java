@@ -90,16 +90,13 @@ public class LeadsPage extends BasePage {
 
     public void fillDataAddNewLead(String name) {
         WebUI.clickElement(dropdownStatus);
-        WebUI.setText(inputSearchStatus, "Customer");
-        WebUI.setKey(inputSearchStatus, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchStatus, "Customer", Keys.ENTER);
 
         WebUI.clickElement(dropdownSource);
-        WebUI.setText(inputSearchSource, "Google");
-        WebUI.setKey(inputSearchSource, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchSource, "Google", Keys.ENTER);
 
         WebUI.clickElement(dropdownAssigned);
-        WebUI.setText(inputSearchAssigned, "Anh Tester");
-        WebUI.setKey(inputSearchAssigned, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchAssigned, "Anh Tester", Keys.ENTER);
 
         WebUI.setText(inputTags, "htest" + System.currentTimeMillis());
 
@@ -112,16 +109,14 @@ public class LeadsPage extends BasePage {
         WebUI.setText(inputWebsite, "htest.com.vn");
 
         WebUI.clickElement(dropdownCountry);
-        WebUI.setText(inputSearchCountry, "Vietnam");
-        WebUI.setKey(inputSearchCountry, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchCountry, "Vietnam", Keys.ENTER);
 
         WebUI.setText(inputPhone, "0965896589");
         WebUI.setText(inputZipCode, "0235565");
         WebUI.setText(inputLeadValue, "10");
 
         WebUI.clickElement(dropdownDefaultLanguage);
-        WebUI.setText(inputSearchDefaultLanguage, "Vietnamese");
-        WebUI.setKey(inputSearchDefaultLanguage, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchDefaultLanguage, "Vietnamese", Keys.ENTER);
 
         WebUI.setText(inputCompany, "NDJSC");
         WebUI.setText(inputDescription, "Test add lead");
@@ -156,8 +151,7 @@ public class LeadsPage extends BasePage {
     public void searchAndCheckLeadInTable(String name) {
         WebUI.waitForElementNotVisible(popupProfileLead);
         WebUI.clickElement(inputSearchLead);
-        WebUI.setText(inputSearchLead, name);
-        WebUI.setKey(inputSearchLead, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchLead, name, Keys.ENTER);
         WebUI.waitForPageLoaded();
         WebUI.sleep(1);
         Assert.assertEquals(getFirstRowItemLeadName(), name, "Không đúng Lead đã thêm mới.");

@@ -1,16 +1,10 @@
 package Bai22_23_WebUI.pages;
 
 import keywords.WebUI;
-import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.time.Duration;
 
 public class CustomersPage extends BasePage {
     private WebDriver driver;
@@ -74,14 +68,12 @@ public class CustomersPage extends BasePage {
 
         // select Groups
         WebUI.clickElement(dropdownGroups);
-        WebUI.setText(inputSearchGroups, "hatran");
-        WebUI.setKey(inputSearchGroups, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchGroups,"hatran", Keys.ENTER);
         WebUI.clickElement(dropdownGroups);
 
         //select Currency
         WebUI.clickElement(dropdownCurrency);
-        WebUI.setText(inputSearchCurrency, "USD");
-        WebUI.setKey(inputSearchCurrency, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchCurrency,"USD", Keys.ENTER);
 
         //select Default Language
         WebUI.clickElement(dropdownDefaultLanguage);
@@ -94,8 +86,7 @@ public class CustomersPage extends BasePage {
 
         //select Country
         WebUI.clickElement(dropdownCountry);
-        WebUI.setText(inputSearchCountry, "Vietnam");
-        WebUI.setKey(inputSearchCountry, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchCountry, "Vietnam",Keys.ENTER);
     }
 
     public void clickSaveButton() {

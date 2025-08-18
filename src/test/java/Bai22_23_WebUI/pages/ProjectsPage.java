@@ -1,17 +1,11 @@
 package Bai22_23_WebUI.pages;
 
 import keywords.WebUI;
-import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.time.Duration;
 
 public class ProjectsPage extends BasePage {
     private WebDriver driver;
@@ -150,8 +144,7 @@ public class ProjectsPage extends BasePage {
 
         // Select members from dropdown
         WebUI.clickElement(dropdownMembers);
-        WebUI.setText(inputSearchMembers, "Anh Tester");
-        WebUI.setKey(inputSearchMembers, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchMembers,"Anh Tester", Keys.ENTER);
         WebUI.clickElement(dropdownMembers);
 
         // Fill start date, deadline, tags

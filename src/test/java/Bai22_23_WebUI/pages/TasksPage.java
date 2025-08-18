@@ -1,17 +1,11 @@
 package Bai22_23_WebUI.pages;
 
 import keywords.WebUI;
-import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.time.Duration;
 
 public class TasksPage extends BasePage {
     private WebDriver driver;
@@ -170,19 +164,16 @@ public class TasksPage extends BasePage {
 
         //select Assignees
         WebUI.clickElement(dropdownAssignees);
-        WebUI.setText(inputSearchAssignees, "Anh Tester");
-        WebUI.setKey(inputSearchAssignees, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchAssignees, "Anh Tester", Keys.ENTER);
         WebUI.clickElement(dropdownAssignees);
 
         //select Followers
         WebUI.clickElement(dropdownFollowers);
-        WebUI.setText(inputSearchFollowers, "Anh Tester");
-        WebUI.setKey(inputSearchFollowers, Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchFollowers, "Anh Tester", Keys.ENTER);
         WebUI.clickElement(dropdownFollowers);
 
         //fill Tags
-        WebUI.setText(inputTags, "htest");
-        WebUI.setKey(inputTags, Keys.ENTER);
+        WebUI.setTextAndKey(inputTags,"htest", Keys.ENTER);
         WebUI.clickElement(labelTags);
 
         //fill iFrame Description
