@@ -1,6 +1,7 @@
 package Bai22_23_WebUI.pages;
 
-import keywords.WebUI_Old;
+import keywords.WebUI;
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,6 +22,7 @@ public class TasksPage extends BasePage {
     public TasksPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
+        new WebUI(driver);
     }
 
     //Locators of elements on Tasks page
@@ -100,127 +102,118 @@ public class TasksPage extends BasePage {
 
     private By valueLeadInTask = By.xpath("//button[@data-id='rel_id']/following-sibling::div/descendant::a//span[@class='text']");
 
-    private boolean checkExist(By by) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
     public void verifyTasksPageDisplay() {
-        Assert.assertTrue(checkExist(headerTasksPage), "The tasks header page not display.");
-        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerTasksPage), "Tasks Summary", "The Tasks header not match.");
+        boolean isTasksPageDisplayed = WebUI.checkElementExist(headerTasksPage);
+        Assert.assertTrue(isTasksPageDisplayed, "The tasks header page not display.");
     }
 
     public void clickButtonNewTask() {
-        WebUI_Old.clickElement(driver, buttonNewTask);
+        WebUI.clickElement(buttonNewTask);
     }
 
     public void verifyAddNewTaskPageDisplay() {
-        Assert.assertTrue(checkExist(headerAddNewTask), "The Add new task header page not display.");
-        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerAddNewTask), "Add new task", "The Add new task header not match.");
+        boolean isAddNewTaskPageDisplayed = WebUI.checkElementExist(headerAddNewTask);
+        Assert.assertTrue(isAddNewTaskPageDisplayed, "The Add new task header page not display.");
+        Assert.assertEquals(WebUI.getElementText(headerAddNewTask), "Add new task", "The Add new task header not match.");
     }
 
     public void chooseOptionRepeatEvery(String typeRepeat) {
         if (!typeRepeat.equals("") && !typeRepeat.equals("Custom")) {
-            WebUI_Old.clickElement(driver, checkboxInfinity);
-            WebUI_Old.clearTextElement(driver, inputTotalCycles);
-            WebUI_Old.setText(driver, inputTotalCycles, "8");
+            WebUI.clickElement(checkboxInfinity);
+            WebUI.clearTextElement(inputTotalCycles);
+            WebUI.setText(inputTotalCycles, "8");
         } else if (typeRepeat.equals("Custom")) {
-            WebUI_Old.clearTextElement(driver, inputNumberCustomRepeatEvery);
-            WebUI_Old.setText(driver, inputNumberCustomRepeatEvery, "3");
-            WebUI_Old.clickElement(driver, dropdownTypeCustomRepeatEvery);
-            WebUI_Old.clickElement(driver, selectTypeCustomRepeatEvery("Week"));
+            WebUI.clearTextElement(inputNumberCustomRepeatEvery);
+            WebUI.setText(inputNumberCustomRepeatEvery, "3");
+            WebUI.clickElement(dropdownTypeCustomRepeatEvery);
+            WebUI.clickElement(selectTypeCustomRepeatEvery("Week"));
         }
     }
 
     public void fillDataAddNewTask(String subject, String valueRelatedTo) {
         Actions actions = new Actions(driver);
-        WebUI_Old.clickElement(driver, checkboxPublic);
-        WebUI_Old.setText(driver, inputSubject, subject);
-        WebUI_Old.clearTextElement(driver, inputHourlyRate);
-        WebUI_Old.setText(driver, inputHourlyRate, "3");
+        WebUI.clickElement(checkboxPublic);
+        WebUI.setText(inputSubject, subject);
+        WebUI.clearTextElement(inputHourlyRate);
+        WebUI.setText(inputHourlyRate, "3");
 
         //select Start Date
-        WebUI_Old.clearTextElement(driver, datepickerStartDate);
-        WebUI_Old.setText(driver, datepickerStartDate, "11-08-2025");
-        WebUI_Old.clickElement(driver, datepickerStartDate);
+        WebUI.clearTextElement(datepickerStartDate);
+        WebUI.setText(datepickerStartDate, "11-08-2025");
+        WebUI.clickElement(datepickerStartDate);
 
         //select Due Date
-        WebUI_Old.clearTextElement(driver, datepickerDueDate);
-        WebUI_Old.setText(driver, datepickerDueDate, "12-08-2025");
-        WebUI_Old.clickElement(driver, datepickerDueDate);
+        WebUI.clearTextElement(datepickerDueDate);
+        WebUI.setText(datepickerDueDate, "12-08-2025");
+        WebUI.clickElement(datepickerDueDate);
 
         //select Priority
-        WebUI_Old.clickElement(driver, dropdownPriority);
-        WebUI_Old.clickElement(driver, selectPriority("High"));
+        WebUI.clickElement(dropdownPriority);
+        WebUI.clickElement(selectPriority("High"));
 
         //select Repeat Every
-        WebUI_Old.clickElement(driver, dropdownRepeatEvery);
+        WebUI.clickElement(dropdownRepeatEvery);
         String typeRepeatEvery = "Custom";
-        WebUI_Old.clickElement(driver, selectRepeatEvery(typeRepeatEvery));
+        WebUI.clickElement(selectRepeatEvery(typeRepeatEvery));
         chooseOptionRepeatEvery(typeRepeatEvery);
 
         //select Related To
-        WebUI_Old.clickElement(driver, dropdownRelatedTo);
+        WebUI.clickElement(dropdownRelatedTo);
         String optionRelatedTo = "Lead";
-        WebUI_Old.clickElement(driver, selectRelatedTo(optionRelatedTo));
-        WebUI_Old.clickElement(driver, dropdownTypeRelatedTo);
-        WebUI_Old.setText(driver, inputSearchTypeRelatedTo, valueRelatedTo);
-        WebUI_Old.sleep(1);
+        WebUI.clickElement(selectRelatedTo(optionRelatedTo));
+        WebUI.clickElement(dropdownTypeRelatedTo);
+        WebUI.setText(inputSearchTypeRelatedTo, valueRelatedTo);
+        WebUI.sleep(1);
         actions.moveToElement(driver.findElement(inputSearchTypeRelatedTo)).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
-        WebUI_Old.waitForResultVisible(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
-        WebUI_Old.clickElement(driver, selectValueSearchTypeRelatedTo(valueRelatedTo));
+        WebUI.waitForElementVisible(selectValueSearchTypeRelatedTo(valueRelatedTo));
+        WebUI.clickElement(selectValueSearchTypeRelatedTo(valueRelatedTo));
 
         //select Assignees
-        WebUI_Old.clickElement(driver, dropdownAssignees);
-        WebUI_Old.setText(driver, inputSearchAssignees, "Anh Tester");
-        WebUI_Old.setKey(driver, inputSearchAssignees, Keys.ENTER);
-        WebUI_Old.clickElement(driver, dropdownAssignees);
+        WebUI.clickElement(dropdownAssignees);
+        WebUI.setText(inputSearchAssignees, "Anh Tester");
+        WebUI.setKey(inputSearchAssignees, Keys.ENTER);
+        WebUI.clickElement(dropdownAssignees);
 
         //select Followers
-        WebUI_Old.clickElement(driver, dropdownFollowers);
-        WebUI_Old.setText(driver, inputSearchFollowers, "Anh Tester");
-        WebUI_Old.setKey(driver, inputSearchFollowers, Keys.ENTER);
-        WebUI_Old.clickElement(driver, dropdownFollowers);
+        WebUI.clickElement(dropdownFollowers);
+        WebUI.setText(inputSearchFollowers, "Anh Tester");
+        WebUI.setKey(inputSearchFollowers, Keys.ENTER);
+        WebUI.clickElement(dropdownFollowers);
 
         //fill Tags
-        WebUI_Old.setText(driver, inputTags, "htest");
-        WebUI_Old.setKey(driver, inputTags, Keys.ENTER);
-        WebUI_Old.clickElement(driver, labelTags);
+        WebUI.setText(inputTags, "htest");
+        WebUI.setKey(inputTags, Keys.ENTER);
+        WebUI.clickElement(labelTags);
 
         //fill iFrame Description
-        WebUI_Old.clickElement(driver, inputTaskDescription);
-        WebUI_Old.switchToFrameWhenAvailable(driver, iframeTaskDescription);
-        WebUI_Old.setText(driver, inputOnFrame, "htest iframe");
-        WebUI_Old.switchToDefaultContent(driver);
+        WebUI.clickElement(inputTaskDescription);
+        WebUI.switchToFrameWhenAvailable(iframeTaskDescription);
+        WebUI.setText(inputOnFrame, "htest iframe");
+        WebUI.switchToDefaultContent();
     }
 
     public void clickButtonSave() {
-        WebUI_Old.clickElement(driver, buttonSave);
+        WebUI.clickElement(buttonSave);
     }
 
     public void verifyAddNewTaskSuccess() {
-        Assert.assertTrue(checkExist(alertMessage), "The alert message not display.");
-        String actualMessage = WebUI_Old.getTextElement(driver, alertMessage);
+        Assert.assertTrue(WebUI.checkElementExist(alertMessage), "The alert message not display.");
+        String actualMessage = WebUI.getElementText(alertMessage);
         Assert.assertEquals(actualMessage, "Task added successfully.", "The alert message add new tasks not match.");
     }
 
     public String getValueLeadInTask() {
-        return WebUI_Old.getTextElement(driver, valueLeadInTask);
+        return WebUI.getElementText(valueLeadInTask);
     }
 
     public void chooseLeadFollowingRelatedTo(String leadName) {
         Actions actions = new Actions(driver);
-        WebUI_Old.clickElement(driver, dropdownRelatedTo);
-        WebUI_Old.clickElement(driver, selectRelatedTo("Lead"));
-        WebUI_Old.clickElement(driver, dropdownTypeRelatedTo);
-        WebUI_Old.setText(driver, inputSearchTypeRelatedTo, leadName);
-        WebUI_Old.sleep(1);
+        WebUI.clickElement(dropdownRelatedTo);
+        WebUI.clickElement(selectRelatedTo("Lead"));
+        WebUI.clickElement(dropdownTypeRelatedTo);
+        WebUI.setText(inputSearchTypeRelatedTo, leadName);
+        WebUI.sleep(1);
         actions.moveToElement(driver.findElement(inputSearchTypeRelatedTo)).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
-        WebUI_Old.waitForResultVisible(driver, valueLeadInTask);
+        WebUI.waitForElementVisible(valueLeadInTask);
     }
 }

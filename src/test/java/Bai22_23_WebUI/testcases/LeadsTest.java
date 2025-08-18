@@ -38,12 +38,11 @@ public class LeadsTest extends BaseTest {
 
         String leadsName = "Leads Htest " + System.currentTimeMillis();
 
+        leadsPage.clickIconLeadsSummary();
         leadsPage.verifyNavigateToLeadPage();
 
         //get total lead status in leads summary
-        leadsPage.clickIconLeadsSummary();
         String beforeTotalActive = leadsPage.getTotalStatusActiveLeads();
-        leadsPage.clickIconLeadsSummary();
         String beforeTotalCustomer = leadsPage.getTotalStatusCustomerLeads();
 
         //Add new lead
@@ -76,16 +75,16 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
+        leadsPage.clickIconLeadsSummary();
         leadsPage.verifyNavigateToLeadPage();
 
-        //get total lead status in leads summary
-        leadsPage.clickIconLeadsSummary();
+        //get total active status in leads summary
         int totalActiveOnLeadsSummary = Integer.parseInt(leadsPage.getTotalStatusActiveLeads());
         int totalActiveOnTable = leadsPage.countActiveStatusOnTable();
         Assert.assertEquals(totalActiveOnTable, totalActiveOnLeadsSummary,
                 "Total active status leads on summary does not match with total active status leads on table.");
 
-        leadsPage.clickIconLeadsSummary();
+        //get total customer status in leads summary
         int totalCustomerOnLeadsSummary = Integer.parseInt(leadsPage.getTotalStatusCustomerLeads());
         int totalCustomerOnTable = leadsPage.countCustomerStatusOnTable();
         Assert.assertEquals(totalCustomerOnTable, totalCustomerOnLeadsSummary,
@@ -100,6 +99,7 @@ public class LeadsTest extends BaseTest {
 
         String leadsName = "Leads Htest " + System.currentTimeMillis();
 
+        leadsPage.clickIconLeadsSummary();
         leadsPage.verifyNavigateToLeadPage();
         //Add new lead
         leadsPage.clickButtonNewLead();

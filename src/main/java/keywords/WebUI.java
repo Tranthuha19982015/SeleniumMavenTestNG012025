@@ -12,7 +12,7 @@ import java.util.List;
 public class WebUI {
 
     private static int WAIT_TIMEOUT = 10;
-    private static double STEP_TIME = 0.5;
+    private static double STEP_TIME = 0;
     private static int PAGE_LOAD_TIMEOUT = 20;
     private static WebDriver driver; //driver = null
 
@@ -69,8 +69,8 @@ public class WebUI {
             highlightElement(by);
             return element;
         } catch (Throwable error) {
-            logConsole("Timeout waiting for the element Visible with " + seconds + "s : " + by.toString());
-            Assert.fail("Timeout waiting for the element Visible with " + seconds + "s : " + by.toString());
+            logConsole("Timeout waiting for the element Visible with " + seconds + "s : " + by);
+            Assert.fail("Timeout waiting for the element Visible with " + seconds + "s : " + by);
         }
         return element;
     }
@@ -97,8 +97,8 @@ public class WebUI {
             highlightElement(by);
             return element;
         } catch (Throwable error) {
-            logConsole("Timeout waiting for the element to be clickable with " + seconds + "s : " + by);
-            Assert.fail("Timeout waiting for the element to be clickable with " + seconds + "s : " + by);
+            logConsole("Timeout waiting for the element to be clickable with " + seconds + "(s) : " + by);
+            Assert.fail("Timeout waiting for the element to be clickable with " + seconds + "(s) : " + by);
         }
         return element;
     }
@@ -125,14 +125,15 @@ public class WebUI {
             highlightElement(by);
             return element;
         } catch (Throwable error) {
-            logConsole("Element not exist with " + seconds + "s : " + by.toString());
-            Assert.fail("Element not exist with " + seconds + "s : " + by.toString());
+            logConsole("Element not exist with " + seconds + "(s) : " + by);
+            Assert.fail("Element not exist with " + seconds + "(s) : " + by);
         }
         return element;
     }
 
     //Chờ đợi trang load xong mới thao tác
     public static void waitForPageLoaded() {
+        //Duration.ofMillis(500): Khoảng thời gian nghỉ trong mỗi vòng lặp
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(PAGE_LOAD_TIMEOUT), Duration.ofMillis(500));
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -169,6 +170,7 @@ public class WebUI {
     }
 
     public static Boolean checkElementExist(By by) {
+        waitForElementVisible(by);
         List<WebElement> listElement = getWebElements(by);
 
         if (listElement.size() > 0) {
@@ -249,7 +251,7 @@ public class WebUI {
         logConsole("Get text of element " + by);
         String text = getWebElement(by).getText();
         logConsole("==> TEXT: " + text);
-        return text; //Trả về một giá trị kiểu String
+        return text;
     }
 
     public static String getElementAttribute(By by, String attributeName) {
@@ -260,12 +262,45 @@ public class WebUI {
         return value;
     }
 
+
     public static String getElementCssValue(By by, String cssPropertyName) {
         waitForElementVisible(by);
         System.out.println("Get CSS value " + cssPropertyName + " of element " + by);
         String value = getWebElement(by).getCssValue(cssPropertyName);
         System.out.println("==> CSS value: " + value);
         return value;
+    }
+
+    public static void switchToFrameWhenAvailable(By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+            System.out.println("Switched to iframe: " + by);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Iframe không xuất hiện sau: " + WAIT_TIMEOUT + " (s)");
+        }
+    }
+
+    public static void switchToDefaultContent() {
+        driver.switchTo().defaultContent();
+        System.out.println("Switched back to default content");
+    }
+
+    public static void clearTextElement(By by) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        element.clear();
+        System.out.println("Clear text default of element: " + by);
+    }
+
+    public static void waitForElementNotVisible(By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.invisibilityOf(getWebElement(by)));
+        } catch (Throwable error) {
+            logConsole("Timeout waiting for the element Not Visible with " + by.toString());
+            Assert.fail("Timeout waiting for the element Not Visible with " + by.toString());
+        }
     }
 }
 

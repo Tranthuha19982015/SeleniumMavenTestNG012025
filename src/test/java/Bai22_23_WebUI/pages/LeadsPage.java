@@ -1,12 +1,8 @@
 package Bai22_23_WebUI.pages;
 
-import keywords.WebUI_Old;
+import keywords.WebUI;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.time.Duration;
 
 public class LeadsPage extends BasePage {
     private WebDriver driver;
@@ -14,6 +10,7 @@ public class LeadsPage extends BasePage {
     public LeadsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
+        new WebUI(driver);
     }
 
     // Locators for elements on the Leads page
@@ -71,112 +68,107 @@ public class LeadsPage extends BasePage {
     private By buttonCloseWindowAfterAdd = By.xpath("//div[@class='modal-content data']//button[@aria-label='Close']");
     private By popupProfileLead = By.xpath("//div[@id='lead-modal']//div[@class='modal-content data']");
 
-    public boolean checkExist(By by) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
     public void clickIconLeadsSummary() {
-        WebUI_Old.clickElement(driver, iconLeadsSummary);
+        WebUI.clickElement(iconLeadsSummary);
+        WebUI.waitForPageLoaded();
     }
 
     public void verifyNavigateToLeadPage() {
-        clickIconLeadsSummary();
-        Assert.assertTrue(checkExist(headerLeadsPage), "The lead header page not display.");
-        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerLeadsPage), "Leads Summary", "The lead header page not match.");
+        boolean isDisplayed = WebUI.checkElementExist(headerLeadsPage);
+        Assert.assertTrue(isDisplayed, "The lead header page not display.");
     }
 
     public void clickButtonNewLead() {
-        WebUI_Old.clickElement(driver, buttonNewLead);
+        WebUI.clickElement(buttonNewLead);
+        WebUI.waitForPageLoaded();
     }
 
     public void verifyOpenWindowAddNewLead() {
-        Assert.assertTrue(checkExist(headerAddNewLeadWindow), "The new lead window not display.");
-        Assert.assertEquals(WebUI_Old.getTextElement(driver, headerAddNewLeadWindow), "Add new lead", "The lead summary window not match.");
+        boolean isDisplayed = WebUI.checkElementExist(headerAddNewLeadWindow);
+        Assert.assertTrue(isDisplayed, "The new lead window not display.");
     }
 
     public void fillDataAddNewLead(String name) {
-        WebUI_Old.clickElement(driver, dropdownStatus);
-        WebUI_Old.setText(driver, inputSearchStatus, "Customer");
-        WebUI_Old.setKey(driver, inputSearchStatus, Keys.ENTER);
+        WebUI.clickElement(dropdownStatus);
+        WebUI.setText(inputSearchStatus, "Customer");
+        WebUI.setKey(inputSearchStatus, Keys.ENTER);
 
-        WebUI_Old.clickElement(driver, dropdownSource);
-        WebUI_Old.setText(driver, inputSearchSource, "Google");
-        WebUI_Old.setKey(driver, inputSearchSource, Keys.ENTER);
+        WebUI.clickElement(dropdownSource);
+        WebUI.setText(inputSearchSource, "Google");
+        WebUI.setKey(inputSearchSource, Keys.ENTER);
 
-        WebUI_Old.clickElement(driver, inputTags);
-        WebUI_Old.setText(driver, inputTags, "HTest");
-        WebUI_Old.setKey(driver, inputTags, Keys.ENTER);
+        WebUI.clickElement(dropdownAssigned);
+        WebUI.setText(inputSearchAssigned, "Anh Tester");
+        WebUI.setKey(inputSearchAssigned, Keys.ENTER);
 
-        WebUI_Old.setText(driver, inputName, name);
+        WebUI.setText(inputTags, "htest" + System.currentTimeMillis());
+
+        WebUI.setText(inputName, name);
 //        WebUI.setText(driver, inputAddress, "Minh Khai");
-        WebUI_Old.setText(driver, inputPosition, "Bắc Từ Liêm");
-        WebUI_Old.setText(driver, inputCity, "Hà Nội");
-        WebUI_Old.setText(driver, inputEmailAddress, "htest" + System.currentTimeMillis() + "@gmail.com");
-        WebUI_Old.setText(driver, inputState, "htest state");
-        WebUI_Old.setText(driver, inputWebsite, "htest.com.vn");
+        WebUI.setText(inputPosition, "Bắc Từ Liêm");
+        WebUI.setText(inputCity, "Hà Nội");
+        WebUI.setText(inputEmailAddress, "htest" + System.currentTimeMillis() + "@gmail.com");
+        WebUI.setText(inputState, "htest state");
+        WebUI.setText(inputWebsite, "htest.com.vn");
 
-        WebUI_Old.clickElement(driver, dropdownCountry);
-        WebUI_Old.setText(driver, inputSearchCountry, "Vietnam");
-        WebUI_Old.setKey(driver, inputSearchCountry, Keys.ENTER);
+        WebUI.clickElement(dropdownCountry);
+        WebUI.setText(inputSearchCountry, "Vietnam");
+        WebUI.setKey(inputSearchCountry, Keys.ENTER);
 
-        WebUI_Old.setText(driver, inputPhone, "0965896589");
-        WebUI_Old.setText(driver, inputZipCode, "0235565");
-        WebUI_Old.setText(driver, inputLeadValue, "10");
+        WebUI.setText(inputPhone, "0965896589");
+        WebUI.setText(inputZipCode, "0235565");
+        WebUI.setText(inputLeadValue, "10");
 
-        WebUI_Old.clickElement(driver, dropdownDefaultLanguage);
-        WebUI_Old.setText(driver, inputSearchDefaultLanguage, "Vietnamese");
-        WebUI_Old.setKey(driver, inputSearchDefaultLanguage, Keys.ENTER);
+        WebUI.clickElement(dropdownDefaultLanguage);
+        WebUI.setText(inputSearchDefaultLanguage, "Vietnamese");
+        WebUI.setKey(inputSearchDefaultLanguage, Keys.ENTER);
 
-        WebUI_Old.setText(driver, inputCompany, "NDJSC");
-        WebUI_Old.setText(driver, inputDescription, "Test add lead");
-        WebUI_Old.clickElement(driver, checkboxPublic);
+        WebUI.setText(inputCompany, "NDJSC");
+        WebUI.setText(inputDescription, "Test add lead");
+        WebUI.clickElement(checkboxPublic);
     }
 
     public void clickSaveButton() {
-        WebUI_Old.clickElement(driver, buttonSave);
+        WebUI.clickElement(buttonSave);
+        WebUI.waitForPageLoaded();
     }
 
     public void clickButtonCloseAfterAdd() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", (driver.findElement(buttonCloseWindowAfterAdd)));
-        WebUI_Old.sleep(1);
-        WebUI_Old.clickElement(driver, buttonCloseWindowAfterAdd);
+        js.executeScript("arguments[0].scrollIntoView(true);", (WebUI.getWebElement(buttonCloseWindowAfterAdd)));
+        WebUI.sleep(1);
+        WebUI.clickElement(buttonCloseWindowAfterAdd);
+        WebUI.waitForPageLoaded();
     }
 
     public String getFirstRowItemLeadName() {
-        return WebUI_Old.getTextElement(driver, firstRowItemLeadName);
+        return WebUI.getElementText(firstRowItemLeadName);
     }
 
     public String getFirstRowItemLeadEmail() {
-        return WebUI_Old.getTextElement(driver, firstRowItemLeadEmail);
+        return WebUI.getElementText(firstRowItemLeadEmail);
     }
 
     public String getFirstRowItemLeadStatus() {
-        return WebUI_Old.getTextElement(driver, firstRowItemLeadStatus);
+        return WebUI.getElementText(firstRowItemLeadStatus);
     }
 
     public void searchAndCheckLeadInTable(String name) {
-//        WebUI_Old.waitForPageLoaded(driver);
-        WebUI_Old.waitForElementInVisible(driver, popupProfileLead);
-        WebUI_Old.clickElement(driver, inputSearchLead);
-        WebUI_Old.setText(driver, inputSearchLead, name);
-        WebUI_Old.setKey(driver, inputSearchLead, Keys.ENTER);
-        WebUI_Old.sleep(1);
+        WebUI.waitForElementNotVisible(popupProfileLead);
+        WebUI.clickElement(inputSearchLead);
+        WebUI.setText(inputSearchLead, name);
+        WebUI.setKey(inputSearchLead, Keys.ENTER);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
         Assert.assertEquals(getFirstRowItemLeadName(), name, "Không đúng Lead đã thêm mới.");
     }
 
     public String getTotalStatusActiveLeads() {
-        return WebUI_Old.getTextElement(driver, labelActive);
+        return WebUI.getElementText(labelActive);
     }
 
     public String getTotalStatusCustomerLeads() {
-        return WebUI_Old.getTextElement(driver, labelCustomer);
+        return WebUI.getElementText(labelCustomer);
     }
 
     public int getTotalLeads() {
@@ -202,10 +194,11 @@ public class LeadsPage extends BasePage {
     }
 
     public int countActiveStatusOnTable() {
-        return driver.findElements(totalStatusActiveLeads).size();
+        return WebUI.getWebElements(totalStatusActiveLeads).size();
     }
 
     public int countCustomerStatusOnTable() {
-        return driver.findElements(totalStatusCustomerLeads).size();
+        return WebUI.getWebElements(totalStatusCustomerLeads).size();
+
     }
 }

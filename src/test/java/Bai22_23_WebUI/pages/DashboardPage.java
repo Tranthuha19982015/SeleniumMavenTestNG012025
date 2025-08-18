@@ -1,5 +1,6 @@
 package Bai22_23_WebUI.pages;
 
+import keywords.WebUI;
 import keywords.WebUI_Old;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ public class DashboardPage extends BasePage {
     public DashboardPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
+        new WebUI(driver);
     }
 
     private By buttonDashboardOptions = By.xpath("//div[@class='screen-options-btn']");
@@ -18,18 +20,17 @@ public class DashboardPage extends BasePage {
     private By labelTotalConvertedLeads = By.xpath("((//span[normalize-space()='Converted Leads'])/parent::div)/following-sibling::span");
 
     public void verifyDashboardPageDisplay() {
-        boolean isDashboardDisplayed = driver.findElements(buttonDashboardOptions).size() > 0;
+        boolean isDashboardDisplayed = WebUI.checkElementExist(buttonDashboardOptions);
         Assert.assertTrue(isDashboardDisplayed, "Dashboard page is not displayed");
     }
 
     //Cách 1
     public String getTotalProjectsInProgress() {
-        return driver.findElement(labelTotalProjectsInprogress).getText();
+        return WebUI.getElementText(labelTotalProjectsInprogress);
     }
 
     public String getTotalConvertedLeads() {
-        String textConvertedLeads = WebUI_Old.getTextElement(driver,labelTotalConvertedLeads);
-        return textConvertedLeads;
+        return WebUI.getElementText(labelTotalConvertedLeads);
     }
 
     //Cách 2

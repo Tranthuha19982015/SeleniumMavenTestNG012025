@@ -1,6 +1,7 @@
 package Bai22_23_WebUI.pages;
 
-import keywords.WebUI_Old;
+import keywords.WebUI;
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -18,6 +19,7 @@ public class ProjectsPage extends BasePage {
     public ProjectsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
+        new WebUI(driver);
     }
 
     //Locator list projects page
@@ -71,23 +73,23 @@ public class ProjectsPage extends BasePage {
 
     //Khai bao cac ham su dung noi bo trong trang Projects
     public String getTotalNotStarted() {
-        return driver.findElement(labelTotalNotStarted).getText();
+        return WebUI.getElementText(labelTotalNotStarted);
     }
 
     public String getTotalInProgress() {
-        return driver.findElement(labelTotalInProgress).getText();
+        return WebUI.getElementText(labelTotalInProgress);
     }
 
     public String getTotalOnHold() {
-        return driver.findElement(labelTotalOnHold).getText();
+        return WebUI.getElementText(labelTotalOnHold);
     }
 
     public String getTotalCancelled() {
-        return driver.findElement(labelTotalCancelled).getText();
+        return WebUI.getElementText(labelTotalCancelled);
     }
 
     public String getTotalFinished() {
-        return driver.findElement(labelTotalFinished).getText();
+        return WebUI.getElementText(labelTotalFinished);
     }
 
     //Ham tinh toan tong so du lieu trong trang Projects
@@ -101,27 +103,19 @@ public class ProjectsPage extends BasePage {
     }
 
     public void verifyProjectsPageDisplay() {
-        WebUI_Old.highlightElement(driver, driver.findElement(headerProjectsPage));
-        boolean isDisplayed = true;
-        try {
-            isDisplayed = driver.findElement(headerProjectsPage).isDisplayed();
-        } catch (NoSuchElementException e) {
-            isDisplayed = false;
-        }
-        System.out.println("Is Projects Page displayed? " + isDisplayed);
-
+        boolean isDisplayed = WebUI.checkElementExist(headerProjectsPage);
         Assert.assertTrue(isDisplayed, "Projects Page is not displayed!");
     }
 
     public void clickAddNewProjectButton() {
-        WebUI_Old.clickElement(driver, buttonNewProject);
+        WebUI.clickElement(buttonNewProject);
     }
 
     public void fillInputBasedOnBillingType(String billingType) {
         if (billingType.equals("Fixed Rate")) {
-            WebUI_Old.setText(driver, inputTotalRate, "1000");
+            WebUI.setText(inputTotalRate, "1000");
         } else if (billingType.equals("Project Hours")) {
-            WebUI_Old.setText(driver, inputRatePerHour, "100");
+            WebUI.setText(inputRatePerHour, "100");
         } else if (billingType.equals("Task Hours")) {
             System.out.println(billingType + " Based on task hourly rate");
         } else {
@@ -131,70 +125,61 @@ public class ProjectsPage extends BasePage {
 
     public void fillDataNewProject(String projectName, String customerName, String billingType) {
         Actions actions = new Actions(driver);
-        WebUI_Old.setText(driver, inputProjectName, projectName);
+        WebUI.setText(inputProjectName, projectName);
 
         // Select customer from dropdown
-        WebUI_Old.clickElement(driver, dropdownCustomer);
-        WebUI_Old.setText(driver, inputSearchCustomer, customerName);
-        WebUI_Old.sleep(1);
+        WebUI.clickElement(dropdownCustomer);
+        WebUI.setText(inputSearchCustomer, customerName);
+        WebUI.sleep(1);
         actions.moveToElement(driver.findElement(valueCustomer(customerName))).click().keyDown(Keys.CONTROL).sendKeys(Keys.END).keyUp(Keys.CONTROL).sendKeys(" ").build().perform();
-        WebUI_Old.waitForResultVisible(driver, valueCustomer(customerName));
-        WebUI_Old.clickElement(driver, valueCustomer(customerName));
-        WebUI_Old.clickElement(driver, checkboxCalculateProgressThroughTasks);
+        WebUI.waitForElementVisible(valueCustomer(customerName));
+        WebUI.clickElement(valueCustomer(customerName));
+        WebUI.clickElement(checkboxCalculateProgressThroughTasks);
 
         // Select billing type
-        WebUI_Old.clickElement(driver, dropdownBillingType);
-        WebUI_Old.clickElement(driver, valueBillingType(billingType));
+        WebUI.clickElement(dropdownBillingType);
+        WebUI.clickElement(valueBillingType(billingType));
         fillInputBasedOnBillingType(billingType);
 
         // Select status
-        WebUI_Old.clickElement(driver, dropdownStatus);
-        WebUI_Old.clickElement(driver, valueStatus("On Hold"));
+        WebUI.clickElement(dropdownStatus);
+        WebUI.clickElement(valueStatus("On Hold"));
 
         //fill Estimated Hours
-        WebUI_Old.setText(driver, inputEstimatedHours, "10");
+        WebUI.setText(inputEstimatedHours, "10");
 
         // Select members from dropdown
-        WebUI_Old.clickElement(driver, dropdownMembers);
-        WebUI_Old.setText(driver, inputSearchMembers, "Anh Tester");
-        WebUI_Old.setKey(driver, inputSearchMembers, Keys.ENTER);
-        WebUI_Old.clickElement(driver, dropdownMembers);
+        WebUI.clickElement(dropdownMembers);
+        WebUI.setText(inputSearchMembers, "Anh Tester");
+        WebUI.setKey(inputSearchMembers, Keys.ENTER);
+        WebUI.clickElement(dropdownMembers);
 
         // Fill start date, deadline, tags
-        WebUI_Old.clearTextElement(driver, inputStartDate);
-        WebUI_Old.setText(driver, inputStartDate, "10/08/2025");
-        WebUI_Old.setText(driver, inputDeadline, "01/12/2025");
-        WebUI_Old.setText(driver, inputTags, "htest13825");
+        WebUI.clearTextElement(inputStartDate);
+        WebUI.setText(inputStartDate, "10/08/2025");
+        WebUI.setText(inputDeadline, "01/12/2025");
+        WebUI.setText(inputTags, "htest13825");
 
         // Switch to iframe for description input
-        WebUI_Old.switchToFrameWhenAvailable(driver, iFrameDescription);
-        WebUI_Old.setText(driver, inputDescription, "Here is the description of the iframe test project.");
-        WebUI_Old.switchToDefaultContent(driver);
-        WebUI_Old.clickElement(driver, checkboxSendProjectCreatedEmail);
+        WebUI.switchToFrameWhenAvailable(iFrameDescription);
+        WebUI.setText(inputDescription, "Here is the description of the iframe test project.");
+        WebUI.switchToDefaultContent();
+        WebUI.clickElement(checkboxSendProjectCreatedEmail);
     }
 
     public void clickSaveButton() {
-        WebUI_Old.clickElement(driver, buttonSave);
+        WebUI.clickElement(buttonSave);
     }
 
     public void verifyAlertMessageSuccessDisplayed() {
-        boolean isDisplayed = true;
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(alertMessage));
-            isDisplayed = driver.findElement(alertMessage).isDisplayed();
-            WebUI_Old.highlightElement(driver, driver.findElement(alertMessage));
-        } catch (NoSuchElementException e) {
-            isDisplayed = false;
-        }
-        System.out.println("Is alert message displayed? " + isDisplayed);
+        boolean isDisplayed = WebUI.checkElementExist(alertMessage);
         Assert.assertTrue(isDisplayed, "Alert message success is not displayed!");
 
-        String actualMessage = driver.findElement(alertMessage).getText();
-        System.out.println("Actual alert message: " + actualMessage);
+        String actualMessage = WebUI.getElementText(alertMessage);
         Assert.assertEquals(actualMessage, "Project added successfully.", "Alert message does not match expected message!");
     }
-    public void verifyProjectDetail(){
+
+    public void verifyProjectDetail() {
 
     }
 

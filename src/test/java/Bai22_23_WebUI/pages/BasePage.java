@@ -46,13 +46,11 @@ public class BasePage {
 
     public LeadsPage clickMenuLeads() {
         WebUI_Old.clickElement(driver, menuLeads);
-        WebUI_Old.waitForPageLoaded(driver);
         return new LeadsPage(driver);
     }
 
     public TasksPage clickMenuTasks() {
         WebUI_Old.clickElement(driver, menuTasks);
-        WebUI_Old.waitForPageLoaded(driver);
         return new TasksPage(driver);
     }
 }

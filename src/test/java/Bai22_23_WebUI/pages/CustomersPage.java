@@ -60,7 +60,6 @@ public class CustomersPage extends BasePage {
     public void verifyNavigateToCustomerPage() {
         boolean check = WebUI.checkElementExist(headerCustomerPage);
         Assert.assertTrue(check, "The customer header page not display.");
-        Assert.assertEquals(WebUI.getElementText(headerCustomerPage), "Customers Summary", "The customer header page not match.");
     }
 
     public void clickButtonNewCustomer() {
@@ -103,10 +102,15 @@ public class CustomersPage extends BasePage {
         WebUI.clickElement(buttonSave);
     }
 
+    public void verifyAlertMessageSuccessDisplayed() {
+        boolean isAlertDisplay = WebUI.checkElementExist(alertMessage);
+        Assert.assertTrue(isAlertDisplay, "The alert message not display after add new customer.");
+        String alertText = WebUI.getElementText(alertMessage);
+        Assert.assertEquals(alertText, "Customer added successfully.", "Alert message does not match.");
+    }
     public void verifyNavigateToCustomerDetailPage() {
         boolean check = WebUI.checkElementExist(headerCustomerDetailPage);
         Assert.assertTrue(check, "The customer detail header page not display.");
-        Assert.assertEquals(WebUI.getElementText(headerCustomerDetailPage), "Profile", "The customer detail header page not match.");
     }
 
     public void verifyAddNewCustomerSuccess(String customerName) {

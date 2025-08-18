@@ -18,7 +18,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
         this.driver = driver; //Từ khóa this phân biệt 2 biến cùng tên trong và ngoài
-        new WebUI(driver); //Khởi tạo WebUI để truyền giá trị driver vào class WebUI
+        new WebUI(driver); //Khởi tạo WebUI để truyền giá trị driver vào class WebUI (khi dùng WebUI thì dùng Tên class.Tên hàm rồi nên chỉ cần khởi tạo kiểu Anonymous, không cần tên đối tượng)
     }
 
     //Khai báo các đối tượng element thuộc về trang Login (khai báo những element cần thiết cho TCs sau này)
@@ -40,7 +40,7 @@ public class LoginPage extends BasePage {
     }
 
     public void navigateToLoginAdminCRM() {
-        driver.get(urlLoginAdmin);
+        WebUI.openURL(urlLoginAdmin);
         WebUI.waitForPageLoaded();
     }
 
@@ -69,6 +69,7 @@ public class LoginPage extends BasePage {
         enterEmail("admin@example.com");
         enterPassword("123456");
         clickLoginButton();
+        WebUI.waitForPageLoaded();
         verifyLoginSuccess();
 
         return new DashboardPage(driver); //Trả về đối tượng DashboardPage sau khi đăng nhập thành công
