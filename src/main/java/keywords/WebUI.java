@@ -216,7 +216,7 @@ public class WebUI {
     public static void openURL(String url) {
         driver.get(url);
         sleep(STEP_TIME);
-        logConsole("Open URL:  " + url);
+        logConsole("Open URL: " + url);
     }
 
     public static void clickElement(By by) {
@@ -306,6 +306,7 @@ public class WebUI {
         System.out.println("Set text: " + value + " on element " + by);
     }
 
+    //cuộn/di chuyển tới 1 phần tử
     public static void scrollToElement(By by) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
@@ -336,7 +337,7 @@ public class WebUI {
         js.executeScript("arguments[0].scrollIntoView(false);", element);
     }
 
-    public static void scrollToPosition(int X, int Y) {
+    public static void scrollToPosition(int X, int Y) { //hàm này ít dùng hoặc hạn chế dùng do kích thước màn hình mỗi ng khác nhau
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(" + X + "," + Y + ");");
     }
@@ -451,6 +452,8 @@ public class WebUI {
         }
     }
 
+    //Các hàm Verify và Assert
+
     public static boolean verifyEquals(Object actual, Object expected) {
         waitForPageLoaded();
         System.out.println("Verify equals: " + actual + " and " + expected);
@@ -474,7 +477,7 @@ public class WebUI {
     public static void assertContains(String actual, String expected, String message) {
         waitForPageLoaded();
         System.out.println("Assert contains: " + actual + " and " + expected);
-        boolean check = actual.contains(expected);
+        boolean check = actual.contains(expected); //cần bước này vì Assert không có Assert Contains
         Assert.assertTrue(check, message);
     }
 }

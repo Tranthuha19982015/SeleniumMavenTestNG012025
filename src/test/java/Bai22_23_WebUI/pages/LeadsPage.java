@@ -65,8 +65,14 @@ public class LeadsPage extends BasePage {
     private By buttonClose = By.xpath("//div[@id='tab_lead_profile']/descendant::button[normalize-space()='Close']");
     private By buttonSave = By.xpath("//div[@id='tab_lead_profile']/descendant::button[normalize-space()='Save']");
 
+    //locators lead detail window
+    //Tab Profile
     private By buttonCloseWindowAfterAdd = By.xpath("//div[@class='modal-content data']//button[@aria-label='Close']");
     private By popupProfileLead = By.xpath("//div[@id='lead-modal']//div[@class='modal-content data']");
+
+    //Tab Tasks
+    private By inputSearchTasks = By.xpath("//div[@id='related_tasks_filter']/descendant::input[@type='search']");
+    private By tasksTab = By.xpath("//a[normalize-space()='Tasks']/parent::li");
 
     public void clickIconLeadsSummary() {
         WebUI.clickElement(iconLeadsSummary);
@@ -136,6 +142,11 @@ public class LeadsPage extends BasePage {
         WebUI.waitForPageLoaded();
     }
 
+    public void verifyAleartMessageSuccessDisplayed(){
+        boolean isDisplayed= WebUI.checkElementExist(alertMessage);
+        Assert.assertTrue(isDisplayed,"The Alert Message does not displayed.");
+    }
+
     public String getFirstRowItemLeadName() {
         return WebUI.getElementText(firstRowItemLeadName);
     }
@@ -154,7 +165,7 @@ public class LeadsPage extends BasePage {
         WebUI.setTextAndKey(inputSearchLead, name, Keys.ENTER);
         WebUI.waitForPageLoaded();
         WebUI.sleep(1);
-        Assert.assertEquals(getFirstRowItemLeadName(), name, "Không đúng Lead đã thêm mới.");
+        Assert.assertEquals(getFirstRowItemLeadName(), name, "FAILED. Incorrect Lead added.");
     }
 
     public String getTotalStatusActiveLeads() {

@@ -20,19 +20,26 @@ public class TasksTest extends BaseTest {
         leadsPage = dashboardPage.clickMenuLeads();
 
         String leadsName = "Leads Htest " + System.currentTimeMillis();
+        leadsPage.clickIconLeadsSummary();
+        leadsPage.verifyNavigateToLeadPage();
         leadsPage.clickButtonNewLead();
+        leadsPage.verifyOpenWindowAddNewLead();
         leadsPage.fillDataAddNewLead(leadsName);
         leadsPage.clickSaveButton();
+        leadsPage.verifyAleartMessageSuccessDisplayed();
         leadsPage.clickButtonCloseAfterAdd();
+        leadsPage.searchAndCheckLeadInTable(leadsName);
 
         tasksPage = leadsPage.clickMenuTasks();
 
-        String subject = "Tasks Htest " + System.currentTimeMillis();
+        String taskName = "Tasks Htest " + System.currentTimeMillis();
         tasksPage.verifyTasksPageDisplay();
         tasksPage.clickButtonNewTask();
         tasksPage.verifyAddNewTaskPageDisplay();
-        tasksPage.fillDataAddNewTask(subject,leadsName);
+        tasksPage.fillDataAddNewTask(taskName,leadsName);
         tasksPage.clickButtonSave();
-        tasksPage.verifyAddNewTaskSuccess();
+        tasksPage.verifyAlertMessageSuccessDisplayed();
+        tasksPage.clickIconCloseTaskDetail();
+        tasksPage.verifyItemAddSuccessOnTableTasks(taskName);
     }
 }

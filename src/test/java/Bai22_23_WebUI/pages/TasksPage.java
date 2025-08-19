@@ -28,7 +28,7 @@ public class TasksPage extends BasePage {
     private By labelAwaitingFeedback = By.xpath("//span[normalize-space()='Awaiting Feedback']/preceding-sibling::span");
     private By labelComplete = By.xpath("//span[normalize-space()='Complete']/preceding-sibling::span");
     private By inputSearchTasks = By.xpath("//div[@id='tasks_filter']/descendant::input[@type='search']");
-    private By firstRowItemTasksName = By.xpath("//table[@id='tasks']//tbody/tr[1]/td[3]");
+    private By firstRowItemTasksName = By.xpath("//table[@id='tasks']//tbody/tr[1]/td[3]/a[contains(@href,'view')]");
 
     //Locators of elements on Add New Task page
     private By headerAddNewTask = By.xpath("//h4[@id='myModalLabel']");
@@ -95,6 +95,10 @@ public class TasksPage extends BasePage {
     private By buttonSave = By.xpath("//button[normalize-space()='Save']");
 
     private By valueLeadInTask = By.xpath("//button[@data-id='rel_id']/following-sibling::div/descendant::a//span[@class='text']");
+
+    //locators pop-up task detail
+    private By iconCloseTaskDetail = By.xpath("//div[@class='modal-header task-single-header']//button[@aria-label='Close']");
+    private By popupTaskDetail = By.xpath("//div[@id='task-modal']//div[@class='modal-content data']");
 
     public void verifyTasksPageDisplay() {
         boolean isTasksPageDisplayed = WebUI.checkElementExist(headerTasksPage);
@@ -173,7 +177,7 @@ public class TasksPage extends BasePage {
         WebUI.clickElement(dropdownFollowers);
 
         //fill Tags
-        WebUI.setTextAndKey(inputTags,"htest", Keys.ENTER);
+        WebUI.setTextAndKey(inputTags, "htest", Keys.ENTER);
         WebUI.clickElement(labelTags);
 
         //fill iFrame Description
@@ -187,10 +191,24 @@ public class TasksPage extends BasePage {
         WebUI.clickElement(buttonSave);
     }
 
-    public void verifyAddNewTaskSuccess() {
+    public void verifyAlertMessageSuccessDisplayed() {
         Assert.assertTrue(WebUI.checkElementExist(alertMessage), "The alert message not display.");
         String actualMessage = WebUI.getElementText(alertMessage);
         Assert.assertEquals(actualMessage, "Task added successfully.", "The alert message add new tasks not match.");
+    }
+
+    public void clickIconCloseTaskDetail() {
+        WebUI.clickElement(iconCloseTaskDetail);
+        WebUI.waitForPageLoaded();
+    }
+
+    public void verifyItemAddSuccessOnTableTasks(String subject) {
+        WebUI.waitForElementNotVisible(popupTaskDetail);
+        WebUI.clickElement(inputSearchTasks);
+        WebUI.setText(inputSearchTasks, subject);
+        WebUI.waitForPageLoaded();
+        WebUI.sleep(1);
+        Assert.assertEquals(WebUI.getElementText(firstRowItemTasksName), subject, "FAILED. Incorrect Task added");
     }
 
     public String getValueLeadInTask() {
