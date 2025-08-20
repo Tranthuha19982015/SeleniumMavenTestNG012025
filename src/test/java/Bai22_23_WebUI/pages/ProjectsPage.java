@@ -148,7 +148,7 @@ public class ProjectsPage extends BasePage {
         WebUI.clickElement(dropdownMembers);
 
         // Fill start date, deadline, tags
-        WebUI.clearTextElement(inputStartDate);
+        WebUI.clearElementText(inputStartDate);
         WebUI.setText(inputStartDate, "10/08/2025");
         WebUI.setText(inputDeadline, "01/12/2025");
         WebUI.setText(inputTags, "htest13825");

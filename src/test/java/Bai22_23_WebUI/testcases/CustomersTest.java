@@ -6,6 +6,9 @@ import Bai22_23_WebUI.pages.LoginPage;
 import common.BaseTest;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CustomersTest extends BaseTest {
     LoginPage loginPage;
     DashboardPage dashboardPage;
@@ -17,7 +20,7 @@ public class CustomersTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         customersPage = dashboardPage.clickMenuCustomers();
 
-        String customerName = "Company HTest " + System.currentTimeMillis();
+        String customerName = "Company HTest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
         customersPage.verifyNavigateToCustomerPage();
         customersPage.clickButtonNewCustomer();

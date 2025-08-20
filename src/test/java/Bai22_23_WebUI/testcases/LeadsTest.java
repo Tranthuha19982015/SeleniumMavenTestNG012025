@@ -8,6 +8,9 @@ import common.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class LeadsTest extends BaseTest {
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
@@ -97,7 +100,7 @@ public class LeadsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         leadsPage = dashboardPage.clickMenuLeads();
 
-        String leadsName = "Leads Htest " + System.currentTimeMillis();
+        String leadsName = "Leads Htest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
         leadsPage.clickIconLeadsSummary();
         leadsPage.verifyNavigateToLeadPage();

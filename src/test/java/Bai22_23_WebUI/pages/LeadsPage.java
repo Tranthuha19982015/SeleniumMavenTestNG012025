@@ -21,6 +21,8 @@ public class LeadsPage extends BasePage {
     private By headerLeadsPage = By.xpath("//h4[normalize-space()='Leads Summary']");
     private By inputSearchLead = By.xpath("//div[@id='leads_filter']/descendant::input[@type='search']");
 
+    private By leadTableRows = By.xpath("//table[@id='leads']/descendant::tbody/tr");
+
     // The first row item in the leads table
     private By firstRowItemLeadName = By.xpath("//table[@id='leads']//tbody/tr[1]/td[3]/a");
     private By firstRowItemLeadEmail = By.xpath("//table[@id='leads']//tbody/tr[1]/td[5]/a");
@@ -42,6 +44,7 @@ public class LeadsPage extends BasePage {
     private By inputAddNewSource = By.xpath("//input[@id='new_source_name']");
     private By dropdownAssigned = By.xpath("//button[@data-id='assigned']");
     private By inputSearchAssigned = By.xpath("//button[@data-id='assigned']/following-sibling::div/descendant::input[@type='search']");
+    private By labelTags = By.xpath("//label[normalize-space()='Tags']");
     private By inputTags = By.xpath("//div[@id='inputTagsWrapper']//li[@class='tagit-new']/input");
     private By inputName = By.xpath("//label[text()='Name']/following-sibling::input[@id='name']");
     private By inputAddress = By.xpath("//textarea[@id='address']");
@@ -67,12 +70,14 @@ public class LeadsPage extends BasePage {
 
     //locators lead detail window
     //Tab Profile
-    private By buttonCloseWindowAfterAdd = By.xpath("//div[@class='modal-content data']//button[@aria-label='Close']");
-    private By popupProfileLead = By.xpath("//div[@id='lead-modal']//div[@class='modal-content data']");
+    private By buttonClosePopupAfterAddLead = By.xpath("//div[@class='modal-content data']//button[@aria-label='Close']");
+    private By popupLeadDetail = By.xpath("//div[@id='lead-modal']//div[@class='modal-content data']");
 
     //Tab Tasks
-    private By inputSearchTasks = By.xpath("//div[@id='related_tasks_filter']/descendant::input[@type='search']");
-    private By tasksTab = By.xpath("//a[normalize-space()='Tasks']/parent::li");
+    private By tasksTab = By.xpath("//div[@class='top-lead-menu']/descendant::li/a[contains(normalize-space(),'Tasks')]");
+    private By inputSearchTaskOnLeadDetailPage = By.xpath("//div[@id='related_tasks_filter']/descendant::input[@type='search']");
+    private By firstRowItemTaskOnLeadDetailPage = By.xpath("//table[@id='related_tasks']//tbody/tr[1]//td[2]/a");
+
 
     public void clickIconLeadsSummary() {
         WebUI.clickElement(iconLeadsSummary);
@@ -105,6 +110,7 @@ public class LeadsPage extends BasePage {
         WebUI.setTextAndKey(inputSearchAssigned, "Anh Tester", Keys.ENTER);
 
         WebUI.setText(inputTags, "htest" + System.currentTimeMillis());
+        WebUI.clickElement(labelTags);
 
         WebUI.setText(inputName, name);
 //        WebUI.setText(driver, inputAddress, "Minh Khai");
@@ -135,16 +141,15 @@ public class LeadsPage extends BasePage {
     }
 
     public void clickButtonCloseAfterAdd() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", (WebUI.getWebElement(buttonCloseWindowAfterAdd)));
+        WebUI.scrollToElementAtTop(buttonClosePopupAfterAddLead);
         WebUI.sleep(1);
-        WebUI.clickElement(buttonCloseWindowAfterAdd);
+        WebUI.clickElement(buttonClosePopupAfterAddLead);
         WebUI.waitForPageLoaded();
     }
 
-    public void verifyAleartMessageSuccessDisplayed(){
-        boolean isDisplayed= WebUI.checkElementExist(alertMessage);
-        Assert.assertTrue(isDisplayed,"The Alert Message does not displayed.");
+    public void verifyAleartMessageSuccessDisplayed() {
+        boolean isDisplayed = WebUI.checkElementExist(alertMessage);
+        Assert.assertTrue(isDisplayed, "The Alert Message does not displayed.");
     }
 
     public String getFirstRowItemLeadName() {
@@ -159,12 +164,15 @@ public class LeadsPage extends BasePage {
         return WebUI.getElementText(firstRowItemLeadStatus);
     }
 
+    public void verifyLeadListVisibleAfterClosingLeadDetailPopup() {
+        WebUI.waitForElementNotVisible(popupLeadDetail);
+    }
+
     public void searchAndCheckLeadInTable(String name) {
-        WebUI.waitForElementNotVisible(popupProfileLead);
         WebUI.clickElement(inputSearchLead);
         WebUI.setTextAndKey(inputSearchLead, name, Keys.ENTER);
-        WebUI.waitForPageLoaded();
         WebUI.sleep(1);
+        WebUI.waitForPageLoaded();
         Assert.assertEquals(getFirstRowItemLeadName(), name, "FAILED. Incorrect Lead added.");
     }
 
@@ -181,8 +189,7 @@ public class LeadsPage extends BasePage {
         return totalLead;
     }
 
-    public void verifyAfterAddingNewLead(int beforeActiveStatus, int beforeCustomerStatus,
-                                         int afterActiveStatus, int afterCustomerStatus, String statusOfFirstRowItem) {
+    public void verifyAfterAddingNewLead(int beforeActiveStatus, int beforeCustomerStatus, int afterActiveStatus, int afterCustomerStatus, String statusOfFirstRowItem) {
         if (statusOfFirstRowItem.equals("Active")) {
             Assert.assertEquals(afterActiveStatus, beforeActiveStatus + 1, "The number of Active Statuses after adding new ones does not match.");
             Assert.assertEquals(afterCustomerStatus, beforeCustomerStatus, "The number of Customer Statuses after adding new ones does not match.");
@@ -204,6 +211,30 @@ public class LeadsPage extends BasePage {
 
     public int countCustomerStatusOnTable() {
         return WebUI.getWebElements(totalStatusCustomerLeads).size();
+    }
 
+    public void clickFirstIteamName() {
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(firstRowItemLeadName);
+        WebUI.sleep(1);
+        WebUI.clickElement(firstRowItemLeadName);
+    }
+
+    public void clickTaskTabOnLeadDetailPage() {
+        WebUI.waitForPageLoaded();
+        WebUI.scrollToElementAtTop(tasksTab);
+        WebUI.sleep(1);
+        WebUI.clickToElementByActions(tasksTab);
+    }
+
+    public void searchNewTaskInTaskTabOnLeadDetailPage(String taskName) {
+        WebUI.waitForPageLoaded();
+        WebUI.clearElementText(inputSearchTaskOnLeadDetailPage);
+        WebUI.clickElement(inputSearchTaskOnLeadDetailPage);
+        WebUI.setText(inputSearchTaskOnLeadDetailPage, taskName);
+        WebUI.setKey(inputSearchTaskOnLeadDetailPage, Keys.ENTER);
+        WebUI.sleep(1);
+        WebUI.waitForPageLoaded();
+        Assert.assertEquals(WebUI.getElementText(firstRowItemTaskOnLeadDetailPage), taskName, "Task Name not match.");
     }
 }

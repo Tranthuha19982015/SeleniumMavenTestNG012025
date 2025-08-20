@@ -7,6 +7,9 @@ import Bai22_23_WebUI.pages.ProjectsPage;
 import common.BaseTest;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ProjectsTest extends BaseTest {
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
@@ -19,13 +22,13 @@ public class ProjectsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
 
         customersPage = dashboardPage.clickMenuCustomers();
-        String customerName = "Company HTest " + System.currentTimeMillis();
+        String customerName = "Company HTest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         customersPage.clickButtonNewCustomer();
         customersPage.fillDataForAddNewCustomer(customerName);
         customersPage.clickSaveButton();
 
         projectsPage = dashboardPage.clickMenuProjects();
-        String projectName = "Project Htest " + System.currentTimeMillis();
+        String projectName = "Project Htest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         projectsPage.verifyProjectsPageDisplay();
         projectsPage.clickAddNewProjectButton();
         projectsPage.fillDataNewProject(projectName,customerName,"Fixed Rate");

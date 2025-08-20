@@ -9,7 +9,6 @@ import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.sql.DriverManager;
 import java.time.Duration;
 import java.util.List;
 
@@ -165,11 +164,33 @@ public class WebUI {
         }
     }
 
+    public static void waitForElementNotVisible(By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.invisibilityOf(getWebElement(by)));
+        } catch (Throwable error) {
+            logConsole("Timeout waiting for the element Not Visible with " + by.toString());
+            Assert.fail("Timeout waiting for the element Not Visible with " + by.toString());
+        }
+    }
+
+    public static void waitForSearchResult(By by) {
+        try {
+            int oldCount = getWebElements(by).size();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.numberOfElementsToBeLessThan(by, oldCount));
+        } catch (Throwable error) {
+            logConsole("Timeout waiting for the element Not Visible with " + by.toString());
+            Assert.fail("Timeout waiting for the element Not Visible with " + by.toString());
+        }
+    }
+
     public static WebElement getWebElement(By by) {
-        return driver.findElement(by);
+        return waitForElementVisible(by);
     }
 
     public static List<WebElement> getWebElements(By by) {
+        waitForElementVisible(by);
         return driver.findElements(by);
     }
 
@@ -221,13 +242,13 @@ public class WebUI {
 
     public static void clickElement(By by) {
         sleep(STEP_TIME);
-        waitForElementVisible(by).click();
+        waitForElementToBeClickable(by).click();
         logConsole("Click on element " + by);
     }
 
     public static void clickElement(By by, int seconds) {
         sleep(STEP_TIME);
-        waitForElementVisible(by, seconds).click();
+        waitForElementToBeClickable(by, seconds).click();
         logConsole("Click on element " + by);
     }
 
@@ -241,6 +262,11 @@ public class WebUI {
         sleep(STEP_TIME);
         waitForElementVisible(by, seconds).sendKeys(text);
         logConsole("Set text " + text + " on element " + by);
+    }
+
+    public static void setKey(By by, Keys key) {
+        waitForElementVisible(by).sendKeys(key);
+        System.out.println("Set key on element: " + by);
     }
 
     public static String getElementText(By by) {
@@ -283,21 +309,11 @@ public class WebUI {
         System.out.println("Switched back to default content");
     }
 
-    public static void clearTextElement(By by) {
+    public static void clearElementText(By by) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         element.clear();
         System.out.println("Clear text default of element: " + by);
-    }
-
-    public static void waitForElementNotVisible(By by) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
-            wait.until(ExpectedConditions.invisibilityOf(getWebElement(by)));
-        } catch (Throwable error) {
-            logConsole("Timeout waiting for the element Not Visible with " + by.toString());
-            Assert.fail("Timeout waiting for the element Not Visible with " + by.toString());
-        }
     }
 
     public static void setTextAndKey(By by, String value, Keys key) {
@@ -412,6 +428,17 @@ public class WebUI {
             Actions action = new Actions(driver);
             //Tính từ vị trí click chuột đầu tiên (clickAndHold)
             action.clickAndHold(getWebElement(fromElement)).pause(1).moveByOffset(X, Y).release().build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean clickToElementByActions(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).click().build().perform();
             return true;
         } catch (Exception e) {
             logConsole(e.getMessage());

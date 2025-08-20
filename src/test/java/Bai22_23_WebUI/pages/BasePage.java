@@ -1,6 +1,7 @@
 package Bai22_23_WebUI.pages;
 
-import keywords.WebUI_Old;
+import keywords.WebUI;
+import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -9,6 +10,7 @@ public class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        new WebUI(driver);
     }
 
     //Element chung cho cac trang
@@ -22,8 +24,8 @@ public class BasePage {
     public By alertMessage = By.xpath("//div[@id='alert_float_1']/span[@class='alert-title']");
 
     public void logoutSystem() {
-        WebUI_Old.clickElement(driver, iconProfile);
-        WebUI_Old.clickElement(driver, optionLogout);
+        WebUI.clickElement(iconProfile);
+        WebUI.clickElement(optionLogout);
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPageDisplay();
@@ -31,26 +33,28 @@ public class BasePage {
 
     //Cac phuong thuc chung cho cac trang
     public void clickMenuDashboard() {
-        WebUI_Old.clickElement(driver, menuDashboard);
+        WebUI.clickElement(menuDashboard);
     }
 
     public CustomersPage clickMenuCustomers() {
-        WebUI_Old.clickElement(driver, menuCustomers);
+        WebUI.clickElement(menuCustomers);
         return new CustomersPage(driver);
     }
 
     public ProjectsPage clickMenuProjects() {
-        WebUI_Old.clickElement(driver, menuProjects);
+        WebUI.clickElement(menuProjects);
         return new ProjectsPage(driver); // Trả về đối tượng ProjectsPage sau khi click vào menu Projects
     }
 
     public LeadsPage clickMenuLeads() {
-        WebUI_Old.clickElement(driver, menuLeads);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(menuLeads);
         return new LeadsPage(driver);
     }
 
     public TasksPage clickMenuTasks() {
-        WebUI_Old.clickElement(driver, menuTasks);
+        WebUI.waitForPageLoaded();
+        WebUI.clickElement(menuTasks);
         return new TasksPage(driver);
     }
 }

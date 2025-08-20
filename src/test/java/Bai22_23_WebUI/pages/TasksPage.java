@@ -27,6 +27,7 @@ public class TasksPage extends BasePage {
     private By labelTesting = By.xpath("//span[normalize-space()='Testing']/preceding-sibling::span");
     private By labelAwaitingFeedback = By.xpath("//span[normalize-space()='Awaiting Feedback']/preceding-sibling::span");
     private By labelComplete = By.xpath("//span[normalize-space()='Complete']/preceding-sibling::span");
+    private By taskTableRows = By.xpath("//table[@id='tasks']/descendant::tbody/tr");
     private By inputSearchTasks = By.xpath("//div[@id='tasks_filter']/descendant::input[@type='search']");
     private By firstRowItemTasksName = By.xpath("//table[@id='tasks']//tbody/tr[1]/td[3]/a[contains(@href,'view')]");
 
@@ -118,10 +119,10 @@ public class TasksPage extends BasePage {
     public void chooseOptionRepeatEvery(String typeRepeat) {
         if (!typeRepeat.equals("") && !typeRepeat.equals("Custom")) {
             WebUI.clickElement(checkboxInfinity);
-            WebUI.clearTextElement(inputTotalCycles);
+            WebUI.clearElementText(inputTotalCycles);
             WebUI.setText(inputTotalCycles, "8");
         } else if (typeRepeat.equals("Custom")) {
-            WebUI.clearTextElement(inputNumberCustomRepeatEvery);
+            WebUI.clearElementText(inputNumberCustomRepeatEvery);
             WebUI.setText(inputNumberCustomRepeatEvery, "3");
             WebUI.clickElement(dropdownTypeCustomRepeatEvery);
             WebUI.clickElement(selectTypeCustomRepeatEvery("Week"));
@@ -132,16 +133,16 @@ public class TasksPage extends BasePage {
         Actions actions = new Actions(driver);
         WebUI.clickElement(checkboxPublic);
         WebUI.setText(inputSubject, subject);
-        WebUI.clearTextElement(inputHourlyRate);
+        WebUI.clearElementText(inputHourlyRate);
         WebUI.setText(inputHourlyRate, "3");
 
         //select Start Date
-        WebUI.clearTextElement(datepickerStartDate);
+        WebUI.clearElementText(datepickerStartDate);
         WebUI.setText(datepickerStartDate, "11-08-2025");
         WebUI.clickElement(datepickerStartDate);
 
         //select Due Date
-        WebUI.clearTextElement(datepickerDueDate);
+        WebUI.clearElementText(datepickerDueDate);
         WebUI.setText(datepickerDueDate, "12-08-2025");
         WebUI.clickElement(datepickerDueDate);
 
@@ -189,6 +190,7 @@ public class TasksPage extends BasePage {
 
     public void clickButtonSave() {
         WebUI.clickElement(buttonSave);
+        WebUI.waitForPageLoaded();
     }
 
     public void verifyAlertMessageSuccessDisplayed() {
@@ -202,12 +204,17 @@ public class TasksPage extends BasePage {
         WebUI.waitForPageLoaded();
     }
 
-    public void verifyItemAddSuccessOnTableTasks(String subject) {
+    public void verifyTaskListVisibleAfterClosingTaskDetailPopup(){
         WebUI.waitForElementNotVisible(popupTaskDetail);
+    }
+    public void searchAndCheckTaskInTable(String subject) {
         WebUI.clickElement(inputSearchTasks);
+        WebUI.clearElementText(inputSearchTasks);
         WebUI.setText(inputSearchTasks, subject);
-        WebUI.waitForPageLoaded();
+        WebUI.setKey(inputSearchTasks, Keys.ENTER);
         WebUI.sleep(1);
+        WebUI.waitForPageLoaded();
+//        WebUI.waitForSearchResult(taskTableRows);
         Assert.assertEquals(WebUI.getElementText(firstRowItemTasksName), subject, "FAILED. Incorrect Task added");
     }
 
