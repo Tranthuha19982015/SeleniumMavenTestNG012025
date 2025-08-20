@@ -2,6 +2,7 @@ package Bai22_23_WebUI.testcases;
 
 import Bai22_23_WebUI.pages.LoginPage;
 import common.BaseTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
