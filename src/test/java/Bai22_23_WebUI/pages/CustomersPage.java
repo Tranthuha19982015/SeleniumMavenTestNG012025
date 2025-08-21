@@ -19,7 +19,12 @@ public class CustomersPage extends BasePage {
     private By buttonNewCustomer = By.xpath("//a[normalize-space()='New Customer']");
     private By headerCustomerPage = By.xpath("//span[normalize-space()='Customers Summary']");
     private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
-    private By firstRowItemCustomer = By.xpath("//table[@id='clients']//tbody/tr[1]/td[3]/a");
+
+    private By firstRowItemCustomer(String customerName) {
+        String xpathCustomerName = "//table[@id='clients']/descendant::a[normalize-space()='" + customerName + "']";
+        return By.xpath(xpathCustomerName);
+    }
+
     private By labelTotalCustomers = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
 
     //Locator for Add New Customer
@@ -48,7 +53,26 @@ public class CustomersPage extends BasePage {
     private By dropdownCountry = By.xpath("//button[contains(@data-id,'country')]");
     private By inputSearchCountry = By.xpath("//button[contains(@data-id,'country')]/following-sibling::div//input[@type='search']");
     private By buttonSave = By.xpath("//div[@id='profile-save-section']//button[normalize-space()='Save']");
-    private By headerCustomerDetailPage = By.xpath("//h4[normalize-space()='Profile']");
+
+    //Locator for Customer Detail Page
+    private By headerCustomerDetailPage(String tabName) {
+        String xpathTab = "//h4[normalize-space()='" + tabName + "']";
+        return By.xpath(xpathTab);
+    }
+
+    private By labelNotstarted = By.xpath("//dt[normalize-space()='Not Started']/following-sibling::dd/div");
+    private By labelInProgress = By.xpath("//dt[normalize-space()='In Progress']/following-sibling::dd/div");
+    private By labelOnHold = By.xpath("//dt[normalize-space()='On Hold']/following-sibling::dd/div");
+    private By labelCancelled = By.xpath("//dt[normalize-space()='Cancelled']/following-sibling::dd/div");
+    private By labelFinished = By.xpath("//dt[normalize-space()='Finished']/following-sibling::dd/div");
+
+    private By customerTabProjects = By.xpath("//a[@data-group='projects' and normalize-space()='Projects']");
+    private By inputSearchInCustomerTabProjects = By.xpath("//div[@id='projects_filter']/descendant::input[@type='search']");
+
+    private By firstRowItemProject(String projectName) {
+        String xpathProject = "//table[@id='projects']/descendant::a[normalize-space()='" + projectName + "']";
+        return By.xpath(projectName);
+    }
 
     //Hàm xử lý cho trang Customer
     public void verifyNavigateToCustomerPage() {
@@ -68,12 +92,12 @@ public class CustomersPage extends BasePage {
 
         // select Groups
         WebUI.clickElement(dropdownGroups);
-        WebUI.setTextAndKey(inputSearchGroups,"hatran", Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchGroups, "hatran", Keys.ENTER);
         WebUI.clickElement(dropdownGroups);
 
         //select Currency
         WebUI.clickElement(dropdownCurrency);
-        WebUI.setTextAndKey(inputSearchCurrency,"USD", Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchCurrency, "USD", Keys.ENTER);
 
         //select Default Language
         WebUI.clickElement(dropdownDefaultLanguage);
@@ -86,7 +110,7 @@ public class CustomersPage extends BasePage {
 
         //select Country
         WebUI.clickElement(dropdownCountry);
-        WebUI.setTextAndKey(inputSearchCountry, "Vietnam",Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchCountry, "Vietnam", Keys.ENTER);
     }
 
     public void clickSaveButton() {
@@ -99,14 +123,15 @@ public class CustomersPage extends BasePage {
         String alertText = WebUI.getElementText(alertMessage);
         Assert.assertEquals(alertText, "Customer added successfully.", "Alert message does not match.");
     }
+
     public void verifyNavigateToCustomerDetailPage() {
-        boolean check = WebUI.checkElementExist(headerCustomerDetailPage);
+        boolean check = WebUI.checkElementExist(headerCustomerDetailPage("Profile"));
         Assert.assertTrue(check, "The customer detail header page not display.");
     }
 
     public void verifyAddNewCustomerSuccess(String customerName) {
         //navigation to customer detail
-        verifyNavigateToCustomerDetailPage();
+//        verifyNavigateToCustomerDetailPage();
 
         //Verify data in customer detail
         Assert.assertEquals(WebUI.getElementAttribute(inputCompany, "value"), customerName, "The Company name not match.");
@@ -115,6 +140,7 @@ public class CustomersPage extends BasePage {
         Assert.assertEquals(WebUI.getElementAttribute(inputWebsite, "value"), "htest.com.vn", "The Website value not match.");
         Assert.assertEquals(WebUI.getElementAttribute(dropdownGroups, "title"), "hatran", "The Groups value not match.");
         Assert.assertEquals(WebUI.getElementAttribute(dropdownCurrency, "title"), "USD", "The Currency value not match.");
+        WebUI.scrollToElementAtBottom(buttonSave);
         Assert.assertEquals(WebUI.getElementAttribute(dropdownDefaultLanguage, "title"), "Vietnamese", "The Default Language value not match.");
         Assert.assertEquals(WebUI.getElementAttribute(inputAddress, "value"), "Minh Khai, Bắc Từ Liêm", "The Address value not match.");
         Assert.assertEquals(WebUI.getElementAttribute(inputCity, "value"), "Hà Nội", "The City value not match.");
@@ -123,8 +149,13 @@ public class CustomersPage extends BasePage {
         Assert.assertEquals(WebUI.getElementAttribute(dropdownCountry, "title"), "Vietnam", "The Country value not match.");
     }
 
-    public void searchAndCheckCustomerInTable() {
-
+    public void searchAndCheckCustomerInTable(String customerName) {
+        WebUI.waitForPageLoaded();
+        WebUI.clearElementText(inputSearchCustomer);
+        WebUI.clickElement(inputSearchCustomer);
+        WebUI.setTextAndKey(inputSearchCustomer, customerName, Keys.ENTER);
+        WebUI.waitForPageLoaded();
+        Assert.assertTrue(WebUI.checkElementExist(firstRowItemCustomer(customerName)), "FAILED! Incorrect Customer added.");
     }
 
     public void verifyCustomerDetail() {

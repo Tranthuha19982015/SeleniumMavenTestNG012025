@@ -22,10 +22,12 @@ public class ProjectsTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
 
         customersPage = dashboardPage.clickMenuCustomers();
+        customersPage.verifyNavigateToCustomerPage();
         String customerName = "Company HTest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         customersPage.clickButtonNewCustomer();
         customersPage.fillDataForAddNewCustomer(customerName);
         customersPage.clickSaveButton();
+        customersPage.verifyAlertMessageSuccessDisplayed();
 
         projectsPage = dashboardPage.clickMenuProjects();
         String projectName = "Project Htest " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -34,6 +36,7 @@ public class ProjectsTest extends BaseTest {
         projectsPage.fillDataNewProject(projectName,customerName,"Fixed Rate");
         projectsPage.clickSaveButton();
 //        projectsPage.verifyAlertMessageSuccessDisplayed();
-
+        projectsPage.clickMenuProjects();
+        projectsPage.verifyAddNewProjectSuccess(projectName);
     }
 }

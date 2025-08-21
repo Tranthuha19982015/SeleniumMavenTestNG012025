@@ -28,5 +28,7 @@ public class CustomersTest extends BaseTest {
         customersPage.clickSaveButton();
         customersPage.verifyNavigateToCustomerDetailPage();
         customersPage.verifyAddNewCustomerSuccess(customerName);
+        customersPage.clickMenuCustomers();
+        customersPage.searchAndCheckCustomerInTable(customerName);
     }
 }

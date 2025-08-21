@@ -185,6 +185,22 @@ public class WebUI {
         }
     }
 
+    public static void waitForSwitchToFrameWhenAvailable(By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+            System.out.println("Switched to iframe: " + by);
+        } catch (Throwable error) {
+            logConsole("Timeout waiting for the iFrame Visible with " + by.toString());
+            Assert.fail("Timeout waiting for the iFrame Visible with " + by.toString());
+        }
+    }
+
+    public static void switchToDefaultContent() {
+        driver.switchTo().defaultContent();
+        System.out.println("Switched back to default content");
+    }
+
     public static WebElement getWebElement(By by) {
         return waitForElementVisible(by);
     }
@@ -252,6 +268,12 @@ public class WebUI {
         logConsole("Click on element " + by);
     }
 
+    public static void clearElementText(By by) {
+        sleep(STEP_TIME);
+        waitForElementVisible(by).clear();
+        System.out.println("Clear text of element: " + by);
+    }
+
     public static void setText(By by, String text) {
         sleep(STEP_TIME);
         waitForElementVisible(by).sendKeys(text);
@@ -294,32 +316,10 @@ public class WebUI {
         return value;
     }
 
-    public static void switchToFrameWhenAvailable(By by) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        try {
-            wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
-            System.out.println("Switched to iframe: " + by);
-        } catch (TimeoutException e) {
-            throw new RuntimeException("Iframe không xuất hiện sau: " + WAIT_TIMEOUT + " (s)");
-        }
-    }
-
-    public static void switchToDefaultContent() {
-        driver.switchTo().defaultContent();
-        System.out.println("Switched back to default content");
-    }
-
-    public static void clearElementText(By by) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT));
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        element.clear();
-        System.out.println("Clear text default of element: " + by);
-    }
-
     public static void setTextAndKey(By by, String value, Keys key) {
         waitForPageLoaded();
         getWebElement(by).sendKeys(value, key);
-        System.out.println("Set text: " + value + " on element " + by);
+        System.out.println("Set text and key: " + value + " on element " + by);
     }
 
     //cuộn/di chuyển tới 1 phần tử

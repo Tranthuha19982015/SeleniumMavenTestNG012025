@@ -183,7 +183,7 @@ public class TasksPage extends BasePage {
 
         //fill iFrame Description
         WebUI.clickElement(inputTaskDescription);
-        WebUI.switchToFrameWhenAvailable(iframeTaskDescription);
+        WebUI.waitForSwitchToFrameWhenAvailable(iframeTaskDescription);
         WebUI.setText(inputOnFrame, "htest iframe");
         WebUI.switchToDefaultContent();
     }

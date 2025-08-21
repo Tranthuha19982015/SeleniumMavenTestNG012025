@@ -15,7 +15,7 @@ public class BaseTest {
 
     @BeforeMethod
     @Parameters({"browser"})
-    public void createDriver(@Optional("chome") String browserName) {
+    public void createDriver(@Optional("chrome") String browserName) {
         switch (browserName.trim().toLowerCase()) {
             case "chrome":
                 System.out.println("Launching Chrome browser...");

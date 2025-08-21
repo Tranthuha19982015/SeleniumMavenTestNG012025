@@ -5,9 +5,6 @@
     <parameter name="val2" value="2"/>
     <parameter name="val3" value="3"/>
     <test name="FirstTest">
-        <!--        <parameter name="val1" value="20"/>-->
-        <!--        <parameter name="val2" value="15"/>-->
-        <!--        <parameter name="val3" value="10"/>-->
         <classes>
             <class name="Bai24_Parameters_MultiBrowser.DemoParameters">
                 <methods>

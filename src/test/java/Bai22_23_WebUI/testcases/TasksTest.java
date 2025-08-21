@@ -64,8 +64,8 @@ public class TasksTest extends BaseTest {
         leadsPage.clickSaveButton();
         leadsPage.verifyAleartMessageSuccessDisplayed();
         leadsPage.clickButtonCloseAfterAdd();
-//        leadsPage.verifyLeadListVisibleAfterClosingLeadDetailPopup();
-//        leadsPage.searchAndCheckLeadInTable(leadsName);
+        leadsPage.verifyLeadListVisibleAfterClosingLeadDetailPopup();
+        leadsPage.searchAndCheckLeadInTable(leadsName);
 
         tasksPage = leadsPage.clickMenuTasks();
 

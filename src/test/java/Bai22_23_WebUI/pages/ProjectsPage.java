@@ -25,7 +25,11 @@ public class ProjectsPage extends BasePage {
     private By labelTotalCancelled = By.xpath("//div[@class='_filters _hidden_inputs']/descendant::span[normalize-space()='Cancelled']/preceding-sibling::span");
     private By labelTotalFinished = By.xpath("//div[@class='_filters _hidden_inputs']/descendant::span[normalize-space()='Finished']/preceding-sibling::span");
     private By inputSearchProject = By.xpath("//div[@id='projects_filter']/descendant::input[@type='search']");
-    private By firstRowItemProjectName = By.xpath("//table[@id='projects']//tbody/tr[1]/td[2]");
+
+    private By firstRowItemProjectName(String projectName) {
+        String xpathProject = "//table[@id='projects']/descendant::a[normalize-space()='" + projectName + "']";
+        return By.xpath(xpathProject);
+    }
 
     //Locator add new project page
     private By inputProjectName = By.xpath("//input[@id='name']");
@@ -144,7 +148,7 @@ public class ProjectsPage extends BasePage {
 
         // Select members from dropdown
         WebUI.clickElement(dropdownMembers);
-        WebUI.setTextAndKey(inputSearchMembers,"Anh Tester", Keys.ENTER);
+        WebUI.setTextAndKey(inputSearchMembers, "Anh Tester", Keys.ENTER);
         WebUI.clickElement(dropdownMembers);
 
         // Fill start date, deadline, tags
@@ -154,7 +158,7 @@ public class ProjectsPage extends BasePage {
         WebUI.setText(inputTags, "htest13825");
 
         // Switch to iframe for description input
-        WebUI.switchToFrameWhenAvailable(iFrameDescription);
+        WebUI.waitForSwitchToFrameWhenAvailable(iFrameDescription);
         WebUI.setText(inputDescription, "Here is the description of the iframe test project.");
         WebUI.switchToDefaultContent();
         WebUI.clickElement(checkboxSendProjectCreatedEmail);
@@ -177,6 +181,11 @@ public class ProjectsPage extends BasePage {
     }
 
     public void verifyAddNewProjectSuccess(String projectName) {
-
+        WebUI.waitForPageLoaded();
+        WebUI.clearElementText(inputSearchProject);
+        WebUI.clickElement(inputSearchProject);
+        WebUI.setTextAndKey(inputSearchProject, projectName, Keys.ENTER);
+        WebUI.waitForPageLoaded();
+        Assert.assertTrue(WebUI.checkElementExist(firstRowItemProjectName(projectName)), "FAILED! Incorrect Project added.");
     }
 }
