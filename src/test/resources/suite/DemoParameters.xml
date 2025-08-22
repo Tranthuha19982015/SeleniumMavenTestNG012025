@@ -8,8 +8,8 @@
         <classes>
             <class name="Bai24_Parameters_MultiBrowser.DemoParameters">
                 <methods>
-                    <include name="testParameter01"></include>
-                    <include name="testParameter02"></include>
+                    <include name="testParameter01"/>
+                    <include name="testParameter02"/>
                 </methods>
             </class>
         </classes>
@@ -21,7 +21,7 @@
         <classes>
             <class name="Bai24_Parameters_MultiBrowser.DemoParameters">
                 <methods>
-                    <include name="testParameter03"></include>
+                    <include name="testParameter03"/>
                 </methods>
             </class>
         </classes>
