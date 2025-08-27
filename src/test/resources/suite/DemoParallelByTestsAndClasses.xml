@@ -9,8 +9,8 @@
     </test>
     <test name="Demo Parallel Testing By Classes 02" parallel="classes">
         <classes>
+            <class name="Bai25_ParallelExecution.FirefoxTest"/>
             <class name="Bai25_ParallelExecution.ChromeTest"/>
-            <class name="Bai25_ParallelExecution.EdgeTest"/>
         </classes>
     </test>
 </suite>
